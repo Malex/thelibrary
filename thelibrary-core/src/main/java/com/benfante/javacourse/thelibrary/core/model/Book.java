@@ -49,5 +49,15 @@ public class Book {
 		if(author!=null)
 		this.author = author;
 	}
+
+	public String getPrint() {
+		StringBuilder str = new StringBuilder();
+		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthor: ").append(this.getAuthor());
+		if(this.getPrice()!=0)
+			str.append("\nPrice: ").append(this.getPrice());
+		
+		return  str.toString();
+	}
+
 }
 
