@@ -28,8 +28,8 @@ public class BookTest {
 		float price = 1.23f;
 		Book book = new Book(id, title, author, price);
 		long newId = 0;
-		String newTitle = "A title";
-		String newAuthor = "The single author";
+		String newTitle = "A special title";
+		String newAuthor = "The single special author";
 		float newPrice = 1.23f;
 		book.setId(newId);
 		book.setTitle(newTitle);
