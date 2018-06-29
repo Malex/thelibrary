@@ -4,7 +4,7 @@ public class Book {
 	private long Id;
 	private String title;
 	private float price;
-	private Author author;
+	private Author[] author;
 	private Publisher publisher;
 	
 	public Book(long id, String title, Author author, Publisher publisher, float price ) {
@@ -48,18 +48,24 @@ public class Book {
 	}
 	
 	
-	public Author getAuthor() {
+	public Author[] getAuthor() {
 		return this.author;
 	}
-	public void setAuthor(Author author) {
-		if(author.getId()!=0)
-			this.author = author;
+	public void setAuthor(Author[] author) {
+		for(Author g : author) {
+			if(g.getId()==0)
+				throw new IllegalArgumentException();
+			else
+				this.addAuthor(g);
+		}
 	}
-
+	public void setAuthor(Author author) {
+		this.addAuthor(author);
+	}
+	
 	public Publisher getPublisher() {
 		return this.publisher;
 	}
-
 	public void setPublisher(Publisher publisher) {
 		if(publisher.getId()!=0)
 			this.publisher = publisher;
@@ -67,6 +73,27 @@ public class Book {
 			throw new IllegalArgumentException();
 	}
 
+	
+	public void addAuthor(Author author) {
+		int len;
+		if(this.getAuthor()==null) {
+				len = 0;
+				this.author = new Author[1];
+		}
+		else
+			len = this.getAuthor().length;
+		
+		Author[] newAuthors = new Author[len+1];
+		
+		for(int i=0; i<len;i++)
+			newAuthors[i] = this.getAuthor()[i];
+		
+		newAuthors[len] = author;
+		
+		this.author = newAuthors;
+	}
+	
+	
 	public String getPrint() {
 		StringBuilder str = new StringBuilder();
 		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthor: ").append(this.getAuthor());
