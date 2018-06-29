@@ -11,7 +11,7 @@ public class BookTest {
 	public void testBookConstruction() {
 		long id = 0;
 		String title = "A title";
-		String author = "The single author";
+		Author author = new Author(1,"Agatha","Christie");
 		float price = 1.23f;
 		Book book = new Book(id, title, author, price);
 		assertEquals(id, book.getId());
@@ -24,12 +24,12 @@ public class BookTest {
 	public void testBookSetters() {
 		long id = 0;
 		String title = "A title";
-		String author = "The single author";
+		Author author = new Author(1,"Agatha","Christie");
 		float price = 1.23f;
 		Book book = new Book(id, title, author, price);
 		long newId = 0;
 		String newTitle = "A special title";
-		String newAuthor = "The single special author";
+		Author newAuthor = new Author(4,"Geroge","Martin");
 		float newPrice = 1.23f;
 		book.setId(newId);
 		book.setTitle(newTitle);

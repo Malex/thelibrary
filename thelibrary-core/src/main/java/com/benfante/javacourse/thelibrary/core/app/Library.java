@@ -8,8 +8,8 @@ public class Library {
 	private Book[] books;
 
 	public static void main(String[] args) {
-		Book book1 = new Book(1252,"Dieci Piccoli indiani","JK Rowling",3.14f);
-		Book book2 = new Book(14272,"Due Coccodrilli","James Cameroon");
+		Book book1 = new Book(1252,"Dieci Piccoli indiani",new Author(1,"JK"," Rowling"),3.14f);
+		Book book2 = new Book(14272,"Due Coccodrilli",new Author(2,"James"," Cameroon"));
 		
 		System.out.println(book1.getPrint());
 		System.out.println(book2.getPrint());
