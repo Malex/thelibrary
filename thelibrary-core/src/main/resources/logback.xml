@@ -9,7 +9,7 @@
 		</encoder>
 	</appender>
 	
-	<logger name="com.benfante.javacourse" level="DEBUG" additivity="false">
+	<logger name="com.benfante.javacourse" level="INFO" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 
