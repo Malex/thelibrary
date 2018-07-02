@@ -1,7 +1,6 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class AuthorTest {
