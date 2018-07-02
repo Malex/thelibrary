@@ -60,6 +60,25 @@ public class BookTest {
 		
 	}
 	
+	
+	@Test 
+	public void noAuthor() {
+		Author[] author = new Author[0];
+		long id = 1;
+		Publisher publisher = new Publisher(1, "A publisher");
+		float price = 1.23f;
+		String title = "A title";
+		
+		Book book = new Book(id, title, author, publisher, price);
+		Author auth2 = new Author(1,"Pippo","Baudo");
+		assertFalse(book.isAuthor(auth2));
+		//System.out.println(book.getPrint());
+		Book book2 = new Book(id, title, author, publisher, price);
+		assertEquals(book,book2);
+		
+	}
+	
+	
 	@Test
 	public void testEquals() {
 		long id = 1;

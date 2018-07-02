@@ -122,9 +122,12 @@ public class Book {
 		for (Author g : this.getAuthor()) {
 			str.append(g.getPrint()).append("; ");
 		}
+		if(this.getAuthor().length==0)
+			str.append("No authors for this book.; "); //Last 2 chars get deleted on next instruction
+		
 		str.delete(str.length()-2,str.length());
 		if(this.getPublisher()!=null)
-			str.append("\nPublisher: ").append(this.getPublisher());
+			str.append("\nPublisher: ").append(this.getPublisher().getPrint());
 		if(this.getPrice()!=0)
 			str.append("\nPrice: ").append(this.getPrice());
 		
@@ -138,7 +141,7 @@ public class Book {
 		if(this.getId()==book.getId()) {
 			if(this.getAuthor().length!=book.getAuthor().length)
 				return false;
-			boolean isThere = false;
+			boolean isThere = this.getAuthor().length==0; //this way it works for 0 authors.
 			for(Author g : this.getAuthor()) {
 				isThere = book.isAuthor(g);
 				if(!isThere)

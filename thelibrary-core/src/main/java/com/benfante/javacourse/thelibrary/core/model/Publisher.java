@@ -44,7 +44,9 @@ public class Publisher {
 	}
 
 
-	
+	public String getPrint() {
+		return this.getName();
+	}
 	
 	@Override
 	public String toString() {
