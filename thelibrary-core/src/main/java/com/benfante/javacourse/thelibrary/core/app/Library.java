@@ -25,7 +25,7 @@ public class Library {
 	
 	public void addBooks(Book[] books) {
 		for (Book g : books)
-			this.addBook(g);
+			this.addBook(g); 
 	}
 	
 	public void removeBook(Book book) {
@@ -64,6 +64,39 @@ public class Library {
 		}
 		
 		this.books = new_book;
+	}
+	
+	
+	public Book[] searchBooksByTitle(String title) {
+		Book[] tmp = new Book[this.books.length];
+		int i = 0;
+		for(Book g : this.books) {
+			if (g.getTitle().equals(title)) {
+				tmp[i] = g;
+				i++;
+			}
+		}
+		Book[] ret = new Book[i];
+		for(int j=0;j<i;j++) {
+			ret[j]=tmp[j];
+		}
+		return ret;
+	}
+	
+	public Book[] searchBooksByAuthor(Author author) {
+		Book[] tmp = new Book[this.books.length];
+		int i = 0;
+		for(Book g : this.books) {
+			if (g.getAuthor().equals(author)) {
+				tmp[i] = g;
+				i++;
+			}
+		}
+		Book[] ret = new Book[i];
+		for(int j=0;j<i;j++) {
+			ret[j]=tmp[j];
+		}
+		return ret;
 	}
 	
 	

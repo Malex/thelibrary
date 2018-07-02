@@ -46,4 +46,23 @@ public class BookTest {
 		assertEquals(newPrice, book.getPrice(), 0.1);
 	}
 	
+	@Test
+	public void testBookEquals() {
+		Author auth1 = new Author(1,"Pippo","Baudo");
+		Author auth2 = new Author(1,"Pippo","Baudo");
+		assertEquals(auth1.equals(auth2),true);
+		auth2.setId(3);
+		assertEquals(auth1.equals(auth2),false);
+		auth2.setId(1);
+		auth2.setLastName("Pluto");
+	}
+	
+	@Test(expected = AssertionError.class)
+	public void testBookEqualsReally() {
+		Author auth1 = new Author(1,"Pippo","Baudo");
+		Author auth2 = new Author(1,"Pippo","Baudo");
+		auth2.setLastName("Pluto");
+		assertEquals(auth1.equals(auth2),true);
+	}
+	
 }
