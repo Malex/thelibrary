@@ -46,7 +46,7 @@ public class BookTest {
 	}
 
 	@Test
-	public void testIsAuthor() {
+	public void testHasAuthor() {
 		Author auth1 = new Author(1,"Pippo","Baudo");
 		Author auth2 = new Author(1,"Pippo","Baudo");
 		auth2.setLastName("Pluto");

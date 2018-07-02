@@ -45,6 +45,17 @@ public class Author {
 		else
 			throw new IllegalArgumentException();
 	}
+	
+	
+	public boolean isAuthor(Book book) {
+		for(Author g : book.getAuthor())
+			if(g.equals(this))
+				return true;
+			else
+				continue;
+		return false;
+	}
+	
 
 	@Override
 	public boolean equals(Object o) {
