@@ -36,7 +36,11 @@ public class Publisher {
 	public boolean equals(Object o) {
 		Publisher pub = (Publisher) o;
 		if(this.getId()==pub.getId()) {
-			assert this.getName().equals(pub.getName());
+			if(this.getName()!=null)
+				assert this.getName().equals(pub.getName());
+			else 
+				if(pub.getName()==null)
+					return true;
 			return true;
 		}
 		else 
