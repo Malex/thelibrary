@@ -4,7 +4,7 @@ public class Book {
 	private long Id;
 	private String title;
 	private float price;
-	private Author[] author;
+	private Author[] author = new Author[0];
 	private Publisher publisher;
 	
 	public Book(long id, String title, Author author, Publisher publisher, float price ) {
@@ -94,12 +94,8 @@ public class Book {
 		int len;
 		if(author.getId()<=0)
 			throw new IllegalArgumentException();
-		if(this.getAuthor()==null) {
-				len = 0;
-				this.author = new Author[1];
-		}
-		else
-			len = this.getAuthor().length;
+		
+		len = this.getAuthor().length;
 		
 		Author[] newAuthors = new Author[len+1];
 		
