@@ -118,7 +118,11 @@ public class Book {
 	
 	public String getPrint() {
 		StringBuilder str = new StringBuilder();
-		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthor: ").append(this.getAuthor());
+		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthors: ");
+		for (Author g : this.getAuthor()) {
+			str.append(g.getPrint()).append("; ");
+		}
+		str.delete(str.length()-2,str.length());
 		if(this.getPublisher()!=null)
 			str.append("\nPublisher: ").append(this.getPublisher());
 		if(this.getPrice()!=0)

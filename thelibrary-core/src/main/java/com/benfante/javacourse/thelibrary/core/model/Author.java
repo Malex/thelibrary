@@ -62,4 +62,8 @@ public class Author {
 		return "Author [id=" + id + ", First Name =" + firstName + ", Last Name =" + lastName + "]";
 	}
 	
+	public String getPrint() {
+		return this.getFirstName()+" "+this.getLastName();
+	}
+	
 }

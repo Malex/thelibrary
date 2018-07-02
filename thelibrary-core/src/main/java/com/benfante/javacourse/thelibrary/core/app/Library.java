@@ -8,13 +8,23 @@ public class Library {
 	private Book[] books = new Book[0];
 
 	public static void main(String[] args) {
-		Book book1 = new Book(1252,"Dieci Piccoli indiani",new Author(1,"JK"," Rowling"),3.14f);
-		Book book2 = new Book(14272,"Due Coccodrilli",new Author(2,"James"," Cameroon"));
-		
-		System.out.println(book1.getPrint());
-		System.out.println(book2.getPrint());
+		Book[] book = new Book[] {new Book(1252,"Dieci Piccoli indiani",new Author(1,"JK"," Rowling"),3.14f),new Book(14272,"Due Coccodrilli",new Author(2,"James"," Cameroon"))};
+		Library lib = new Library(book);
+		lib.printBooks();
 	}
 
+	public Library() {
+		super();
+	}
+	
+	public Library(Book book) {
+		this.addBook(book);
+	}
+	
+	public Library(Book[] books) {
+		this.addBooks(books);
+	}
+	
 	public void addBook(Book book) {
 		Book[] new_books = new Book[this.books.length+1];
 		for(int i=0; i<this.books.length; i++)
@@ -102,6 +112,13 @@ public class Library {
 
 	protected Book[] getBooks() {
 		return this.books;
+	}
+
+	
+	public void printBooks() {
+		for(Book g : this.getBooks()) {
+			System.out.println(g.getPrint()+"\n");
+		}
 	}
 	
 }
