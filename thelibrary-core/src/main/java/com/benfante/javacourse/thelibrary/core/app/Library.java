@@ -23,6 +23,10 @@ public class Library {
 		this.books = new_books;
 	}
 	
+	public void addBooks(Book[] books) {
+		for (Book g : books)
+			this.addBook(g);
+	}
 	
 	public void removeBook(Book book) {
 		long base_id = book.getId();
@@ -35,6 +39,11 @@ public class Library {
 		}
 		if(found)
 			this.trimBooks();
+	}
+	
+	public void removeBooks(Book[] books) {
+		for (Book g : books) 
+			this.removeBook(g);
 	}
 	
 	/*Method to resize array after removing elements*/

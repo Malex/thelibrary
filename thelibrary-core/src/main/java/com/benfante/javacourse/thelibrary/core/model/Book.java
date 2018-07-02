@@ -53,7 +53,7 @@ public class Book {
 	}
 	public void setAuthor(Author[] author) {
 		for(Author g : author) {
-			if(g.getId()==0)
+			if(g.getId()<=0)
 				throw new IllegalArgumentException();
 			else
 				this.addAuthor(g);
@@ -67,7 +67,7 @@ public class Book {
 		return this.publisher;
 	}
 	public void setPublisher(Publisher publisher) {
-		if(publisher.getId()!=0)
+		if(publisher.getId() > 0)
 			this.publisher = publisher;
 		else
 			throw new IllegalArgumentException();
@@ -76,6 +76,8 @@ public class Book {
 	
 	public void addAuthor(Author author) {
 		int len;
+		if(author.getId()<=0)
+			throw new IllegalArgumentException();
 		if(this.getAuthor()==null) {
 				len = 0;
 				this.author = new Author[1];
