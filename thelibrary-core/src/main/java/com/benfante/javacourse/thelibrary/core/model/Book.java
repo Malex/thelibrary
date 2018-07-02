@@ -1,10 +1,16 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Book {
+	
+	private static final Logger log = LoggerFactory.getLogger(Book.class);
+	
 	private long Id;
 	private String title;
 	private float price;
-	private Author[] author;
+	private Author[] author = new Author[0];
 	private Publisher publisher;
 	
 	public Book(long id, String title, Author author, Publisher publisher, float price ) {
@@ -19,6 +25,22 @@ public class Book {
 	}
 	
 	public Book(long Id, String title, Author author,float price) {
+		this(Id,title,author);
+		this.setPrice(price);
+	}
+	
+	public Book(long id, String title, Author[] author, Publisher publisher, float price ) {
+		this(id,title,author,price);
+		this.setPublisher(publisher);
+	}
+
+	public Book(long Id, String title, Author[] author) {
+		this.setId(Id);
+		this.setAuthor(author);
+		this.setTitle(title);
+	}
+	
+	public Book(long Id, String title, Author[] author,float price) {
 		this(Id,title,author);
 		this.setPrice(price);
 	}
@@ -52,8 +74,9 @@ public class Book {
 		return this.author;
 	}
 	public void setAuthor(Author[] author) {
+		this.author = new Author[0];
 		for(Author g : author) {
-			if(g.getId()==0)
+			if(g.getId()<=0)
 				throw new IllegalArgumentException();
 			else
 				this.addAuthor(g);
@@ -67,7 +90,7 @@ public class Book {
 		return this.publisher;
 	}
 	public void setPublisher(Publisher publisher) {
-		if(publisher.getId()!=0)
+		if(publisher.getId() > 0)
 			this.publisher = publisher;
 		else
 			throw new IllegalArgumentException();
@@ -75,13 +98,12 @@ public class Book {
 
 	
 	public void addAuthor(Author author) {
+		log.debug("Adding author: id={}, Name: {} {}",author.getId(),author.getFirstName(),author.getLastName());
 		int len;
-		if(this.getAuthor()==null) {
-				len = 0;
-				this.author = new Author[1];
-		}
-		else
-			len = this.getAuthor().length;
+		if(author.getId()<=0)
+			throw new IllegalArgumentException();
+		
+		len = this.getAuthor().length;
 		
 		Author[] newAuthors = new Author[len+1];
 		
@@ -94,16 +116,51 @@ public class Book {
 	}
 	
 	
+	public boolean hasAuthor(Author author) {
+		for(Author g : this.getAuthor()) {
+			if(g.equals(author))
+				return true;
+		}
+		return false;
+	}
+	
 	public String getPrint() {
 		StringBuilder str = new StringBuilder();
-		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthor: ").append(this.getAuthor());
+		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthors: ");
+		for (Author g : this.getAuthor()) {
+			str.append(g.getPrint()).append("; ");
+		}
+		if(this.getAuthor().length==0)
+			str.append("No authors for this book.; "); //Last 2 chars get deleted on next instruction
+		
+		str.delete(str.length()-2,str.length());
 		if(this.getPublisher()!=null)
-			str.append("\nPublisher: ").append(this.getPublisher());
+			str.append("\nPublisher: ").append(this.getPublisher().getPrint());
 		if(this.getPrice()!=0)
 			str.append("\nPrice: ").append(this.getPrice());
 		
 		return  str.toString();
 	}
 
+	
+	@Override
+	public boolean equals(Object o) {
+		Book book = (Book)o;
+		if(this.getId()==book.getId()) {
+			if(this.getAuthor().length!=book.getAuthor().length)
+				return false;
+			boolean isThere = this.getAuthor().length==0; //this way it works for 0 authors.
+			for(Author g : this.getAuthor()) {
+				isThere = book.hasAuthor(g);
+				if(!isThere)
+					break;
+			}
+			assert isThere && (this.getTitle().equals(book.getTitle())) && this.getPrice()==book.getPrice() && ((this.getPublisher()!=null)?(this.getPublisher().equals(book.getPublisher())):true);
+			return true;
+		}
+		else 
+			return false;
+	}
+	
 }
 

@@ -45,13 +45,36 @@ public class Author {
 		else
 			throw new IllegalArgumentException();
 	}
-
-
 	
+	
+	public boolean isAuthor(Book book) {
+		for(Author g : book.getAuthor())
+			if(g.equals(this))
+				return true;
+			else
+				continue;
+		return false;
+	}
+	
+
+	@Override
+	public boolean equals(Object o) {
+		Author author = (Author) o;
+		if(this.getId()==author.getId()) {
+			assert this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName());
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	@Override
 	public String toString() {
 		return "Author [id=" + id + ", First Name =" + firstName + ", Last Name =" + lastName + "]";
+	}
+	
+	public String getPrint() {
+		return this.getFirstName()+" "+this.getLastName();
 	}
 	
 }

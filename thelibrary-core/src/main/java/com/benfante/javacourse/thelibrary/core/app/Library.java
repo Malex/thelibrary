@@ -1,20 +1,30 @@
 package com.benfante.javacourse.thelibrary.core.app;
 
-
 import com.benfante.javacourse.thelibrary.core.model.*;
 
 public class Library {
 	
-	private Book[] books;
+	private Book[] books = new Book[0];
 
 	public static void main(String[] args) {
-		Book book1 = new Book(1252,"Dieci Piccoli indiani",new Author(1,"JK"," Rowling"),3.14f);
-		Book book2 = new Book(14272,"Due Coccodrilli",new Author(2,"James"," Cameroon"));
-		
-		System.out.println(book1.getPrint());
-		System.out.println(book2.getPrint());
+		Book[] book = new Book[] {new Book(1252,"Dieci Piccoli indiani",new Author(1,"JK"," Rowling"),3.14f),new Book(14272,"Due Coccodrilli",new Author(2,"James"," Cameroon"))};
+		Library lib = new Library(book);
+		lib.books[0].addAuthor(new Author(10,"This","Author"));
+		lib.printBooks();
 	}
 
+	public Library() {
+		super();
+	}
+	
+	public Library(Book book) {
+		this.addBook(book);
+	}
+	
+	public Library(Book[] books) {
+		this.addBooks(books);
+	}
+	
 	public void addBook(Book book) {
 		Book[] new_books = new Book[this.books.length+1];
 		for(int i=0; i<this.books.length; i++)
@@ -23,6 +33,10 @@ public class Library {
 		this.books = new_books;
 	}
 	
+	public void addBooks(Book[] books) {
+		for (Book g : books)
+			this.addBook(g); 
+	}
 	
 	public void removeBook(Book book) {
 		long base_id = book.getId();
@@ -35,6 +49,11 @@ public class Library {
 		}
 		if(found)
 			this.trimBooks();
+	}
+	
+	public void removeBooks(Book[] books) {
+		for (Book g : books) 
+			this.removeBook(g);
 	}
 	
 	/*Method to resize array after removing elements*/
@@ -57,5 +76,49 @@ public class Library {
 		this.books = new_book;
 	}
 	
+	
+	public Book[] searchBooksByTitle(String title) {
+		Book[] tmp = new Book[this.books.length];
+		int i = 0;
+		for(Book g : this.books) {
+			if (g.getTitle().equals(title)) {
+				tmp[i] = g;
+				i++;
+			}
+		}
+		Book[] ret = new Book[i];
+		for(int j=0;j<i;j++) {
+			ret[j]=tmp[j];
+		}
+		return ret;
+	}
+	
+	public Book[] searchBooksByAuthor(Author author) {
+		Book[] tmp = new Book[this.books.length];
+		int i = 0;
+		for(Book g : this.books) {
+			if (g.hasAuthor(author)) {
+				tmp[i] = g;
+				i++;
+			}
+		}
+		Book[] ret = new Book[i];
+		for(int j=0;j<i;j++) {
+			ret[j]=tmp[j];
+		}
+		return ret;
+	}
+	
+
+	protected Book[] getBooks() {
+		return this.books;
+	}
+
+	
+	public void printBooks() {
+		for(Book g : this.getBooks()) {
+			System.out.println(g.getPrint()+"\n");
+		}
+	}
 	
 }
