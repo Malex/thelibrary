@@ -22,7 +22,7 @@ public class AuthorTest {
 		Author auth1 = new Author(1,"Pippo","Baudo");
 		Author auth2 = new Author(1,"Pippo","Baudo");
 		auth2.setLastName("Pluto");
-		assertTrue(auth1.equals(auth2));
+		auth1.equals(auth2);
 	}
 	
 	@Test
