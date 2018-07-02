@@ -96,7 +96,7 @@ public class Library {
 		Book[] tmp = new Book[this.books.length];
 		int i = 0;
 		for(Book g : this.books) {
-			if (g.isAuthor(author)) {
+			if (g.hasAuthor(author)) {
 				tmp[i] = g;
 				i++;
 			}

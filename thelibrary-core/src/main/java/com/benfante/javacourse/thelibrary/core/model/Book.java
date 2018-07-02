@@ -68,6 +68,7 @@ public class Book {
 		return this.author;
 	}
 	public void setAuthor(Author[] author) {
+		this.author = new Author[0];
 		for(Author g : author) {
 			if(g.getId()<=0)
 				throw new IllegalArgumentException();
@@ -108,7 +109,7 @@ public class Book {
 	}
 	
 	
-	public boolean isAuthor(Author author) {
+	public boolean hasAuthor(Author author) {
 		for(Author g : this.getAuthor()) {
 			if(g.equals(author))
 				return true;
@@ -143,7 +144,7 @@ public class Book {
 				return false;
 			boolean isThere = this.getAuthor().length==0; //this way it works for 0 authors.
 			for(Author g : this.getAuthor()) {
-				isThere = book.isAuthor(g);
+				isThere = book.hasAuthor(g);
 				if(!isThere)
 					break;
 			}

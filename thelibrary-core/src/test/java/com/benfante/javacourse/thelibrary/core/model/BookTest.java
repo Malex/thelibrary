@@ -53,10 +53,10 @@ public class BookTest {
 		auth2.setId(3);
 		Author[] arrAuth = {auth1,auth2};
 		Book book = new Book(4,"ciao", arrAuth);
-		assertTrue(book.isAuthor(auth1));
-		assertTrue(book.isAuthor(auth2));
-		assertTrue(book.isAuthor(new Author(1,"Pippo","Baudo")));
-		assertFalse(book.isAuthor(new Author(10,"Carlo","Carlino")));
+		assertTrue(book.hasAuthor(auth1));
+		assertTrue(book.hasAuthor(auth2));
+		assertTrue(book.hasAuthor(new Author(1,"Pippo","Baudo")));
+		assertFalse(book.hasAuthor(new Author(10,"Carlo","Carlino")));
 		
 	}
 	
@@ -71,7 +71,7 @@ public class BookTest {
 		
 		Book book = new Book(id, title, author, publisher, price);
 		Author auth2 = new Author(1,"Pippo","Baudo");
-		assertFalse(book.isAuthor(auth2));
+		assertFalse(book.hasAuthor(auth2));
 		//System.out.println(book.getPrint());
 		Book book2 = new Book(id, title, author, publisher, price);
 		assertEquals(book,book2);
