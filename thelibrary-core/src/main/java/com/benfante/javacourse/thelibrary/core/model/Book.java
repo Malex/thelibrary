@@ -1,6 +1,12 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Book {
+	
+	private static final Logger log = LoggerFactory.getLogger(Book.class);
+	
 	private long Id;
 	private String title;
 	private float price;
@@ -92,6 +98,7 @@ public class Book {
 
 	
 	public void addAuthor(Author author) {
+		log.debug("Adding author: id={}, Name: {} {}",author.getId(),author.getFirstName(),author.getLastName());
 		int len;
 		if(author.getId()<=0)
 			throw new IllegalArgumentException();
