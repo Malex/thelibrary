@@ -11,9 +11,9 @@ public class AuthorTest {
 	public void testAuthorEquals() {
 		Author auth1 = new Author(1,"Pippo","Baudo");
 		Author auth2 = new Author(1,"Pippo","Baudo");
-		assertEquals(auth1.equals(auth2),true);
+		assertTrue(auth1.equals(auth2));
 		auth2.setId(3);
-		assertEquals(auth1.equals(auth2),false);
+		assertFalse(auth1.equals(auth2));
 		auth2.setId(1);
 		auth2.setLastName("Pluto");
 	}
@@ -23,6 +23,6 @@ public class AuthorTest {
 		Author auth1 = new Author(1,"Pippo","Baudo");
 		Author auth2 = new Author(1,"Pippo","Baudo");
 		auth2.setLastName("Pluto");
-		assertEquals(auth1.equals(auth2),true);
+		assertTrue(auth1.equals(auth2));
 	}
 }

@@ -23,6 +23,22 @@ public class Book {
 		this.setPrice(price);
 	}
 	
+	public Book(long id, String title, Author[] author, Publisher publisher, float price ) {
+		this(id,title,author,price);
+		this.setPublisher(publisher);
+	}
+
+	public Book(long Id, String title, Author[] author) {
+		this.setId(Id);
+		this.setAuthor(author);
+		this.setTitle(title);
+	}
+	
+	public Book(long Id, String title, Author[] author,float price) {
+		this(Id,title,author);
+		this.setPrice(price);
+	}
+	
 	public long getId() {
 		return this.Id;
 	}
@@ -96,6 +112,14 @@ public class Book {
 	}
 	
 	
+	public boolean isAuthor(Author author) {
+		for(Author g : this.getAuthor()) {
+			if(g.equals(author))
+				return true;
+		}
+		return false;
+	}
+	
 	public String getPrint() {
 		StringBuilder str = new StringBuilder();
 		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthor: ").append(this.getAuthor());
@@ -107,5 +131,25 @@ public class Book {
 		return  str.toString();
 	}
 
+	
+	@Override
+	public boolean equals(Object o) {
+		Book book = (Book)o;
+		if(this.getId()==book.getId()) {
+			if(this.getAuthor().length!=book.getAuthor().length)
+				return false;
+			boolean isThere = false;
+			for(Author g : this.getAuthor()) {
+				isThere = book.isAuthor(g);
+				if(!isThere)
+					break;
+			}
+			assert isThere && (this.getTitle().equals(book.getTitle())) && this.getPrice()==book.getPrice() && ((this.getPublisher()!=null)?(this.getPublisher().equals(book.getPublisher())):true);
+			return true;
+		}
+		else 
+			return false;
+	}
+	
 }
 

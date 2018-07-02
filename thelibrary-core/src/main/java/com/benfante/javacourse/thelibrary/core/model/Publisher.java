@@ -31,6 +31,17 @@ public class Publisher {
 		else
 			throw new IllegalArgumentException();
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Publisher pub = (Publisher) o;
+		if(this.getId()==pub.getId()) {
+			assert this.getName().equals(pub.getName());
+			return true;
+		}
+		else 
+			return false;
+	}
 
 
 	

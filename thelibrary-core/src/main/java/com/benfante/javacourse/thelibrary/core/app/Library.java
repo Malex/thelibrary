@@ -5,7 +5,7 @@ import com.benfante.javacourse.thelibrary.core.model.*;
 
 public class Library {
 	
-	private Book[] books;
+	private Book[] books = new Book[0];
 
 	public static void main(String[] args) {
 		Book book1 = new Book(1252,"Dieci Piccoli indiani",new Author(1,"JK"," Rowling"),3.14f);
@@ -87,7 +87,7 @@ public class Library {
 		Book[] tmp = new Book[this.books.length];
 		int i = 0;
 		for(Book g : this.books) {
-			if (g.getAuthor().equals(author)) {
+			if (g.isAuthor(author)) {
 				tmp[i] = g;
 				i++;
 			}
@@ -99,5 +99,9 @@ public class Library {
 		return ret;
 	}
 	
+
+	protected Book[] getBooks() {
+		return this.books;
+	}
 	
 }

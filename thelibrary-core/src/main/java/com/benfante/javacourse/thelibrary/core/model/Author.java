@@ -46,7 +46,9 @@ public class Author {
 			throw new IllegalArgumentException();
 	}
 
-	public boolean equals(Author author) {
+	@Override
+	public boolean equals(Object o) {
+		Author author = (Author) o;
 		if(this.getId()==author.getId()) {
 			assert this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName());
 			return true;
