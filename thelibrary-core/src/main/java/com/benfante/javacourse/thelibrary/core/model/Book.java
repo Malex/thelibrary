@@ -73,7 +73,7 @@ public class Book {
 	public Author[] getAuthor() {
 		return this.author;
 	}
-	public void setAuthor(Author[] author) {
+	void setAuthor(Author[] author) {
 		this.author = new Author[0];
 		for(Author g : author) {
 			if(g.getId()<=0)
@@ -82,7 +82,8 @@ public class Book {
 				this.addAuthor(g);
 		}
 	}
-	public void setAuthor(Author author) {
+	void setAuthor(Author author) {
+		this.author = new Author[0];
 		this.addAuthor(author);
 	}
 	
