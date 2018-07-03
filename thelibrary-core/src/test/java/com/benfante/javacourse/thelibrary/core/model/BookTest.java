@@ -40,7 +40,7 @@ public class BookTest {
 		book.setPrice(newPrice);
 		assertEquals(newId, book.getId());
 		assertEquals(newTitle, book.getTitle());
-		assertEquals(newAuthor, book.getAuthor()[1]);
+		assertEquals(newAuthor, book.getAuthor()[0]);
 		assertEquals(newPublisher, book.getPublisher());
 		assertEquals(newPrice, book.getPrice(), 0.1);
 	}
