@@ -59,6 +59,10 @@ public class Author {
 
 	@Override
 	public boolean equals(Object o) {
+		if(o==null)
+			return false;
+		if(!(o instanceof Author))
+			return false;
 		Author author = (Author) o;
 		if(this.getId()==author.getId()) {
 			assert this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName());
