@@ -12,11 +12,13 @@ public class LibraryTest {
 
 	@Test
 	public void testAddBook() {
+		Book[] b = new Book[1];
+		b[0] = new Book(1,"Sanremo",new Author(3,"Pippo","Baudo"));
 		Library lib = new Library();
-		lib.addBook(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-		assertEquals(lib.getBooks()[0],new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
+		lib.addBook(b[0]);
+		assertTrue(Arrays.equals(lib.getBooks(),b));
 	}
-
+	
 	@Test
 	public void testAddBooks() {
 		Book[] b = new Book[3];
@@ -105,6 +107,5 @@ public class LibraryTest {
 		Book[] b2 = new Book[] {b[0],b[1]};
 		assertTrue(Arrays.equals(ret, b2));
 	}
-
 
 }

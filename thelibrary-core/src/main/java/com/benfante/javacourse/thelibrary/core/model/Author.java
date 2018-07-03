@@ -49,8 +49,9 @@ public class Author {
 	
 	public boolean isAuthor(Book book) {
 		for(Author g : book.getAuthor())
-			if(g.equals(this))
-				return true;
+			if(g.hashCode()==this.hashCode())
+				if(g.equals(this))
+					return true;
 			else
 				continue;
 		return false;
@@ -59,6 +60,10 @@ public class Author {
 
 	@Override
 	public boolean equals(Object o) {
+		if(o==null)
+			return false;
+		if(!(o instanceof Author))
+			return false;
 		Author author = (Author) o;
 		if(this.getId()==author.getId()) {
 			assert this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName());
@@ -66,6 +71,11 @@ public class Author {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return Long.valueOf(this.getId()).hashCode()+this.getFirstName().hashCode()+this.getLastName().hashCode();
 	}
 	
 	@Override

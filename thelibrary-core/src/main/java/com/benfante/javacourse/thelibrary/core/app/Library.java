@@ -39,10 +39,10 @@ public class Library {
 	}
 	
 	public void removeBook(Book book) {
-		long base_id = book.getId();
+		int hash = book.hashCode();
 		boolean found = false;
 		for (int i=0; i < this.books.length; i++) {
-			if(this.books[i].getId() == base_id) {
+			if(this.books[i].hashCode() == hash && this.books[i].equals(book)) {
 				this.books[i] = null;
 				if(!found) found=true;
 			}
@@ -57,7 +57,7 @@ public class Library {
 	}
 	
 	/*Method to resize array after removing elements*/
-	protected void trimBooks() {
+	void trimBooks() {
 		int count = 0,shift=0;
 		for (int i=0; i < this.books.length; i++) {
 			if(this.books[i]==null) { //Finding how many elements were removed, saving in count
@@ -110,7 +110,7 @@ public class Library {
 	}
 	
 
-	protected Book[] getBooks() {
+	Book[] getBooks() {
 		return this.books;
 	}
 

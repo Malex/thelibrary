@@ -40,7 +40,7 @@ public class BookTest {
 		book.setPrice(newPrice);
 		assertEquals(newId, book.getId());
 		assertEquals(newTitle, book.getTitle());
-		assertEquals(newAuthor, book.getAuthor()[1]);
+		assertEquals(newAuthor, book.getAuthor()[0]);
 		assertEquals(newPublisher, book.getPublisher());
 		assertEquals(newPrice, book.getPrice(), 0.1);
 	}
@@ -89,6 +89,9 @@ public class BookTest {
 		Book book = new Book(id, title, author, publisher, price);
 		Book book2 = new Book(id, title, author, publisher, price);
 		assertEquals(book,book2);
+		assertEquals(book.hashCode(),book2.hashCode());
+		book2.setId(3);
+		assertNotEquals(book.hashCode(),book2.hashCode());
 	}
 	
 }
