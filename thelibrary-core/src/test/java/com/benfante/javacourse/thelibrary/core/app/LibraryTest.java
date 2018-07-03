@@ -14,7 +14,7 @@ public class LibraryTest {
 	public void testAddBook() {
 		Book[] b = new Book[] {new Book(1,"Sanremo",new Author(3,"Pippo","Baudo"))};
 		Library lib = new Library();
-		lib.addBook(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
+		lib.addBook(b[0]);
 		assertTrue(Arrays.equals(lib.getBooks(),b));
 	}
 
