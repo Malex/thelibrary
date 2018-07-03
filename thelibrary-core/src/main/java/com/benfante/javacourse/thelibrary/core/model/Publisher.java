@@ -47,7 +47,11 @@ public class Publisher {
 			return false;
 	}
 
-
+	@Override
+	public int hashCode() {
+		return Long.valueOf(this.getId()).hashCode()+this.getName().hashCode();
+	}
+	
 	public String getPrint() {
 		return this.getName();
 	}

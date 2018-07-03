@@ -39,10 +39,10 @@ public class Library {
 	}
 	
 	public void removeBook(Book book) {
-		long base_id = book.getId();
+		int hash = book.hashCode();
 		boolean found = false;
 		for (int i=0; i < this.books.length; i++) {
-			if(this.books[i].getId() == base_id) {
+			if(this.books[i].hashCode() == hash && this.books[i].equals(book)) {
 				this.books[i] = null;
 				if(!found) found=true;
 			}

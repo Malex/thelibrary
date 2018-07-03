@@ -49,8 +49,9 @@ public class Author {
 	
 	public boolean isAuthor(Book book) {
 		for(Author g : book.getAuthor())
-			if(g.equals(this))
-				return true;
+			if(g.hashCode()==this.hashCode())
+				if(g.equals(this))
+					return true;
 			else
 				continue;
 		return false;
@@ -70,6 +71,11 @@ public class Author {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return Long.valueOf(this.getId()).hashCode()+this.getFirstName().hashCode()+this.getLastName().hashCode();
 	}
 	
 	@Override

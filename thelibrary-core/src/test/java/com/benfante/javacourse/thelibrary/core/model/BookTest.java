@@ -89,6 +89,9 @@ public class BookTest {
 		Book book = new Book(id, title, author, publisher, price);
 		Book book2 = new Book(id, title, author, publisher, price);
 		assertEquals(book,book2);
+		assertEquals(book.hashCode(),book2.hashCode());
+		book2.setId(3);
+		assertNotEquals(book.hashCode(),book2.hashCode());
 	}
 	
 }

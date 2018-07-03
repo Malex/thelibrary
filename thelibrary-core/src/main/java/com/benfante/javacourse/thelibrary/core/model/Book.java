@@ -119,8 +119,9 @@ public class Book {
 	
 	public boolean hasAuthor(Author author) {
 		for(Author g : this.getAuthor()) {
-			if(g.equals(author))
-				return true;
+			if(g.hashCode()==author.hashCode())
+				if(g.equals(author))
+					return true;
 		}
 		return false;
 	}
@@ -161,6 +162,14 @@ public class Book {
 		}
 		else 
 			return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		int tmpHash = 0;
+		for(Author g : this.getAuthor())
+			tmpHash += g.hashCode();
+		return Long.valueOf(this.getId()).hashCode()+Float.valueOf(this.getPrice()).hashCode()+this.getTitle().hashCode()+((this.getPublisher()!=null)?this.getPublisher().hashCode():0)+tmpHash;
 	}
 	
 }
