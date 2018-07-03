@@ -57,7 +57,7 @@ public class Library {
 	}
 	
 	/*Method to resize array after removing elements*/
-	protected void trimBooks() {
+	void trimBooks() {
 		int count = 0,shift=0;
 		for (int i=0; i < this.books.length; i++) {
 			if(this.books[i]==null) { //Finding how many elements were removed, saving in count
@@ -110,7 +110,7 @@ public class Library {
 	}
 	
 
-	protected Book[] getBooks() {
+	Book[] getBooks() {
 		return this.books;
 	}
 
