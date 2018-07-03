@@ -12,9 +12,9 @@ public class LibraryTest {
 
 	@Test
 	public void testAddBook() {
-		Library lib = new Library();
-		lib.addBook( new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
 		Book[] b = new Book[] {new Book(1,"Sanremo",new Author(3,"Pippo","Baudo"))};
+		Library lib = new Library();
+		lib.addBook(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
 		assertTrue(Arrays.equals(lib.getBooks(),b));
 	}
 
