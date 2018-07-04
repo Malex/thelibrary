@@ -12,6 +12,7 @@ public class Book {
 	private float price;
 	private Author[] author = new Author[0];
 	private Publisher publisher;
+	private BookCategory[] categories = new BookCategory[0];;
 	
 	public Book(long id, String title, Author author, Publisher publisher, float price ) {
 		this(id,title,author,price);
@@ -140,10 +141,51 @@ public class Book {
 			str.append("\nPublisher: ").append(this.getPublisher().getPrint());
 		if(this.getPrice()!=0)
 			str.append("\nPrice: ").append(this.getPrice());
+		str.append("\nCategories: ");
+		if(this.getCategories().length>0) {
+				for(BookCategory cat : this.getCategories()) 
+					str.append(cat.toString()).append(", ");
+				
+				str.delete(str.length()-2,str.length()).append(".");
+
+		} else {
+			str.append("No category set for this Book.");
+		}
 		
 		return  str.toString();
 	}
 
+
+	public BookCategory[] getCategories() {
+		return this.categories;
+	}
+	void setCategories(BookCategory[] categories) {
+		this.categories = new BookCategory[0];
+		this.addCategories(categories);
+	}
+	
+	public void addCategory(BookCategory category) {
+		int len;
+		if(category==null)
+			throw new IllegalArgumentException();
+		
+		len = this.getCategories().length;
+		
+		BookCategory[] newCat = new BookCategory[len+1];
+		
+		for(int i=0; i<len;i++)
+			newCat[i] = this.getCategories()[i];
+		
+		newCat[len] = category;
+		
+		this.categories = newCat;
+	}
+	
+	public void addCategories(BookCategory[] categories) {
+		for(BookCategory cat : categories)
+			this.addCategory(cat);
+	}
+	
 	
 	@Override
 	public boolean equals(Object o) {
@@ -151,15 +193,15 @@ public class Book {
 			return false;
 		Book book = (Book)o;
 		if(this.getId()==book.getId()) {
-			if(this.getAuthor().length!=book.getAuthor().length)
-				return false;
-			boolean isThere = this.getAuthor().length==0; //this way it works for 0 authors.
-			for(Author g : this.getAuthor()) {
-				isThere = book.hasAuthor(g);
-				if(!isThere)
-					break;
-			}
-			assert isThere && (this.getTitle().equals(book.getTitle())) && this.getPrice()==book.getPrice() && ((this.getPublisher()!=null)?(this.getPublisher().equals(book.getPublisher())):true);
+//			if(this.getAuthor().length!=book.getAuthor().length)
+//				return false;
+//			boolean isThere = this.getAuthor().length==0; //this way it works for 0 authors.
+//			for(Author g : this.getAuthor()) {
+//				isThere = book.hasAuthor(g);
+//				if(!isThere)
+//					break;
+//			}
+//			assert isThere && (this.getTitle().equals(book.getTitle())) && this.getPrice()==book.getPrice() && ((this.getPublisher()!=null)?(this.getPublisher().equals(book.getPublisher())):true);
 			return true;
 		}
 		else 
@@ -168,10 +210,10 @@ public class Book {
 	
 	@Override
 	public int hashCode() {
-		int tmpHash = 0;
-		for(Author g : this.getAuthor())
-			tmpHash += g.hashCode();
-		return Long.valueOf(this.getId()).hashCode()+Float.valueOf(this.getPrice()).hashCode()+this.getTitle().hashCode()+((this.getPublisher()!=null)?this.getPublisher().hashCode():0)+tmpHash;
+//		int tmpHash = 0;
+//		for(Author g : this.getAuthor())
+//			tmpHash += g.hashCode();
+		return Long.valueOf(this.getId()).hashCode();//+Float.valueOf(this.getPrice()).hashCode()+this.getTitle().hashCode()+((this.getPublisher()!=null)?this.getPublisher().hashCode():0)+tmpHash;
 	}
 	
 }

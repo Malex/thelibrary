@@ -6,6 +6,7 @@ import org.junit.Test;
 public class AuthorTest {
 
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testAuthorEquals() {
 		Object auth1 = new Author(1,"Pippo","Baudo");
