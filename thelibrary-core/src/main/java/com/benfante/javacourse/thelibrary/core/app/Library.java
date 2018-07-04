@@ -11,7 +11,7 @@ public class Library {
 		Library lib = new Library(book);
 		lib.books[0].addAuthor(new Author(10,"This","Author"));
 		lib.books[0].addCategory(BookCategory.LITERATURE_AND_FICTION);
-		lib.books[0].addCategory(BookCategory.LITERATURE_AND_FICTION);
+		lib.books[0].addCategory(BookCategory.COMPUTERS_AND_TECHNOLOGY);
 		lib.printBooks();
 	}
 

@@ -50,7 +50,10 @@ public class Book {
 		return this.Id;
 	}
 	public void setId(long id) {
-		this.Id = id;
+		if(id>0)
+			this.Id = id;
+		else
+			throw new IllegalArgumentException("ID must be positive");
 	}
 	
 	
@@ -60,6 +63,8 @@ public class Book {
 	public void setTitle(String title) {
 		if(title!=null)
 			this.title = title;
+		else
+			throw new IllegalArgumentException();
 	}
 	
 
@@ -67,7 +72,10 @@ public class Book {
 		return price;
 	}
 	public void setPrice(float price) {
-		this.price = price;
+		if(price>=0)
+			this.price = price;
+		else
+			throw new IllegalArgumentException("Price must be non-negative");
 	}
 	
 	
@@ -75,6 +83,8 @@ public class Book {
 		return this.author;
 	}
 	void setAuthor(Author[] author) {
+		if(author==null) 
+			throw new IllegalArgumentException();
 		this.author = new Author[0];
 		for(Author g : author) {
 			if(g.getId()<=0)
@@ -84,6 +94,8 @@ public class Book {
 		}
 	}
 	void setAuthor(Author author) {
+		if(author==null)
+			throw new IllegalArgumentException();
 		this.author = new Author[0];
 		this.addAuthor(author);
 	}
@@ -92,7 +104,7 @@ public class Book {
 		return this.publisher;
 	}
 	public void setPublisher(Publisher publisher) {
-		if(publisher.getId() > 0)
+		if(publisher!=null && publisher.getId() > 0)
 			this.publisher = publisher;
 		else
 			throw new IllegalArgumentException();
@@ -102,7 +114,7 @@ public class Book {
 	public void addAuthor(Author author) {
 		log.debug("Adding author: id={}, Name: {} {}",author.getId(),author.getFirstName(),author.getLastName());
 		int len;
-		if(author.getId()<=0)
+		if(author==null || author.getId()<=0)
 			throw new IllegalArgumentException();
 		
 		len = this.getAuthor().length;
@@ -119,11 +131,12 @@ public class Book {
 	
 	
 	public boolean hasAuthor(Author author) {
-		for(Author g : this.getAuthor()) {
-			if(g.hashCode()==author.hashCode())
-				if(g.equals(author))
-					return true;
-		}
+		if(!(author==null))
+			for(Author g : this.getAuthor()) {
+				if(g.hashCode()==author.hashCode())
+					if(g.equals(author))
+						return true;
+			}
 		return false;
 	}
 	
@@ -160,6 +173,8 @@ public class Book {
 		return this.categories;
 	}
 	void setCategories(BookCategory[] categories) {
+		if(categories==null)
+			throw new IllegalArgumentException();
 		this.categories = new BookCategory[0];
 		this.addCategories(categories);
 	}
@@ -184,6 +199,8 @@ public class Book {
 	}
 	
 	public void addCategories(BookCategory[] categories) {
+		if(categories==null)
+			throw new IllegalArgumentException();
 		for(BookCategory cat : categories)
 			this.addCategory(cat);
 	}
