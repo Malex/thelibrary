@@ -6,6 +6,7 @@ import org.junit.Test;
 public class AuthorTest {
 
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testAuthorEquals() {
 		Object auth1 = new Author(1,"Pippo","Baudo");
@@ -19,13 +20,13 @@ public class AuthorTest {
 		
 	}
 	
-	@Test(expected = AssertionError.class)
-	public void testAuthorEqualsReally() {
-		Author auth1 = new Author(1,"Pippo","Baudo");
-		Author auth2 = new Author(1,"Pippo","Baudo");
-		auth2.setLastName("Pluto");
-		auth1.equals(auth2);
-	}
+//	@Test(expected = AssertionError.class)
+//	public void testAuthorEqualsReally() {
+//		Author auth1 = new Author(1,"Pippo","Baudo");
+//		Author auth2 = new Author(1,"Pippo","Baudo");
+//		auth2.setLastName("Pluto");
+//		auth1.equals(auth2);
+//	}
 	
 	@Test
 	public void testIsAuthor() {

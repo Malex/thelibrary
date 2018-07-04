@@ -2,6 +2,8 @@ package com.benfante.javacourse.thelibrary.core.model;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 public class BookTest {
@@ -92,6 +94,25 @@ public class BookTest {
 		assertEquals(book.hashCode(),book2.hashCode());
 		book2.setId(3);
 		assertNotEquals(book.hashCode(),book2.hashCode());
+	}
+	
+	@Test
+	public void testCategory() {
+		long id = 1;
+		String title = "A title";
+		Author author = new Author(1, "The", "single author");
+		Publisher publisher = new Publisher(1, "A publisher");
+		float price = 1.23f;
+		Book book = new Book(id, title, author, publisher, price);
+		book.addCategory(BookCategory.ARTS_AND_PHOTOGRAPHY);
+		assertTrue(Arrays.equals(book.getCategories(),new BookCategory[] {BookCategory.ARTS_AND_PHOTOGRAPHY}));
+		BookCategory[] cat = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER};
+		book.setCategories(cat);
+		BookCategory[] new_cat = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER};
+		assertTrue(Arrays.equals(book.getCategories(), new_cat));
+		BookCategory[] new_cat_dup = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER, BookCategory.OTHER};
+		book.addCategory(BookCategory.OTHER);
+		assertFalse(Arrays.equals(book.getCategories(),new_cat_dup));
 	}
 	
 }
