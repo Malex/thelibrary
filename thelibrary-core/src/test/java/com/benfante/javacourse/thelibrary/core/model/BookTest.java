@@ -110,6 +110,9 @@ public class BookTest {
 		book.setCategories(cat);
 		BookCategory[] new_cat = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER};
 		assertTrue(Arrays.equals(book.getCategories(), new_cat));
+		BookCategory[] new_cat_dup = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER, BookCategory.OTHER};
+		book.addCategory(BookCategory.OTHER);
+		assertFalse(Arrays.equals(book.getCategories(),new_cat_dup));
 	}
 	
 }

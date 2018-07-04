@@ -10,6 +10,8 @@ public class Library {
 		Book[] book = new Book[] {new Book(1252,"Dieci Piccoli indiani",new Author(1,"JK"," Rowling"),3.14f),new Book(14272,"Due Coccodrilli",new Author(2,"James"," Cameroon"))};
 		Library lib = new Library(book);
 		lib.books[0].addAuthor(new Author(10,"This","Author"));
+		lib.books[0].addCategory(BookCategory.LITERATURE_AND_FICTION);
+		lib.books[0].addCategory(BookCategory.LITERATURE_AND_FICTION);
 		lib.printBooks();
 	}
 

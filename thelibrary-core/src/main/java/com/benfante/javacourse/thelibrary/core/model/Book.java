@@ -173,9 +173,11 @@ public class Book {
 		
 		BookCategory[] newCat = new BookCategory[len+1];
 		
-		for(int i=0; i<len;i++)
+		for(int i=0; i<len;i++) {
+			if(this.getCategories()[i]==category) //avoid duplicates (probably should use a util method)
+				return;
 			newCat[i] = this.getCategories()[i];
-		
+		}
 		newCat[len] = category;
 		
 		this.categories = newCat;

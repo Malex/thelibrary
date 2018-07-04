@@ -1,23 +1,21 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
 public enum BookCategory {
-	OTHER, 
-	ARTS_AND_PHOTOGRAPHY,
-	HISTORY,
-	LITERATURE_AND_FICTION;
+	OTHER("Other"), 
+	ARTS_AND_PHOTOGRAPHY("Arts and Photography"),
+	COMPUTERS_AND_TECHNOLOGY("Computers and Technology"),
+	HISTORY("History"),
+	LITERATURE_AND_FICTION("Literature and Fiction");
+
+	private String nameValue;
 	
+	BookCategory(String s) {
+		this.nameValue = s;
+	}
+
 	@Override
 	public String toString() {
-		switch(this) {
-			case OTHER:
-				return "Other";
-			case ARTS_AND_PHOTOGRAPHY:
-				return "Arts and Photography";
-			case HISTORY:
-				return "History";
-			case LITERATURE_AND_FICTION:
-				return "Literature and Fiction";
-		}
-		return "";//just to suppress error
+		return this.nameValue;
 	}
+	
 }
