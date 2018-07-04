@@ -19,13 +19,13 @@ public class AuthorTest {
 		
 	}
 	
-	@Test(expected = AssertionError.class)
-	public void testAuthorEqualsReally() {
-		Author auth1 = new Author(1,"Pippo","Baudo");
-		Author auth2 = new Author(1,"Pippo","Baudo");
-		auth2.setLastName("Pluto");
-		auth1.equals(auth2);
-	}
+//	@Test(expected = AssertionError.class)
+//	public void testAuthorEqualsReally() {
+//		Author auth1 = new Author(1,"Pippo","Baudo");
+//		Author auth2 = new Author(1,"Pippo","Baudo");
+//		auth2.setLastName("Pluto");
+//		auth1.equals(auth2);
+//	}
 	
 	@Test
 	public void testIsAuthor() {

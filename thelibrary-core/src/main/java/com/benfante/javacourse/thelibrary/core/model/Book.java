@@ -147,6 +147,8 @@ public class Book {
 	
 	@Override
 	public boolean equals(Object o) {
+		if(o==null || !(o instanceof Book))
+			return false;
 		Book book = (Book)o;
 		if(this.getId()==book.getId()) {
 			if(this.getAuthor().length!=book.getAuthor().length)
