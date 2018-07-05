@@ -4,6 +4,11 @@ import com.benfante.javacourse.thelibrary.core.model.*;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -108,4 +113,19 @@ public class LibraryTest {
 		assertTrue(Arrays.equals(ret, b2));
 	}
 
+	@Test
+	public void testLoadBooks() {
+		Library lib = new Library();
+		try(InputStream in = this.getClass().getResourceAsStream("/books.txt")){
+			Library arg = new Library();
+			arg.addBook(new Book(1,"Dieci Piccoli Indiani",new Author(1,"Agatha","Christie"),new Publisher(1,"Mondadori"),new BigDecimal(10.5)));
+			arg.addBook(new Book(2,"The Java Programming Language",new Author[] {new Author(2,"Ken","Arnolds"),new Author(3,"James","Gosling"),new Author(4,"David","Holmes")},new Publisher(2,"Addison-Wesley Professional"),new BigDecimal(10.5)));
+			assertNotNull(in);
+			lib.loadBooks(in,null);
+			assertTrue(Arrays.equals(lib.getBooks(),arg.getBooks()));
+		} catch (IOException e) {
+			System.out.println("File not found");
+		}
+	}
+	
 }

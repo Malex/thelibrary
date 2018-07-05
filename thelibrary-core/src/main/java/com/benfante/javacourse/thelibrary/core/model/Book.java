@@ -1,5 +1,7 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
+import java.math.BigDecimal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,12 +11,12 @@ public class Book {
 	
 	private long Id;
 	private String title;
-	private float price;
+	private BigDecimal price;
 	private Author[] author = new Author[0];
 	private Publisher publisher;
 	private BookCategory[] categories = new BookCategory[0];;
 	
-	public Book(long id, String title, Author author, Publisher publisher, float price ) {
+	public Book(long id, String title, Author author, Publisher publisher, BigDecimal price ) {
 		this(id,title,author,price);
 		this.setPublisher(publisher);
 	}
@@ -25,12 +27,12 @@ public class Book {
 		this.setTitle(title);
 	}
 	
-	public Book(long Id, String title, Author author,float price) {
+	public Book(long Id, String title, Author author,BigDecimal price) {
 		this(Id,title,author);
 		this.setPrice(price);
 	}
 	
-	public Book(long id, String title, Author[] author, Publisher publisher, float price ) {
+	public Book(long id, String title, Author[] author, Publisher publisher, BigDecimal price ) {
 		this(id,title,author,price);
 		this.setPublisher(publisher);
 	}
@@ -41,7 +43,7 @@ public class Book {
 		this.setTitle(title);
 	}
 	
-	public Book(long Id, String title, Author[] author,float price) {
+	public Book(long Id, String title, Author[] author,BigDecimal price) {
 		this(Id,title,author);
 		this.setPrice(price);
 	}
@@ -68,16 +70,21 @@ public class Book {
 	}
 	
 
-	public float getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 	public void setPrice(float price) {
 		if(price>=0)
+			this.price = BigDecimal.valueOf(price);
+		else
+			throw new IllegalArgumentException("Price must be non-negative");
+	}
+	public void setPrice(BigDecimal price) {
+		if(price.compareTo(BigDecimal.valueOf(0))>=0)
 			this.price = price;
 		else
 			throw new IllegalArgumentException("Price must be non-negative");
 	}
-	
 	
 	public Author[] getAuthor() {
 		return this.author;
@@ -152,7 +159,7 @@ public class Book {
 		str.delete(str.length()-2,str.length());
 		if(this.getPublisher()!=null)
 			str.append("\nPublisher: ").append(this.getPublisher().getPrint());
-		if(this.getPrice()!=0)
+		if(this.getPrice().compareTo(BigDecimal.valueOf(0))!=0)
 			str.append("\nPrice: ").append(this.getPrice());
 		str.append("\nCategories: ");
 		if(this.getCategories().length>0) {

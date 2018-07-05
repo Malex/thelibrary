@@ -1,6 +1,9 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
 import static org.junit.Assert.*;
+
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 public class AuthorTest {
@@ -37,8 +40,8 @@ public class AuthorTest {
 		float price = 1.23f;
 		String title = "A title";
 		
-		Book book = new Book(id, title, author, publisher, price);
-		Book book3 = new Book(id, title, auth1, publisher, price);
+		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
+		Book book3 = new Book(id, title, auth1, publisher, BigDecimal.valueOf(price));
 
 		Author auth2 = new Author(2,"Pippo","Baudo");
 		auth2.setLastName("Pluto");
