@@ -1,11 +1,15 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
 import static org.junit.Assert.*;
+
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 public class AuthorTest {
 
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testAuthorEquals() {
 		Object auth1 = new Author(1,"Pippo","Baudo");
@@ -19,13 +23,13 @@ public class AuthorTest {
 		
 	}
 	
-	@Test(expected = AssertionError.class)
-	public void testAuthorEqualsReally() {
-		Author auth1 = new Author(1,"Pippo","Baudo");
-		Author auth2 = new Author(1,"Pippo","Baudo");
-		auth2.setLastName("Pluto");
-		auth1.equals(auth2);
-	}
+//	@Test(expected = AssertionError.class)
+//	public void testAuthorEqualsReally() {
+//		Author auth1 = new Author(1,"Pippo","Baudo");
+//		Author auth2 = new Author(1,"Pippo","Baudo");
+//		auth2.setLastName("Pluto");
+//		auth1.equals(auth2);
+//	}
 	
 	@Test
 	public void testIsAuthor() {
@@ -36,8 +40,8 @@ public class AuthorTest {
 		float price = 1.23f;
 		String title = "A title";
 		
-		Book book = new Book(id, title, author, publisher, price);
-		Book book3 = new Book(id, title, auth1, publisher, price);
+		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
+		Book book3 = new Book(id, title, auth1, publisher, BigDecimal.valueOf(price));
 
 		Author auth2 = new Author(2,"Pippo","Baudo");
 		auth2.setLastName("Pluto");

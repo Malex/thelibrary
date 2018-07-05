@@ -2,6 +2,9 @@ package com.benfante.javacourse.thelibrary.core.model;
 
 import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+
 import org.junit.Test;
 
 public class BookTest {
@@ -13,11 +16,11 @@ public class BookTest {
 		Author author = new Author(1, "The", "single author");
 		Publisher publisher = new Publisher(1, "A publisher");
 		float price = 1.23f;
-		Book book = new Book(id, title, author, publisher, price);
+		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
 		assertEquals(id, book.getId());
 		assertEquals(title, book.getTitle());
 		assertEquals(author, book.getAuthor()[0]);
-		assertEquals(price, book.getPrice(), 0.1);
+		assertEquals(book.getPrice().compareTo(BigDecimal.valueOf(price)), 0);
 	}
 
 	@Test
@@ -27,7 +30,7 @@ public class BookTest {
 		Author author = new Author(1, "The", "single author");
 		Publisher publisher = new Publisher(1, "A publisher");
 		float price = 1.23f;
-		Book book = new Book(id, title, author, publisher, price);
+		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
 		long newId = 2;
 		String newTitle = "Another title";
 		Author newAuthor = new Author(2, "Another", "author");
@@ -42,7 +45,7 @@ public class BookTest {
 		assertEquals(newTitle, book.getTitle());
 		assertEquals(newAuthor, book.getAuthor()[0]);
 		assertEquals(newPublisher, book.getPublisher());
-		assertEquals(newPrice, book.getPrice(), 0.1);
+		assertEquals(book.getPrice().compareTo(BigDecimal.valueOf(newPrice)), 0);
 	}
 
 	@Test
@@ -62,18 +65,18 @@ public class BookTest {
 	
 	
 	@Test 
-	public void noAuthor() {
+	public void testNoAuthor() {
 		Author[] author = new Author[0];
 		long id = 1;
 		Publisher publisher = new Publisher(1, "A publisher");
 		float price = 1.23f;
 		String title = "A title";
 		
-		Book book = new Book(id, title, author, publisher, price);
+		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
 		Author auth2 = new Author(1,"Pippo","Baudo");
 		assertFalse(book.hasAuthor(auth2));
 		//System.out.println(book.getPrint());
-		Book book2 = new Book(id, title, author, publisher, price);
+		Book book2 = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
 		assertEquals(book,book2);
 		
 	}
@@ -86,12 +89,31 @@ public class BookTest {
 		Author author = new Author(1, "The", "single author");
 		Publisher publisher = new Publisher(1, "A publisher");
 		float price = 1.23f;
-		Book book = new Book(id, title, author, publisher, price);
-		Book book2 = new Book(id, title, author, publisher, price);
+		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
+		Book book2 = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
 		assertEquals(book,book2);
 		assertEquals(book.hashCode(),book2.hashCode());
 		book2.setId(3);
 		assertNotEquals(book.hashCode(),book2.hashCode());
+	}
+	
+	@Test
+	public void testCategory() {
+		long id = 1;
+		String title = "A title";
+		Author author = new Author(1, "The", "single author");
+		Publisher publisher = new Publisher(1, "A publisher");
+		float price = 1.23f;
+		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
+		book.addCategory(BookCategory.ARTS_AND_PHOTOGRAPHY);
+		assertTrue(Arrays.equals(book.getCategories(),new BookCategory[] {BookCategory.ARTS_AND_PHOTOGRAPHY}));
+		BookCategory[] cat = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER};
+		book.setCategories(cat);
+		BookCategory[] new_cat = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER};
+		assertTrue(Arrays.equals(book.getCategories(), new_cat));
+		BookCategory[] new_cat_dup = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER, BookCategory.OTHER};
+		book.addCategory(BookCategory.OTHER);
+		assertFalse(Arrays.equals(book.getCategories(),new_cat_dup));
 	}
 	
 }

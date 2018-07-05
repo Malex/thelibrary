@@ -68,7 +68,7 @@ public class Author {
 			return false;
 		Author author = (Author) o;
 		if(this.getId()==author.getId()) {
-			assert this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName());
+			//assert this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName());
 			return true;
 		} else {
 			return false;
@@ -77,7 +77,7 @@ public class Author {
 	
 	@Override
 	public int hashCode() {
-		return Long.valueOf(this.getId()).hashCode()+this.getFirstName().hashCode()+this.getLastName().hashCode();
+		return Long.valueOf(this.getId()).hashCode();//+this.getFirstName().hashCode()+this.getLastName().hashCode();
 	}
 	
 	@Override
