@@ -2,6 +2,7 @@ package com.benfante.javacourse.thelibrary.core.model;
 
 import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class BookTest {
 		assertEquals(id, book.getId());
 		assertEquals(title, book.getTitle());
 		assertEquals(author, book.getAuthor()[0]);
-		assertEquals(price, book.getPrice(), 0.1);
+		assertEquals(book.getPrice().compareTo(BigDecimal.valueOf(price)), 0);
 	}
 
 	@Test
@@ -44,7 +45,7 @@ public class BookTest {
 		assertEquals(newTitle, book.getTitle());
 		assertEquals(newAuthor, book.getAuthor()[0]);
 		assertEquals(newPublisher, book.getPublisher());
-		assertEquals(newPrice, book.getPrice(), 0.1);
+		assertEquals(book.getPrice().compareTo(BigDecimal.valueOf(newPrice)), 0);
 	}
 
 	@Test
@@ -64,7 +65,7 @@ public class BookTest {
 	
 	
 	@Test 
-	public void noAuthor() {
+	public void testNoAuthor() {
 		Author[] author = new Author[0];
 		long id = 1;
 		Publisher publisher = new Publisher(1, "A publisher");
