@@ -3,8 +3,12 @@ package com.benfante.javacourse.thelibrary.core.app;
 import com.benfante.javacourse.thelibrary.core.model.*;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 
 public class Library {
@@ -13,36 +17,56 @@ public class Library {
 
 	public static void main(String[] args) {
 		Library lib = new Library();
+		lib.runApp(System.in);
+		
+	}
+
+	
+	public void loadBooks(InputStream inp,OutputStream Out) {
+		if(Out==null) {
+			Out = new OutputStream() { @Override public void write(int b) { } };
+		}
 		long id;
 		long id_p;
 		long id_a;
 		String titolo;
-		try(BufferedReader in = new BufferedReader(new InputStreamReader(System.in));) {
-			System.out.println("Inserisci il libro: ");
-			System.out.println("\tInserisci l'ID del libro: ");
+		try(BufferedReader in = new BufferedReader(new InputStreamReader(inp));
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(Out));) {
+			out.write("Inserisci il libro: ");
+			out.newLine();
+			out.write("\tInserisci l'ID del libro: ");
+			out.newLine();
 			
 			while((id = Long.valueOf(in.readLine()).longValue())!=-1){
-				System.out.println("\tInserisci titolo: ");
+				out.write("\tInserisci titolo: ");
+				out.newLine();
 				titolo = in.readLine();
-				System.out.println("\tInserisci prezzo");
+				out.write("\tInserisci prezzo");
+				out.newLine();
 				//readline below
 				Book b = new Book(id,titolo,new Author[0],new BigDecimal(in.readLine()));
 		
 				String input_a;
 				String input_c;
-				System.out.println("\tInserisci ID dell'Autore: ");
+				out.write("\tInserisci ID dell'Autore: ");
+				out.newLine();
 				while((id_a = Long.valueOf(in.readLine()).longValue())!=-1) {
-					System.out.println("\tInserisci Nome Autore: ");
+					out.write("\tInserisci Nome Autore: ");
+					out.newLine();
 					input_a = in.readLine();
-					System.out.println("\tInserisci Cognome Autore: ");
+					out.write("\tInserisci Cognome Autore: ");
+					out.newLine();
 					input_c = in.readLine();
 					b.addAuthor(new Author(id_a,input_a,input_c));
-					System.out.println("\tInserisci ID dell'Autore: ");
+					out.write("\tInserisci ID dell'Autore: ");
+					out.newLine();
 				}
 
-				System.out.println("\tInserisci ID dell'editore: ");
+				out.write("\tInserisci ID dell'editore: ");
+				out.newLine();
 				id_p = Long.valueOf(in.readLine()).longValue();
-				System.out.println("\tInserisci nome editore: ");
+				out.write("\tInserisci nome editore: ");
+				out.newLine();
 				b.setPublisher(new Publisher(id_p, in.readLine()));
 				
 				String cat = null;
@@ -51,32 +75,45 @@ public class Library {
 						try {
 							b.addCategory(BookCategory.getCategory(Integer.valueOf(cat).intValue()-1));
 						} catch(IllegalArgumentException e) {
-							System.out.println("Tale categoria non rientra in quelle previste. Riprova.");
+							out.write("Tale categoria non rientra in quelle previste. Riprova.");
+							out.newLine();
 							cat = null;
 							continue;
 						}
 					}
-					System.out.println("\tCategorie disponibili: ");
+					out.write("\tCategorie disponibili: ");
+					out.newLine();
 					int count = 1;
-					for(BookCategory g : BookCategory.values())
-						System.out.println((count++)+". "+g.toString());
+					for(BookCategory g : BookCategory.values()) {
+						out.write((count++)+". "+g.toString());
+						out.newLine();
+					}
+					out.write("\tX Fine inserimento categorie");
+					out.newLine();
 					
-					System.out.println("\tInserisci una categoria: ");
+					out.write("\tInserisci una categoria: ");
+					out.newLine();
 					cat = in.readLine();
 				} while(! "X".equals(cat));
 				
-				lib.addBook(b);
+				this.addBook(b);
 				
-				System.out.println("Inserisci il libro: ");
-				System.out.println("\tInserisci l'ID del libro: ");
-
+				out.write("Inserisci il libro: ");
+				out.newLine();
+				out.write("\tInserisci l'ID del libro: ");
+				out.newLine();
 			}
 		} catch(IOException e) {
 			System.out.println("An Error has occured while reading input");
 		}
-		lib.printBooks();
 	}
-
+	
+	
+	public void runApp(InputStream inp) {
+		this.loadBooks(inp, null);
+		this.printBooks();
+	}
+	
 	public Library() {
 		super();
 	}
