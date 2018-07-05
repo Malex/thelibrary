@@ -13,6 +13,16 @@ public enum BookCategory {
 		this.nameValue = s;
 	}
 
+	
+	public static BookCategory getCategory(int i) throws IllegalArgumentException {
+		BookCategory[] categories = BookCategory.values();
+		for(int j = 0;j < categories.length ; j++) {
+			if(j==i) 
+				return categories[j];
+		}
+		throw new IllegalArgumentException();
+	}
+	
 	@Override
 	public String toString() {
 		return this.nameValue;
