@@ -18,11 +18,19 @@ public class Library {
 	public static void main(String[] args) {
 		Library lib = new Library();
 		lib.runApp(System.in);
+		lib.printBooks();
 		
 	}
 
 	
-	public void loadBooks(InputStream inp,OutputStream Out) {
+	public static void printLine(BufferedWriter out,String s) throws IOException {
+		out.write(s);
+		out.newLine();
+		out.flush();
+	}
+	
+	
+	public void loadBooks(InputStream inp,OutputStream Out) throws IOException {
 		if(Out==null) {
 			Out = new OutputStream() { @Override public void write(int b) { } };
 		}
@@ -30,87 +38,73 @@ public class Library {
 		long id_p;
 		long id_a;
 		String titolo;
-		try(BufferedReader in = new BufferedReader(new InputStreamReader(inp));
-			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(Out));) {
-			out.write("Inserisci il libro: ");
-			out.newLine();
-			out.write("\tInserisci l'ID del libro: ");
-			out.newLine();
+		BufferedReader in = new BufferedReader(new InputStreamReader(inp));
+		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(Out));
+		printLine(out,"Inserisci il libro: ");
+		printLine(out,"\tInserisci l'ID del libro: ");
 			
-			while((id = Long.parseLong(in.readLine()))!=-1){
-				out.write("\tInserisci titolo: ");
-				out.newLine();
-				titolo = in.readLine();
-				out.write("\tInserisci prezzo");
-				out.newLine();
-				//readline below
-				Book b = new Book(id,titolo,new Author[0],new BigDecimal(in.readLine()));
-		
-				String input_a;
-				String input_c;
-				out.write("\tInserisci ID dell'Autore: ");
-				out.newLine();
-				while((id_a = Long.parseLong(in.readLine()))!=-1) {
-					out.write("\tInserisci Nome Autore: ");
-					out.newLine();
-					input_a = in.readLine();
-					out.write("\tInserisci Cognome Autore: ");
-					out.newLine();
-					input_c = in.readLine();
-					b.addAuthor(new Author(id_a,input_a,input_c));
-					out.write("\tInserisci ID dell'Autore: ");
-					out.newLine();
-				}
-
-				out.write("\tInserisci ID dell'editore: ");
-				out.newLine();
-				id_p = Long.parseLong(in.readLine());
-				out.write("\tInserisci nome editore: ");
-				out.newLine();
-				b.setPublisher(new Publisher(id_p, in.readLine()));
-				
-				String cat = null;
-				do {
-					if(cat!=null) {
-						try {
-							b.addCategory(BookCategory.getCategory(Integer.valueOf(cat).intValue()-1));
-						} catch(IllegalArgumentException e) {
-							out.write("Tale categoria non rientra in quelle previste. Riprova.");
-							out.newLine();
-							cat = null;
-							continue;
-						}
-					}
-					out.write("\tCategorie disponibili: ");
-					out.newLine();
-					int count = 1;
-					for(BookCategory g : BookCategory.values()) {
-						out.write((count++)+". "+g.toString());
-						out.newLine();
-					}
-					out.write("\tX Fine inserimento categorie");
-					out.newLine();
-					
-					out.write("\tInserisci una categoria: ");
-					out.newLine();
-					cat = in.readLine();
-				} while(! "X".equals(cat));
-				
-				this.addBook(b);
-				
-				out.write("Inserisci il libro: ");
-				out.newLine();
-				out.write("\tInserisci l'ID del libro: ");
-				out.newLine();
+		while((id = Long.parseLong(in.readLine()))!=-1){
+			printLine(out,"\tInserisci titolo: ");
+			titolo = in.readLine();
+			printLine(out,"\tInserisci prezzo");
+			//readline below
+			Book b = new Book(id,titolo,new Author[0],new BigDecimal(in.readLine()));
+	
+			String input_a;
+			String input_c;
+			printLine(out,"\tInserisci ID dell'Autore: ");
+			while((id_a = Long.parseLong(in.readLine()))!=-1) {
+				printLine(out,"\tInserisci Nome Autore: ");
+				input_a = in.readLine();
+				printLine(out,"\tInserisci Cognome Autore: ");
+				input_c = in.readLine();
+				b.addAuthor(new Author(id_a,input_a,input_c));
+				printLine(out,"\tInserisci ID dell'Autore: ");
 			}
-		} catch(IOException e) {
-			System.out.println("An Error has occured while reading input");
+
+			printLine(out,"\tInserisci ID dell'editore: ");
+			id_p = Long.parseLong(in.readLine());
+			printLine(out,"\tInserisci nome editore: ");
+			b.setPublisher(new Publisher(id_p, in.readLine()));
+			
+			String cat = null;
+			do {
+				if(cat!=null) {
+					try {
+						b.addCategory(BookCategory.getCategory(Integer.valueOf(cat).intValue()-1));
+					} catch(IllegalArgumentException e) {
+						printLine(out,"Tale categoria non rientra in quelle previste. Riprova.");
+						out.newLine();
+						cat = null;
+						continue;
+					}
+				}
+				printLine(out,"\tCategorie disponibili: ");
+				int count = 1;
+				for(BookCategory g : BookCategory.values()) {
+					printLine(out,(count++)+". "+g.toString());
+				}
+				printLine(out,"X Fine inserimento categorie");
+				
+				printLine(out,"\tInserisci una categoria: ");
+				cat = in.readLine();
+			} while(! "X".equals(cat));
+			
+			this.addBook(b);
+			
+			printLine(out,"Inserisci il libro: ");
+			printLine(out,"\tInserisci l'ID del libro: ");
 		}
+
 	}
 	
 	
 	public void runApp(InputStream inp) {
-		this.loadBooks(inp, null);
+		try {
+			this.loadBooks(inp, System.out);
+		} catch (IOException e) {
+			System.out.println("An error has occured");
+		}
 		this.printBooks();
 	}
 	
