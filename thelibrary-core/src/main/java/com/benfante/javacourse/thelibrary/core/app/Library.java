@@ -37,7 +37,7 @@ public class Library {
 			out.write("\tInserisci l'ID del libro: ");
 			out.newLine();
 			
-			while((id = Long.valueOf(in.readLine()).longValue())!=-1){
+			while((id = Long.parseLong(in.readLine()))!=-1){
 				out.write("\tInserisci titolo: ");
 				out.newLine();
 				titolo = in.readLine();
@@ -50,7 +50,7 @@ public class Library {
 				String input_c;
 				out.write("\tInserisci ID dell'Autore: ");
 				out.newLine();
-				while((id_a = Long.valueOf(in.readLine()).longValue())!=-1) {
+				while((id_a = Long.parseLong(in.readLine()))!=-1) {
 					out.write("\tInserisci Nome Autore: ");
 					out.newLine();
 					input_a = in.readLine();
@@ -64,7 +64,7 @@ public class Library {
 
 				out.write("\tInserisci ID dell'editore: ");
 				out.newLine();
-				id_p = Long.valueOf(in.readLine()).longValue();
+				id_p = Long.parseLong(in.readLine());
 				out.write("\tInserisci nome editore: ");
 				out.newLine();
 				b.setPublisher(new Publisher(id_p, in.readLine()));
