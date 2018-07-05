@@ -16,7 +16,7 @@ public class Book {
 	private Publisher publisher;
 	private BookCategory[] categories = new BookCategory[0];;
 	
-	public Book(long id, String title, Author author, Publisher publisher, float price ) {
+	public Book(long id, String title, Author author, Publisher publisher, BigDecimal price ) {
 		this(id,title,author,price);
 		this.setPublisher(publisher);
 	}
@@ -27,12 +27,12 @@ public class Book {
 		this.setTitle(title);
 	}
 	
-	public Book(long Id, String title, Author author,float price) {
+	public Book(long Id, String title, Author author,BigDecimal price) {
 		this(Id,title,author);
 		this.setPrice(price);
 	}
 	
-	public Book(long id, String title, Author[] author, Publisher publisher, float price ) {
+	public Book(long id, String title, Author[] author, Publisher publisher, BigDecimal price ) {
 		this(id,title,author,price);
 		this.setPublisher(publisher);
 	}
@@ -43,7 +43,7 @@ public class Book {
 		this.setTitle(title);
 	}
 	
-	public Book(long Id, String title, Author[] author,float price) {
+	public Book(long Id, String title, Author[] author,BigDecimal price) {
 		this(Id,title,author);
 		this.setPrice(price);
 	}

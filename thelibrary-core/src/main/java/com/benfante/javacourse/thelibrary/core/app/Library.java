@@ -2,16 +2,51 @@ package com.benfante.javacourse.thelibrary.core.app;
 
 import com.benfante.javacourse.thelibrary.core.model.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+
 public class Library {
 	
 	private Book[] books = new Book[0];
 
 	public static void main(String[] args) {
-		Book[] book = new Book[] {new Book(1252,"Dieci Piccoli indiani",new Author(1,"JK"," Rowling"),3.14f),new Book(14272,"Due Coccodrilli",new Author(2,"James"," Cameroon"))};
-		Library lib = new Library(book);
-		lib.books[0].addAuthor(new Author(10,"This","Author"));
-		lib.books[0].addCategory(BookCategory.LITERATURE_AND_FICTION);
-		lib.books[0].addCategory(BookCategory.COMPUTERS_AND_TECHNOLOGY);
+		Library lib = new Library();
+		long id = 1;
+		long id_p = 1;
+		long id_a = 1;
+		String titolo;
+		try(BufferedReader in = new BufferedReader(new InputStreamReader(System.in));) {
+			do{
+				System.out.println("Inserisci il libro: ");
+				System.out.println("\tInserisci titolo: ");
+				titolo = in.readLine();
+				if(titolo.equals("FINE"))
+					break;
+				System.out.println("\tInserisci prezzo");
+			
+				Book b = new Book(id++,titolo,new Author[0],new BigDecimal(in.readLine()));
+		
+				String input_a;
+				String input_c;
+				do {
+					System.out.println("Inserisci Nome Autore: ");
+					input_a = in.readLine();
+					if(input_a.equals("FINE"))
+						break;
+					System.out.println("Inserisci Cognome Autore: ");
+					input_c = in.readLine();
+					b.addAuthor(new Author(id_a++,input_a,input_c));
+				} while(! input_a.equals("FINE"));
+
+				System.out.println("Inserisci nome editore: ");
+				b.setPublisher(new Publisher(id_p++, in.readLine()));
+				lib.addBook(b);
+			} while (! titolo.equals("FINE"));
+		} catch(IOException e) {
+			System.out.println("An Error has occured while reading input");
+		}
 		lib.printBooks();
 	}
 
