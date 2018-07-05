@@ -128,4 +128,25 @@ public class LibraryTest {
 		}
 	}
 	
+	@Test
+	public void testSaveData() {
+		Library lib = new Library();
+		try(InputStream in = this.getClass().getResourceAsStream("/books.txt");){
+			File f = new File(this.getClass().getResource("/books.dat").getFile());
+			if(!f.exists())
+				f.createNewFile();
+			Library arg = new Library();
+			arg.addBook(new Book(1,"Dieci Piccoli Indiani",new Author(1,"Agatha","Christie"),new Publisher(1,"Mondadori"),new BigDecimal(10.5)));
+			arg.addBook(new Book(2,"The Java Programming Language",new Author[] {new Author(2,"Ken","Arnolds"),new Author(3,"James","Gosling"),new Author(4,"David","Holmes")},new Publisher(2,"Addison-Wesley Professional"),new BigDecimal(10.5)));
+			assertNotNull(in);
+			lib.loadBooks(in,null);
+			lib.saveArchive();
+			Library lib2 = Library.loadArchive();
+			assertTrue(Arrays.equals(lib.getBooks(), lib2.getBooks()));
+		} catch(IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+			fail("It didnt work");
+		}
+	}
+	
 }

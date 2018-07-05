@@ -1,6 +1,13 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
-public class Author {
+import java.io.Serializable;
+
+public class Author implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private long id;
 	private String firstName;
@@ -60,6 +67,8 @@ public class Author {
 
 	@Override
 	public boolean equals(Object o) {
+		if(o==this)
+			return true;
 		if(o==null)
 			return false;
 		if(!(o instanceof Author))

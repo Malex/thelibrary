@@ -2,11 +2,17 @@ package com.benfante.javacourse.thelibrary.core.app;
 
 import com.benfante.javacourse.thelibrary.core.model.*;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
@@ -215,5 +221,27 @@ public class Library {
 			System.out.println(g.getPrint()+"\n");
 		}
 	}
+
+	
+	public void saveArchive() {
+		try(ObjectOutputStream oj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(this.getClass().getResource("/books.dat").getFile()))));) {
+			oj.writeObject(this.getBooks());
+		} catch(IOException e) {
+			System.out.println("Couldnt create output .dat archive");
+			e.printStackTrace();
+		}
+	}
+	
+	public static Library loadArchive() throws ClassNotFoundException {
+		try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(Library.class.getResourceAsStream("/books.dat"))); ) {
+			Library ret = new Library();
+			ret.addBooks((Book[]) in.readObject());
+			return ret;
+		} catch(IOException e) {
+			System.out.println("Couldnt find archive to load");
+		}
+		throw new RuntimeException("No return to make");
+	}
+	
 	
 }

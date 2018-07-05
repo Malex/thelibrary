@@ -1,6 +1,8 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
-public enum BookCategory {
+import java.io.Serializable;
+
+public enum BookCategory implements Serializable {
 	OTHER("Other"), 
 	ARTS_AND_PHOTOGRAPHY("Arts and Photography"),
 	COMPUTERS_AND_TECHNOLOGY("Computers and Technology"),
