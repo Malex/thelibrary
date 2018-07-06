@@ -19,7 +19,7 @@ public class Library {
 	}
 
 	
-	public static void printLine(BufferedWriter out,String s) throws IOException {
+	private static void printLine(BufferedWriter out,String s) throws IOException {
 		out.write(s);
 		out.newLine();
 		out.flush();
