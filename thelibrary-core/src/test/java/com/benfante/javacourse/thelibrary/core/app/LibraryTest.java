@@ -4,11 +4,9 @@ import com.benfante.javacourse.thelibrary.core.model.*;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -123,8 +121,9 @@ public class LibraryTest {
 			assertNotNull(in);
 			lib.loadBooks(in,null);
 			assertTrue(Arrays.equals(lib.getBooks(),arg.getBooks()));
-		} catch (IOException e) {
+		} catch (IOException | RuntimeException e) {
 			System.out.println("File not found");
+			fail("prova");
 		}
 	}
 	
@@ -147,6 +146,7 @@ public class LibraryTest {
 			e.printStackTrace();
 			fail("It didnt work");
 		}
+		
 	}
-	
+
 }
