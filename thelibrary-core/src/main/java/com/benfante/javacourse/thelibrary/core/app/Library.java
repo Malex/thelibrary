@@ -5,11 +5,14 @@ import com.benfante.javacourse.thelibrary.core.model.*;
 import java.io.*;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Library {
 	
-	private Book[] books = new Book[0];
+	private Collection<Book> books = new LinkedList<>();
 
 	public static void main(String[] args) {
 		Library lib = new Library();
@@ -130,88 +133,81 @@ public class Library {
 //			new_books[i]=this.books[i];
 //		new_books[this.books.length] = book;
 //		this.books = new_books;
-		this.books = (Book[]) Arrays.copyOf(this.books, this.books.length+1);
-		this.books[this.books.length-1] = book;
+		this.books.add(book);
 	}
 	
 	public void addBooks(Book[] books) {
 		for (Book g : books)
 			this.addBook(g); 
 	}
+	public void addBooks(Collection<Book> books) {
+		for (Book g : books)
+			this.addBook(g); 
+	}
 	
 	public void removeBook(Book book) {
-		int hash = book.hashCode();
-		boolean found = false;
-		for (int i=0; i < this.books.length; i++) {
-			if(this.books[i].hashCode() == hash && this.books[i].equals(book)) {
-				this.books[i] = null;
-				if(!found) found=true;
-			}
-		}
-		if(found)
-			this.trimBooks();
+//		int hash = book.hashCode();
+//		boolean found = false;
+//		for (int i=0; i < this.books.length; i++) {
+//			if(this.books[i].hashCode() == hash && this.books[i].equals(book)) {
+//				this.books[i] = null;
+//				if(!found) found=true;
+//			}
+//		}
+//		if(found)
+//			this.trimBooks();
+		this.books.remove(book);
 	}
 	
 	public void removeBooks(Book[] books) {
-		for (Book g : books) 
-			this.removeBook(g);
+		for(Book b : books)
+			this.removeBook(b);
+	}
+	public void removeBooks(Collection<Book> books) {
+		for(Iterator<Book> b=books.iterator();b.hasNext();) {
+			this.removeBook(b.next());
+		}
 	}
 	
 	/*Method to resize array after removing elements*/
-	void trimBooks() {
-		int count = 0,shift=0;
-		for (int i=0; i < this.books.length; i++) {
-			if(this.books[i]==null) { //Finding how many elements were removed, saving in count
-				count++;
-			}
-		}
-		Book[] new_book = new Book[this.books.length-count];
-		
-		for (int i=0; i < this.books.length-count;i++) { // Filling new array
-			while(this.books[i+shift]==null) { //Counting number of blanks from location in cycle
-				shift++;
-			}
-			new_book[i]=this.books[i+shift];
-		}
-		
-		this.books = new_book;
-	}
+//	void trimBooks() {
+//		int count = 0,shift=0;
+//		for (int i=0; i < this.books.length; i++) {
+//			if(this.books[i]==null) { //Finding how many elements were removed, saving in count
+//				count++;
+//			}
+//		}
+//		Book[] new_book = new Book[this.books.length-count];
+//		
+//		for (int i=0; i < this.books.length-count;i++) { // Filling new array
+//			while(this.books[i+shift]==null) { //Counting number of blanks from location in cycle
+//				shift++;
+//			}
+//			new_book[i]=this.books[i+shift];
+//		}
+//		
+//		this.books = new_book;
+//	}
 	
 	
-	public Book[] searchBooksByTitle(String title) {
-		Book[] tmp = new Book[this.books.length];
-		int i = 0;
-		for(Book g : this.books) {
-			if (g.getTitle().equals(title)) {
-				tmp[i] = g;
-				i++;
-			}
-		}
-		Book[] ret = new Book[i];
-		for(int j=0;j<i;j++) {
-			ret[j]=tmp[j];
-		}
+	public Collection<Book> searchBooksByTitle(String title) {
+		List<Book> ret = new LinkedList<>();
+		for(Book g : this.getBooks())
+			if (g.getTitle().equals(title)) 
+				ret.add(g);
 		return ret;
 	}
 	
-	public Book[] searchBooksByAuthor(Author author) {
-		Book[] tmp = new Book[this.books.length];
-		int i = 0;
-		for(Book g : this.books) {
-			if (g.hasAuthor(author)) {
-				tmp[i] = g;
-				i++;
-			}
-		}
-		Book[] ret = new Book[i];
-		for(int j=0;j<i;j++) {
-			ret[j]=tmp[j];
-		}
+	public Collection<Book> searchBooksByAuthor(Author author) {
+		List<Book> ret = new LinkedList<>();
+		for(Book g : this.getBooks())
+			if (g.hasAuthor(author)) 
+				ret.add(g);
 		return ret;
 	}
 	
 
-	Book[] getBooks() {
+	Collection<Book> getBooks() {
 		return this.books;
 	}
 
@@ -233,10 +229,12 @@ public class Library {
 		}
 	}
 	
+
+	@SuppressWarnings("unchecked")
 	public static Library loadArchive() throws ClassNotFoundException {
 		try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(Library.class.getResourceAsStream("/books.dat"))); ) {
 			Library ret = new Library();
-			ret.addBooks((Book[]) in.readObject());
+			ret.addBooks((List<Book>) in.readObject());
 			return ret;
 		} catch(IOException e) {
 			System.out.println("Couldnt find archive to load");

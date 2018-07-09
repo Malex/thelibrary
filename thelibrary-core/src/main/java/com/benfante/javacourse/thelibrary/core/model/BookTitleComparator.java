@@ -3,7 +3,10 @@ package com.benfante.javacourse.thelibrary.core.model;
 import java.util.Comparator;
 
 public class BookTitleComparator implements Comparator<Book> {
-
+	
+	private static final BookTitleComparator comparator = new BookTitleComparator();
+	
+	
 	@Override
 	public int compare(Book arg0, Book arg1) {
 		if(arg0==null || arg1==null) 
@@ -13,4 +16,11 @@ public class BookTitleComparator implements Comparator<Book> {
 		}
 	}
 
+	private BookTitleComparator() {
+	}
+
+	public static BookTitleComparator getInstance() {
+		return comparator;
+	}
+	
 }
