@@ -1,6 +1,12 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
-public class FullName {
+import java.io.Serializable;
+
+public class FullName implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String firstName;
 	String lastName;
 	
