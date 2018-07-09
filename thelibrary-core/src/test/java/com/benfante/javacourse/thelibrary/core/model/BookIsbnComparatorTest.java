@@ -16,7 +16,7 @@ public class BookIsbnComparatorTest {
 		book2.setIsbn("12345");
 		book3.setIsbn("02159");
 		book4.setIsbn("552369");
-		BookIsbnComparator com = new BookIsbnComparator();
+		BookIsbnComparator com = BookIsbnComparator.getInstance();
 		assertTrue(com.compare(book1, book2)==0);
 		assertTrue(com.compare(book1, book4)<0);
 		assertTrue(com.compare(book1, book3)>0);

@@ -4,6 +4,16 @@ import java.util.Comparator;
 
 public class BookIsbnComparator implements Comparator<Book> {
 
+	private static final BookIsbnComparator com = new BookIsbnComparator();
+	
+	
+	public static BookIsbnComparator getInstance() {
+		return com;
+	}
+	
+	private BookIsbnComparator() {
+	}
+
 	@Override
 	public int compare(Book o1, Book o2) {
 		if(o1==null || o2==null) 
