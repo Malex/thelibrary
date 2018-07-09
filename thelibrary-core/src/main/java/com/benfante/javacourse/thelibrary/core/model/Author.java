@@ -10,14 +10,12 @@ public class Author implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private long id;
-	private String firstName;
-	private String lastName;
+	private FullName name;
 	
 	
 	public Author(long id, String firstName, String lastName) {
 		this.setId(id);
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
+		this.name = new FullName(firstName,lastName);
 	}
 	
 	
@@ -33,22 +31,22 @@ public class Author implements Serializable {
 	
 	
 	public String getFirstName() {
-		return this.firstName;
+		return this.name.getFirstName();
 	}
 	public void setFirstName(String firstName) {
 		if(firstName!=null)
-			this.firstName = firstName;
+			this.name.setFirstName(firstName);
 		else
 			throw new IllegalArgumentException();
 	}
 	
 	
 	public String getLastName() {
-		return this.lastName;
+		return this.name.getLastName();
 	}
 	public void setLastName(String lastName) {
 		if(lastName!=null)
-			this.lastName = lastName;
+			this.name.setLastName(lastName);
 		else
 			throw new IllegalArgumentException();
 	}
@@ -89,7 +87,7 @@ public class Author implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Author [id=" + id + ", First Name =" + firstName + ", Last Name =" + lastName + "]";
+		return "Author [id=" + this.getId() + ", name= "+this.name.toString()+" ]";
 	}
 	
 	public String getPrint() {

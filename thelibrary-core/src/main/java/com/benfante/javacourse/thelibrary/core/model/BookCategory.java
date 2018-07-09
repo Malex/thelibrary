@@ -11,7 +11,7 @@ public enum BookCategory implements Serializable {
 
 	private String nameValue;
 	
-	BookCategory(String s) {
+	private BookCategory(String s) {
 		this.nameValue = s;
 	}
 

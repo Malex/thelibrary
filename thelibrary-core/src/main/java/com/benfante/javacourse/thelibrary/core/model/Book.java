@@ -2,11 +2,15 @@ package com.benfante.javacourse.thelibrary.core.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Book implements Serializable {
+public class Book implements Serializable,Comparable<Book> {
 	
 	
 	/**
@@ -17,11 +21,12 @@ public class Book implements Serializable {
 	private static final Logger log = LoggerFactory.getLogger(Book.class);
 	
 	private long Id;
+	private String isbn;
 	private String title;
 	private BigDecimal price;
-	private Author[] author = new Author[0];
+	private List<Author> author = new LinkedList<>();
 	private Publisher publisher;
-	private BookCategory[] categories = new BookCategory[0];;
+	private SortedSet<BookCategory> categories = new TreeSet<>();
 	
 	public Book(long id, String title, Author author, Publisher publisher, BigDecimal price ) {
 		this(id,title,author,price);
@@ -55,6 +60,22 @@ public class Book implements Serializable {
 		this.setPrice(price);
 	}
 	
+	public Book(long id, String title, List<Author> author, Publisher publisher, BigDecimal price ) {
+		this(id,title,author,price);
+		this.setPublisher(publisher);
+	}
+
+	public Book(long Id, String title, List<Author> author) {
+		this.setId(Id);
+		this.setAuthor(author);
+		this.setTitle(title);
+	}
+	
+	public Book(long Id, String title, List<Author> author,BigDecimal price) {
+		this(Id,title,author);
+		this.setPrice(price);
+	}
+	
 	public long getId() {
 		return this.Id;
 	}
@@ -66,6 +87,16 @@ public class Book implements Serializable {
 	}
 	
 	
+	public String getIsbn() {
+		return this.isbn;
+	}
+
+	public void setIsbn(String isbn) throws IllegalArgumentException {
+		if(isbn==null || isbn.length()==0)
+			throw new IllegalArgumentException();
+		this.isbn = isbn;
+	}
+
 	public String getTitle() {
 		return this.title;
 	}
@@ -93,13 +124,13 @@ public class Book implements Serializable {
 			throw new IllegalArgumentException("Price must be non-negative");
 	}
 	
-	public Author[] getAuthor() {
+	public List<Author> getAuthor() {
 		return this.author;
 	}
 	void setAuthor(Author[] author) {
 		if(author==null) 
 			throw new IllegalArgumentException();
-		this.author = new Author[0];
+		this.author.clear();
 		for(Author g : author) {
 			if(g.getId()<=0)
 				throw new IllegalArgumentException();
@@ -110,8 +141,14 @@ public class Book implements Serializable {
 	void setAuthor(Author author) {
 		if(author==null)
 			throw new IllegalArgumentException();
-		this.author = new Author[0];
+		this.author.clear();
 		this.addAuthor(author);
+	}
+	void setAuthor(List<Author> author) {
+		if(author==null)
+			throw new IllegalArgumentException();
+		this.author.clear();
+		this.author.addAll(author);
 	}
 	
 	public Publisher getPublisher() {
@@ -125,33 +162,17 @@ public class Book implements Serializable {
 	}
 
 	
-	public void addAuthor(Author author) {
+	public void addAuthor(Author author) throws RuntimeException {
 		log.debug("Adding author: id={}, Name: {} {}",author.getId(),author.getFirstName(),author.getLastName());
-		int len;
 		if(author==null || author.getId()<=0)
 			throw new IllegalArgumentException();
-		
-		len = this.getAuthor().length;
-		
-		Author[] newAuthors = new Author[len+1];
-		
-		for(int i=0; i<len;i++)
-			newAuthors[i] = this.getAuthor()[i];
-		
-		newAuthors[len] = author;
-		
-		this.author = newAuthors;
+		if(!this.author.add(author))  //adding happens here
+			throw new RuntimeException("Could not add author");
 	}
 	
 	
 	public boolean hasAuthor(Author author) {
-		if(!(author==null))
-			for(Author g : this.getAuthor()) {
-				if(g.hashCode()==author.hashCode())
-					if(g.equals(author))
-						return true;
-			}
-		return false;
+		return this.getAuthor().contains(author);
 	}
 	
 	public String getPrint() {
@@ -160,7 +181,7 @@ public class Book implements Serializable {
 		for (Author g : this.getAuthor()) {
 			str.append(g.getPrint()).append("; ");
 		}
-		if(this.getAuthor().length==0)
+		if(this.getAuthor().isEmpty())
 			str.append("No authors for this book.; "); //Last 2 chars get deleted on next instruction
 		
 		str.delete(str.length()-2,str.length());
@@ -169,7 +190,7 @@ public class Book implements Serializable {
 		if(this.getPrice().compareTo(BigDecimal.valueOf(0))!=0)
 			str.append("\nPrice: ").append(this.getPrice());
 		str.append("\nCategories: ");
-		if(this.getCategories().length>0) {
+		if(this.getCategories().size()>0) {
 				for(BookCategory cat : this.getCategories()) 
 					str.append(cat.toString()).append(", ");
 				
@@ -183,36 +204,48 @@ public class Book implements Serializable {
 	}
 
 
-	public BookCategory[] getCategories() {
+	public SortedSet<BookCategory> getCategories() {
 		return this.categories;
 	}
 	void setCategories(BookCategory[] categories) {
 		if(categories==null)
 			throw new IllegalArgumentException();
-		this.categories = new BookCategory[0];
+		this.categories.clear();;
+		this.addCategories(categories);
+	}
+	void setCategories(SortedSet<BookCategory> categories) {
+		if(categories==null)
+			throw new IllegalArgumentException();
+		this.categories.clear();;
 		this.addCategories(categories);
 	}
 	
 	public void addCategory(BookCategory category) {
-		int len;
+		//int len;
 		if(category==null)
 			throw new IllegalArgumentException();
-		
-		len = this.getCategories().length;
-		
-		BookCategory[] newCat = new BookCategory[len+1];
-		
-		for(int i=0; i<len;i++) {
-			if(this.getCategories()[i]==category) //avoid duplicates (probably should use a util method)
-				return;
-			newCat[i] = this.getCategories()[i];
-		}
-		newCat[len] = category;
-		
-		this.categories = newCat;
+		this.categories.add(category);
+//		len = this.getCategories().length;
+//		
+//		BookCategory[] newCat = new BookCategory[len+1];
+//		
+//		for(int i=0; i<len;i++) {
+//			if(this.getCategories()[i]==category) //avoid duplicates (probably should use a util method)
+//				return;
+//			newCat[i] = this.getCategories()[i];
+//		}
+//		newCat[len] = category;
+//		
+//		this.categories = newCat;
 	}
 	
 	public void addCategories(BookCategory[] categories) {
+		if(categories==null)
+			throw new IllegalArgumentException();
+		for(BookCategory cat : categories)
+			this.addCategory(cat);
+	}
+	public void addCategories(SortedSet<BookCategory> categories) {
 		if(categories==null)
 			throw new IllegalArgumentException();
 		for(BookCategory cat : categories)
@@ -247,6 +280,21 @@ public class Book implements Serializable {
 //		for(Author g : this.getAuthor())
 //			tmpHash += g.hashCode();
 		return Long.valueOf(this.getId()).hashCode();//+Float.valueOf(this.getPrice()).hashCode()+this.getTitle().hashCode()+((this.getPublisher()!=null)?this.getPublisher().hashCode():0)+tmpHash;
+	}
+
+	
+	private int calcComp(Book o) {
+		return (this.getId()<o.getId())?-1:1;
+	}
+	@Override
+	public int compareTo(Book o) {
+		if(this.hashCode()!=o.hashCode())
+			return this.calcComp(o);
+		else
+			if(this.equals(o))
+				return 0;
+			else
+				return this.calcComp(o);
 	}
 	
 }
