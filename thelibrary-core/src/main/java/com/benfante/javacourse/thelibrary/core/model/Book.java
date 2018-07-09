@@ -8,7 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Book implements Serializable {
+public class Book implements Serializable,Comparable<Book> {
 	
 	
 	/**
@@ -19,6 +19,7 @@ public class Book implements Serializable {
 	private static final Logger log = LoggerFactory.getLogger(Book.class);
 	
 	private long Id;
+	private String isbn;
 	private String title;
 	private BigDecimal price;
 	private List<Author> author = new LinkedList<>();
@@ -84,6 +85,16 @@ public class Book implements Serializable {
 	}
 	
 	
+	public String getIsbn() {
+		return this.isbn;
+	}
+
+	public void setIsbn(String isbn) throws IllegalArgumentException {
+		if(isbn==null || isbn.length()==0)
+			throw new IllegalArgumentException();
+		this.isbn = isbn;
+	}
+
 	public String getTitle() {
 		return this.title;
 	}
@@ -255,6 +266,21 @@ public class Book implements Serializable {
 //		for(Author g : this.getAuthor())
 //			tmpHash += g.hashCode();
 		return Long.valueOf(this.getId()).hashCode();//+Float.valueOf(this.getPrice()).hashCode()+this.getTitle().hashCode()+((this.getPublisher()!=null)?this.getPublisher().hashCode():0)+tmpHash;
+	}
+
+	
+	private int calcComp(Book o) {
+		return (this.getId()<o.getId())?-1:1;
+	}
+	@Override
+	public int compareTo(Book o) {
+		if(this.hashCode()!=o.hashCode())
+			return this.calcComp(o);
+		else
+			if(this.equals(o))
+				return 0;
+			else
+				return this.calcComp(o);
 	}
 	
 }
