@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,7 @@ public class Book implements Serializable,Comparable<Book> {
 	private BigDecimal price;
 	private List<Author> author = new LinkedList<>();
 	private Publisher publisher;
-	private BookCategory[] categories = new BookCategory[0];;
+	private SortedSet<BookCategory> categories = new TreeSet<>();
 	
 	public Book(long id, String title, Author author, Publisher publisher, BigDecimal price ) {
 		this(id,title,author,price);
@@ -188,7 +190,7 @@ public class Book implements Serializable,Comparable<Book> {
 		if(this.getPrice().compareTo(BigDecimal.valueOf(0))!=0)
 			str.append("\nPrice: ").append(this.getPrice());
 		str.append("\nCategories: ");
-		if(this.getCategories().length>0) {
+		if(this.getCategories().size()>0) {
 				for(BookCategory cat : this.getCategories()) 
 					str.append(cat.toString()).append(", ");
 				
@@ -202,36 +204,48 @@ public class Book implements Serializable,Comparable<Book> {
 	}
 
 
-	public BookCategory[] getCategories() {
+	public SortedSet<BookCategory> getCategories() {
 		return this.categories;
 	}
 	void setCategories(BookCategory[] categories) {
 		if(categories==null)
 			throw new IllegalArgumentException();
-		this.categories = new BookCategory[0];
+		this.categories.clear();;
+		this.addCategories(categories);
+	}
+	void setCategories(SortedSet<BookCategory> categories) {
+		if(categories==null)
+			throw new IllegalArgumentException();
+		this.categories.clear();;
 		this.addCategories(categories);
 	}
 	
 	public void addCategory(BookCategory category) {
-		int len;
+		//int len;
 		if(category==null)
 			throw new IllegalArgumentException();
-		
-		len = this.getCategories().length;
-		
-		BookCategory[] newCat = new BookCategory[len+1];
-		
-		for(int i=0; i<len;i++) {
-			if(this.getCategories()[i]==category) //avoid duplicates (probably should use a util method)
-				return;
-			newCat[i] = this.getCategories()[i];
-		}
-		newCat[len] = category;
-		
-		this.categories = newCat;
+		this.categories.add(category);
+//		len = this.getCategories().length;
+//		
+//		BookCategory[] newCat = new BookCategory[len+1];
+//		
+//		for(int i=0; i<len;i++) {
+//			if(this.getCategories()[i]==category) //avoid duplicates (probably should use a util method)
+//				return;
+//			newCat[i] = this.getCategories()[i];
+//		}
+//		newCat[len] = category;
+//		
+//		this.categories = newCat;
 	}
 	
 	public void addCategories(BookCategory[] categories) {
+		if(categories==null)
+			throw new IllegalArgumentException();
+		for(BookCategory cat : categories)
+			this.addCategory(cat);
+	}
+	public void addCategories(SortedSet<BookCategory> categories) {
 		if(categories==null)
 			throw new IllegalArgumentException();
 		for(BookCategory cat : categories)

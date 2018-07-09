@@ -3,7 +3,8 @@ package com.benfante.javacourse.thelibrary.core.model;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -106,14 +107,20 @@ public class BookTest {
 		float price = 1.23f;
 		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
 		book.addCategory(BookCategory.ARTS_AND_PHOTOGRAPHY);
-		assertTrue(Arrays.equals(book.getCategories(),new BookCategory[] {BookCategory.ARTS_AND_PHOTOGRAPHY}));
-		BookCategory[] cat = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER};
+		SortedSet<BookCategory> tmp= new TreeSet<>();
+		tmp.add(BookCategory.ARTS_AND_PHOTOGRAPHY);
+		assertTrue(book.getCategories().equals(tmp));
+		SortedSet<BookCategory> cat = new TreeSet<>(); 
+		cat.add(BookCategory.HISTORY);cat.add(BookCategory.LITERATURE_AND_FICTION);cat.add(BookCategory.OTHER);
 		book.setCategories(cat);
-		BookCategory[] new_cat = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER};
-		assertTrue(Arrays.equals(book.getCategories(), new_cat));
-		BookCategory[] new_cat_dup = new BookCategory[] {BookCategory.HISTORY,BookCategory.LITERATURE_AND_FICTION,BookCategory.OTHER, BookCategory.OTHER};
-		book.addCategory(BookCategory.OTHER);
-		assertFalse(Arrays.equals(book.getCategories(),new_cat_dup));
+		SortedSet<BookCategory> new_cat = new TreeSet<>();
+		new_cat.add(BookCategory.HISTORY);new_cat.add(BookCategory.LITERATURE_AND_FICTION);new_cat.add(BookCategory.OTHER);
+		assertTrue(book.getCategories().equals(new_cat));
+		//Following test was not to generate dupes, no longer needed
+//		SortedSet<BookCategory> new_cat_dup = new TreeSet<>(); 
+//		new_cat_dup.add(BookCategory.HISTORY);new_cat_dup.add(BookCategory.LITERATURE_AND_FICTION);new_cat_dup.add(BookCategory.OTHER);
+//		book.addCategory(BookCategory.OTHER);
+//		assertFalse(book.getCategories().equals(new_cat_dup));
 	}
 	
 	
