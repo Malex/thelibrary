@@ -116,4 +116,16 @@ public class BookTest {
 		assertFalse(Arrays.equals(book.getCategories(),new_cat_dup));
 	}
 	
+	
+	@Test
+	public void testCompare() {
+		Book book1 = new Book(2,"A book",new Author(1,"a","author"));
+		Book book2 = new Book(2,"A book",new Author(1,"a","author"));
+		Book book3 = new Book(1,"A book",new Author(1,"a","author"));
+		Book book4 = new Book(4,"A book",new Author(1,"a","author"));
+		assertTrue(book1.compareTo(book2)==0);
+		assertTrue(book1.compareTo(book3)>0);
+		assertTrue(book1.compareTo(book4)<0);
+	}
+	
 }
