@@ -19,7 +19,7 @@ public class BookTest {
 		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
 		assertEquals(id, book.getId());
 		assertEquals(title, book.getTitle());
-		assertEquals(author, book.getAuthor()[0]);
+		assertEquals(author, book.getAuthor().get(0));
 		assertEquals(book.getPrice().compareTo(BigDecimal.valueOf(price)), 0);
 	}
 
@@ -43,7 +43,7 @@ public class BookTest {
 		book.setPrice(newPrice);
 		assertEquals(newId, book.getId());
 		assertEquals(newTitle, book.getTitle());
-		assertEquals(newAuthor, book.getAuthor()[0]);
+		assertEquals(newAuthor, book.getAuthor().get(0));
 		assertEquals(newPublisher, book.getPublisher());
 		assertEquals(book.getPrice().compareTo(BigDecimal.valueOf(newPrice)), 0);
 	}

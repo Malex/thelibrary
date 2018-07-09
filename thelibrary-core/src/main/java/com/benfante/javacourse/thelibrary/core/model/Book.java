@@ -2,6 +2,8 @@ package com.benfante.javacourse.thelibrary.core.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +21,7 @@ public class Book implements Serializable {
 	private long Id;
 	private String title;
 	private BigDecimal price;
-	private Author[] author = new Author[0];
+	private List<Author> author = new LinkedList<>();
 	private Publisher publisher;
 	private BookCategory[] categories = new BookCategory[0];;
 	
@@ -51,6 +53,22 @@ public class Book implements Serializable {
 	}
 	
 	public Book(long Id, String title, Author[] author,BigDecimal price) {
+		this(Id,title,author);
+		this.setPrice(price);
+	}
+	
+	public Book(long id, String title, List<Author> author, Publisher publisher, BigDecimal price ) {
+		this(id,title,author,price);
+		this.setPublisher(publisher);
+	}
+
+	public Book(long Id, String title, List<Author> author) {
+		this.setId(Id);
+		this.setAuthor(author);
+		this.setTitle(title);
+	}
+	
+	public Book(long Id, String title, List<Author> author,BigDecimal price) {
 		this(Id,title,author);
 		this.setPrice(price);
 	}
@@ -93,13 +111,13 @@ public class Book implements Serializable {
 			throw new IllegalArgumentException("Price must be non-negative");
 	}
 	
-	public Author[] getAuthor() {
+	public List<Author> getAuthor() {
 		return this.author;
 	}
 	void setAuthor(Author[] author) {
 		if(author==null) 
 			throw new IllegalArgumentException();
-		this.author = new Author[0];
+		this.author.clear();
 		for(Author g : author) {
 			if(g.getId()<=0)
 				throw new IllegalArgumentException();
@@ -110,8 +128,14 @@ public class Book implements Serializable {
 	void setAuthor(Author author) {
 		if(author==null)
 			throw new IllegalArgumentException();
-		this.author = new Author[0];
+		this.author.clear();
 		this.addAuthor(author);
+	}
+	void setAuthor(List<Author> author) {
+		if(author==null)
+			throw new IllegalArgumentException();
+		this.author.clear();
+		this.author.addAll(author);
 	}
 	
 	public Publisher getPublisher() {
@@ -125,33 +149,17 @@ public class Book implements Serializable {
 	}
 
 	
-	public void addAuthor(Author author) {
+	public void addAuthor(Author author) throws RuntimeException {
 		log.debug("Adding author: id={}, Name: {} {}",author.getId(),author.getFirstName(),author.getLastName());
-		int len;
 		if(author==null || author.getId()<=0)
 			throw new IllegalArgumentException();
-		
-		len = this.getAuthor().length;
-		
-		Author[] newAuthors = new Author[len+1];
-		
-		for(int i=0; i<len;i++)
-			newAuthors[i] = this.getAuthor()[i];
-		
-		newAuthors[len] = author;
-		
-		this.author = newAuthors;
+		if(!this.author.add(author))  //adding happens here
+			throw new RuntimeException("Could not add author");
 	}
 	
 	
 	public boolean hasAuthor(Author author) {
-		if(!(author==null))
-			for(Author g : this.getAuthor()) {
-				if(g.hashCode()==author.hashCode())
-					if(g.equals(author))
-						return true;
-			}
-		return false;
+		return this.getAuthor().contains(author);
 	}
 	
 	public String getPrint() {
@@ -160,7 +168,7 @@ public class Book implements Serializable {
 		for (Author g : this.getAuthor()) {
 			str.append(g.getPrint()).append("; ");
 		}
-		if(this.getAuthor().length==0)
+		if(this.getAuthor().isEmpty())
 			str.append("No authors for this book.; "); //Last 2 chars get deleted on next instruction
 		
 		str.delete(str.length()-2,str.length());
