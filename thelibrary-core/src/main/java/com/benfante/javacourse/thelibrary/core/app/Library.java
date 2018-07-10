@@ -17,7 +17,10 @@ public class Library {
 	
 	private Map<String,Collection<Book>> booksByTitle = new HashMap<>(); 
 	private Map<Author,Collection<Book>> booksByAuthor = new HashMap<>();
+	private Map<String,Book> booksByIsbn = new HashMap<>(); 
 
+	
+	
 	public static void main(String[] args) {
 		Library lib = new Library();
 		lib.runApp(System.in);
@@ -155,9 +158,15 @@ public class Library {
 			this.booksByAuthor.put(a, tmp);
 		}
 	}
+	private void updateIsbnMap(Book book) {
+		if(this.booksByIsbn.containsKey(book.getIsbn()))
+			throw new RuntimeException("ISBN codes must be unique");
+		this.booksByIsbn.put(book.getIsbn(), book);
+	}
 	private void updateMaps(Book book) {
 		this.updateTitleMap(book);
 		this.updateAuthorMap(book);
+		this.updateIsbnMap(book);
 	}
 	
 	public void addBook(Book book) {
@@ -232,8 +241,12 @@ public class Library {
 		return this.booksByAuthor.get(author).toArray(runtimeArr);
 	}
 	
+	public Book searchBookByIsbn(String isbn) {
+		return this.booksByIsbn.get(isbn);
+	}
+	
 
-	Collection<Book> getBooks() {
+	public Collection<Book> getBooks() {
 		return this.books;
 	}
 
