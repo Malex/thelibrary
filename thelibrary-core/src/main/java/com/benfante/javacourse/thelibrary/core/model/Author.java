@@ -23,7 +23,7 @@ public class Author implements Serializable {
 		return this.id;
 	}
 	public void setId(long id) {
-		if(id>0)
+		if(id>=0)
 			this.id = id;
 		else
 			throw new IllegalArgumentException();

@@ -53,4 +53,33 @@ public class AuthorTest {
 		assertTrue(auth1.isAuthor(book3));
 		assertTrue(auth1.isAuthor(book2));
 	}
+	
+	//Benfante tests
+	@Test
+	public void testEquals() {
+		Author author1 = new Author(1, null, null);
+		Author author2 = new Author(1, null, null);
+		assertTrue(author1.equals(author2));
+	}
+
+	@Test
+	public void testEqualsFalse() {
+		Author author1 = new Author(1, null, null);
+		Author author2 = new Author(2, null, null);
+		assertFalse(author1.equals(author2));
+	}
+
+	@Test
+	public void testHashCode() {
+		Author author1 = new Author(1, null, null);
+		Author author2 = new Author(1, null, null);
+		assertTrue(author1.hashCode() == author2.hashCode());
+	}
+
+	@Test
+	public void testHashCodeDifferentMaybe() {
+		Author author1 = new Author(1, null, null);
+		Author author2 = new Author(2, null, null);
+		assertTrue(author1.hashCode() != author2.hashCode());
+	}
 }
