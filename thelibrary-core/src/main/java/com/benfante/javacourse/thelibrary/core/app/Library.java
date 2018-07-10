@@ -156,6 +156,7 @@ public class Library {
 				tmp.addAll(this.booksByAuthor.get(a));
 			tmp.add(book);
 			this.booksByAuthor.put(a, tmp);
+			tmp.clear();
 		}
 	}
 	private void updateIsbnMap(Book book) {
