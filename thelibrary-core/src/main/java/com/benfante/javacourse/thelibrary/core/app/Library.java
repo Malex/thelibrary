@@ -6,13 +6,18 @@ import java.io.*;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Library {
 	
 	private Collection<Book> books = new HashSet<>();
+	
+	private Map<String,Collection<Book>> booksByTitle = new HashMap<>(); 
+	private Map<Author,Collection<Book>> booksByAuthor = new HashMap<>();
 
 	public static void main(String[] args) {
 		Library lib = new Library();
@@ -40,6 +45,7 @@ public class Library {
 		input_a = in.readLine();
 		printLine(out,"\tInserisci Cognome Autore: ");
 		input_c = in.readLine();
+		
 		b.addAuthor(new Author(id_a,input_a,input_c));
 		return true;
 	}
@@ -127,6 +133,28 @@ public class Library {
 		this.addBooks(books);
 	}
 	
+	
+	private void updateTitleMap(Book book) {
+		Collection<Book> tmp = new HashSet<>();
+		if(this.booksByTitle.containsKey(book.getTitle()))
+			tmp.addAll(this.booksByTitle.get(book.getTitle()));
+		tmp.add(book);
+		this.booksByTitle.put(book.getTitle(), tmp);
+	}
+	private void updateAuthorMap(Book book) {
+		Collection<Book> tmp = new HashSet<>();
+		for(Author a : book.getAuthor()) {
+			if(this.booksByAuthor.containsKey(a))
+				tmp.addAll(this.booksByAuthor.get(a));
+			tmp.add(book);
+			this.booksByAuthor.put(a, tmp);
+		}
+	}
+	private void updateMaps(Book book) {
+		this.updateTitleMap(book);
+		this.updateAuthorMap(book);
+	}
+	
 	public void addBook(Book book) {
 //		Book[] new_books = new Book[this.books.length+1];
 //		for(int i=0; i<this.books.length; i++)
@@ -134,6 +162,7 @@ public class Library {
 //		new_books[this.books.length] = book;
 //		this.books = new_books;
 		this.books.add(book);
+		this.updateMaps(book);
 	}
 	
 	public void addBooks(Book[] books) {
@@ -191,19 +220,11 @@ public class Library {
 	
 	
 	public Collection<Book> searchBooksByTitle(String title) {
-		List<Book> ret = new LinkedList<>();
-		for(Book g : this.getBooks())
-			if (g.getTitle().equals(title)) 
-				ret.add(g);
-		return ret;
+		return this.booksByTitle.get(title);
 	}
 	
 	public Collection<Book> searchBooksByAuthor(Author author) {
-		List<Book> ret = new LinkedList<>();
-		for(Book g : this.getBooks())
-			if (g.hasAuthor(author)) 
-				ret.add(g);
-		return ret;
+		return this.booksByAuthor.get(author);
 	}
 	
 

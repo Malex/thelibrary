@@ -97,7 +97,7 @@ public class LibraryTest {
 		Library lib = new Library();
 		lib.addBooks(b);
 		Collection<Book> ret=lib.searchBooksByTitle("Sanremo");
-		Collection<Book> b2 = new LinkedList<>() ;
+		Collection<Book> b2 = new HashSet<>() ;
 		b2.add(b.get(0));
 		b2.add(b.get(2));
 		assertTrue(ret.equals(b2));
@@ -113,7 +113,7 @@ public class LibraryTest {
 		Library lib = new Library();
 		lib.addBooks(b);
 		Collection<Book> ret=lib.searchBooksByAuthor(Pippo);
-		Collection<Book> b2 = new LinkedList<>() ;
+		Collection<Book> b2 = new HashSet<>() ;
 		b2.add(b.get(0));
 		b2.add(b.get(1));
 		assertTrue(ret.equals(b2));
