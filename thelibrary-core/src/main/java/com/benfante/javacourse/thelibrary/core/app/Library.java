@@ -8,11 +8,10 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class Library {
+	private static final Book[] runtimeArr = new Book[0]; 
 	
 	private Collection<Book> books = new HashSet<>();
 	
@@ -45,8 +44,14 @@ public class Library {
 		input_a = in.readLine();
 		printLine(out,"\tInserisci Cognome Autore: ");
 		input_c = in.readLine();
-		
-		b.addAuthor(new Author(id_a,input_a,input_c));
+		Author a = new Author(id_a,input_a,input_c);
+		if(this.booksByAuthor.containsKey(a))
+			for(Author f : this.booksByAuthor.keySet())
+				if(f.hashCode()==a.hashCode())
+					if(f.equals(a)) {
+						a = f; break;
+					}
+		b.addAuthor(a);
 		return true;
 	}
 	
@@ -219,12 +224,12 @@ public class Library {
 //	}
 	
 	
-	public Collection<Book> searchBooksByTitle(String title) {
-		return this.booksByTitle.get(title);
+	public Book[] searchBooksByTitle(String title) {
+		return this.booksByTitle.get(title).toArray(runtimeArr);
 	}
 	
-	public Collection<Book> searchBooksByAuthor(Author author) {
-		return this.booksByAuthor.get(author);
+	public Book[] searchBooksByAuthor(Author author) {
+		return this.booksByAuthor.get(author).toArray(runtimeArr);
 	}
 	
 

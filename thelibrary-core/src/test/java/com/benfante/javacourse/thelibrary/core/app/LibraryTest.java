@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -96,11 +97,11 @@ public class LibraryTest {
 		b.add(new Book(5,"Sanremo",new Author(5,"Pippow","Baudow")));
 		Library lib = new Library();
 		lib.addBooks(b);
-		Collection<Book> ret=lib.searchBooksByTitle("Sanremo");
-		Collection<Book> b2 = new HashSet<>() ;
-		b2.add(b.get(0));
-		b2.add(b.get(2));
-		assertTrue(ret.equals(b2));
+		Book[] ret=lib.searchBooksByTitle("Sanremo");
+		Book[] b2 = new Book[2] ;
+		b2[0]=b.get(0);
+		b2[1]=b.get(2);
+		assertTrue(Arrays.equals(ret, b2));
 	}
 
 	@Test
@@ -112,11 +113,11 @@ public class LibraryTest {
 		Author Pippo = new Author(3, "Pippo", "Baudo");
 		Library lib = new Library();
 		lib.addBooks(b);
-		Collection<Book> ret=lib.searchBooksByAuthor(Pippo);
-		Collection<Book> b2 = new HashSet<>() ;
-		b2.add(b.get(0));
-		b2.add(b.get(1));
-		assertTrue(ret.equals(b2));
+		Book[] ret=lib.searchBooksByAuthor(Pippo);
+		Book[] b2 = new Book[2] ;
+		b2[0]=b.get(0);
+		b2[1]=b.get(1);
+		assertTrue(Arrays.equals(ret, b2));
 	}
 
 	@Test
