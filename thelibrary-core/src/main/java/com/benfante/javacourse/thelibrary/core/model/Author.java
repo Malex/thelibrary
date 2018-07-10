@@ -2,7 +2,7 @@ package com.benfante.javacourse.thelibrary.core.model;
 
 import java.io.Serializable;
 
-public class Author implements Serializable {
+public class Author implements Serializable,Comparable<Author> {
 	
 	/**
 	 * 
@@ -92,6 +92,15 @@ public class Author implements Serializable {
 	
 	public String getPrint() {
 		return this.getFirstName()+" "+this.getLastName();
+	}
+
+
+	@Override
+	public int compareTo(Author o) {
+		if(o.getId()==this.getId()) //NullPointerException is automatically raised here
+			return 0;
+		else 
+			return (this.getId()<o.getId())?-1:1;
 	}
 	
 }

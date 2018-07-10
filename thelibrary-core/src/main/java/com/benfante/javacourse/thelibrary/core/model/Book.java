@@ -288,9 +288,7 @@ public class Book implements Serializable,Comparable<Book> {
 	}
 	@Override
 	public int compareTo(Book o) {
-		if(o==null)
-			throw new NullPointerException();
-		if(this.hashCode()!=o.hashCode())
+		if(o.hashCode()!=this.hashCode()) //NullPointerException is raised here automatically
 			return this.calcComp(o);
 		else
 			if(this.equals(o))
