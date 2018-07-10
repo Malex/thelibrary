@@ -159,7 +159,7 @@ public class Library {
 		}
 	}
 	private void updateIsbnMap(Book book) {
-		if(this.booksByIsbn.containsKey(book.getIsbn()))
+		if(book.getIsbn()!=null && this.booksByIsbn.containsKey(book.getIsbn()))
 			throw new RuntimeException("ISBN codes must be unique");
 		this.booksByIsbn.put(book.getIsbn(), book);
 	}
