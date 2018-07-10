@@ -164,8 +164,8 @@ public class Library {
 			this.removeBook(b);
 	}
 	public void removeBooks(Collection<Book> books) {
-		for(Iterator<Book> b=books.iterator();b.hasNext();) {
-			this.removeBook(b.next());
+		for(Book b : books) {
+			this.removeBook(b);
 		}
 	}
 	
