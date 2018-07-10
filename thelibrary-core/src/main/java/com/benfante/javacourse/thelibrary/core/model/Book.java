@@ -76,6 +76,22 @@ public class Book implements Serializable,Comparable<Book> {
 		this.setPrice(price);
 	}
 	
+	public Book(long id, String Isbn, String title, List<Author> author, Publisher publisher, BigDecimal price ) {
+		this(id,title,author,publisher,price);
+		this.setIsbn(Isbn);
+	}
+
+	public Book(long Id, String Isbn, String title, List<Author> author) {
+		this(Id,title,author);
+		this.setIsbn(Isbn);
+	}
+	
+	public Book(long Id, String Isbn, String title, List<Author> author,BigDecimal price) {
+		this(Id,title,author,price);
+		this.setIsbn(Isbn);
+	}
+	
+	
 	public long getId() {
 		return this.Id;
 	}
