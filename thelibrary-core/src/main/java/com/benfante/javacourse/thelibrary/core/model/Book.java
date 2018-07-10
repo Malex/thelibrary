@@ -83,7 +83,7 @@ public class Book implements Serializable,Comparable<Book> {
 		if(id>=0)
 			this.Id = id;
 		else
-			throw new IllegalArgumentException("ID must be positive");
+			throw new IllegalArgumentException("ID must be non-negative");
 	}
 	
 	
