@@ -6,12 +6,13 @@ import java.io.*;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Library {
 	
-	private Collection<Book> books = new LinkedList<>();
+	private Collection<Book> books = new HashSet<>();
 
 	public static void main(String[] args) {
 		Library lib = new Library();
@@ -233,7 +234,7 @@ public class Library {
 	public static Library loadArchive() throws ClassNotFoundException {
 		try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(Library.class.getResourceAsStream("/books.dat"))); ) {
 			Library ret = new Library();
-			ret.addBooks((List<Book>) in.readObject());
+			ret.addBooks((HashSet<Book>) in.readObject());
 			return ret;
 		} catch(IOException e) {
 			System.out.println("Couldnt find archive to load");

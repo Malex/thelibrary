@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,12 +21,13 @@ public class LibraryTest {
 		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
 		Library lib = new Library();
 		lib.addBook(b.get(0));
-		assertTrue(b.equals(lib.getBooks()));
+		Collection<Book> set = new HashSet<>(b);
+		assertTrue(set.equals(lib.getBooks()));
 	}
 	
 	@Test
 	public void testAddBooks() {
-		List<Book> b = new LinkedList<>();
+		Collection<Book> b = new HashSet<>();
 		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
 		b.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
 		b.add(new Book(5,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
@@ -43,7 +45,7 @@ public class LibraryTest {
 		Library lib = new Library();
 		lib.addBooks(b);
 		lib.removeBook(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-		List<Book> b2 = new LinkedList<>();
+		Collection<Book> b2 = new HashSet<>();
 		b2.add(b.get(0));
 		b2.add(b.get(2));
 		assertTrue(b2.equals(lib.getBooks()));
@@ -61,7 +63,7 @@ public class LibraryTest {
 		b3.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
 		b3.add(new Book(3,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
 		lib.removeBooks(b3);
-		Collection<Book> b2 = new LinkedList<>();
+		Collection<Book> b2 = new HashSet<>();
 		b2.add(b.get(0));
 		assertTrue(b2.equals(lib.getBooks()));
 		
