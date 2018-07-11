@@ -191,7 +191,8 @@ public class Book implements Serializable,Comparable<Book> {
 		return this.getAuthor().contains(author);
 	}
 	
-	public String getPrint() {
+	@Override
+	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthors: ");
 		for (Author g : this.getAuthor()) {

@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class Library {
@@ -15,11 +17,9 @@ public class Library {
 	
 	private Collection<Book> books = new HashSet<>();
 	
-	private Map<String,Collection<Book>> booksByTitle = new HashMap<>(); 
-	private Map<Author,Collection<Book>> booksByAuthor = new HashMap<>();
-	private Map<String,Book> booksByIsbn = new HashMap<>(); 
-
-	
+	Map<String,Collection<Book>> booksByTitle = new HashMap<>(); 
+	Map<Author,Collection<Book>> booksByAuthor = new HashMap<>();
+	Map<String,Book> booksByIsbn = new HashMap<>(); 
 	
 	public static void main(String[] args) {
 		Library lib = new Library();
@@ -150,13 +150,12 @@ public class Library {
 		this.booksByTitle.put(book.getTitle(), tmp);
 	}
 	private void updateAuthorMap(Book book) {
-		Collection<Book> tmp = new HashSet<>();
 		for(Author a : book.getAuthor()) {
+			Collection<Book> tmp = new HashSet<>();
 			if(this.booksByAuthor.containsKey(a))
 				tmp.addAll(this.booksByAuthor.get(a));
 			tmp.add(book);
 			this.booksByAuthor.put(a, tmp);
-			tmp.clear();
 		}
 	}
 	private void updateIsbnMap(Book book) {
@@ -170,12 +169,29 @@ public class Library {
 		this.updateIsbnMap(book);
 	}
 	
+	private Author searchAuthorById(long id) {
+		for(Author a : this.booksByAuthor.keySet()) {
+			if(a.getId()==id)
+				return a;
+		}
+		return null;
+	}
 	public void addBook(Book book) {
 //		Book[] new_books = new Book[this.books.length+1];
 //		for(int i=0; i<this.books.length; i++)
 //			new_books[i]=this.books[i];
 //		new_books[this.books.length] = book;
 //		this.books = new_books;
+		Author tmp;
+		Author a;
+		for(int i=0;i<book.getAuthor().size();i++) {
+			a = book.getAuthor().get(i);
+			tmp = this.searchAuthorById(a.getId());
+			if(tmp==null)
+				continue;
+			else
+				book.getAuthor().set(i, tmp);
+		}
 		this.books.add(book);
 		this.updateMaps(book);
 	}
@@ -189,6 +205,21 @@ public class Library {
 			this.addBook(g); 
 	}
 	
+	private void removeMapTitle(Book book) {
+		this.booksByTitle.get(book.getTitle()).remove(book);
+	}
+	private void removeMapAuthor(Book book) {
+		for(Author a : book.getAuthor())
+			this.booksByAuthor.get(a).remove(book);
+	}
+	private void removeMapIsbn(Book book) {
+		this.booksByIsbn.remove(book.getIsbn());
+	}
+	private void removeMap(Book book) {
+		this.removeMapTitle(book);
+		this.removeMapAuthor(book);
+		this.removeMapIsbn(book);
+	}
 	public void removeBook(Book book) {
 //		int hash = book.hashCode();
 //		boolean found = false;
@@ -201,6 +232,7 @@ public class Library {
 //		if(found)
 //			this.trimBooks();
 		this.books.remove(book);
+		this.removeMap(book);
 	}
 	
 	public void removeBooks(Book[] books) {
@@ -254,7 +286,7 @@ public class Library {
 	
 	public void printBooks() {
 		for(Book g : this.getBooks()) {
-			System.out.println(g.getPrint()+"\n");
+			System.out.println(g.toString()+"\n");
 		}
 	}
 
@@ -269,6 +301,12 @@ public class Library {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void loadArchive(InputStream is) throws IOException,ClassNotFoundException {
+		ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(is));
+		this.addBooks((HashSet<Book>) in.readObject());
+		
+	}
 
 	@SuppressWarnings("unchecked")
 	public static Library loadArchive() throws ClassNotFoundException {
