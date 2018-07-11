@@ -15,6 +15,7 @@ import java.util.List;
 import org.junit.Test;
 
 public class LibraryTest {
+	private String c = "";
 	private OutputStream nullPrintStream =
 			new OutputStream() {
 				@Override
@@ -147,9 +148,9 @@ public class LibraryTest {
 	public void testSaveData() {
 		Library lib = new Library();
 		try(InputStream in = this.getClass().getResourceAsStream("/books.txt");){
-			File f = new File(this.getClass().getResource("/books.dat").getFile());
-			if(!f.exists())
-				f.createNewFile();
+//			File f = new File(this.getClass().getResource("/books.dat").getFile());
+//			if(!f.exists())
+//				f.createNewFile();
 			Library arg = new Library();
 			arg.addBook(new Book(1,"Dieci Piccoli Indiani",new Author(1,"Agatha","Christie"),new Publisher(1,"Mondadori"),new BigDecimal(10.5)));
 			arg.addBook(new Book(2,"The Java Programming Language",new Author[] {new Author(2,"Ken","Arnolds"),new Author(3,"James","Gosling"),new Author(4,"David","Holmes")},new Publisher(2,"Addison-Wesley Professional"),new BigDecimal(10.5)));
@@ -189,10 +190,31 @@ public class LibraryTest {
 	}
 	
 	@Test
-	public void testSearchBookByTitleAfterRemove() throws ClassNotFoundException, IOException {
+	public void testXAuthorsNotDuplicate() throws ClassNotFoundException,IOException {
 		Library app = new Library();
 		try (InputStream is = this.getClass().getResourceAsStream("/books.dat");) {
 			app.loadArchive(is);
+		}
+		//app.addBook(new Book(45,"Prova",new Author(1,"Agatha","Christie")));
+		for(Author author : app.booksByAuthor.keySet()) {
+			for(Book b : app.booksByAuthor.get(author)) {
+				for(Author a : b.getAuthor()) {
+					if(a.equals(author)) {
+						assertTrue(a==author);
+						break;
+					}
+				}
+			}
+		} 
+	}
+	
+	@Test
+	public void testSearchBookByTitleAfterRemove() throws ClassNotFoundException, IOException {
+		Library app = new Library();
+		try (InputStream is = this.getClass().getResourceAsStream("/books.dat");) {
+			System.out.println(this.getClass().getResource("/books.dat"));
+			app.loadArchive(is);
+			c+=" titleremove";
 		}
 		String title = "Dieci Piccoli Indiani";
 		Book[] searchResult = app.searchBooksByTitle(title);
@@ -205,8 +227,12 @@ public class LibraryTest {
 	public void testSearchBookByAuthorAfterRemove() throws ClassNotFoundException, IOException {
 		Library app = new Library();
 		try (InputStream is = this.getClass().getResourceAsStream("/books.dat");) {
+			System.out.println(this.getClass().getResource("/books.dat"));
 			app.loadArchive(is);
+			c+=" authorremove";
 		}
+		assertNotNull(app.getBooks());
+		assertFalse(app.getBooks().isEmpty());
 		Author author = new Author(1, "Agatha", "Christie");
 		app.addBook(new Book(5,"Orient Express", author));
 		Book[] searchResult = app.searchBooksByAuthor(author);
@@ -214,26 +240,5 @@ public class LibraryTest {
 		searchResult = app.searchBooksByAuthor(author);
 		assertEquals(1, searchResult.length);
 	}
-	
-	
-	@Test
-	public void testAuthorsNotDuplicate() throws Exception {
-		Library app = new Library();
-		try (InputStream is = this.getClass().getResourceAsStream("/books.dat");) {
-			app.loadArchive(is);
-		}
-		app.addBook(new Book(45,"lol",new Author(1,"Agatha","Christie")));
-		for(Author author : app.booksByAuthor.keySet()) {
-			for(Book b : app.booksByAuthor.get(author)) {
-				for(Author a : b.getAuthor()) {
-					if(a.equals(author)) {
-						assertTrue(a==author);
-						break;
-					}
-				}
-			}
-		}	
-	}
-	
 	
 }

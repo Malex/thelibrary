@@ -8,8 +8,6 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class Library {
@@ -293,6 +291,7 @@ public class Library {
 	
 	public void saveArchive() {
 		try(ObjectOutputStream oj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(this.getClass().getResource("/books.dat").getFile()))));) {
+			System.out.println(this.getClass().getResource("/books.dat").getFile());
 			oj.writeObject(this.getBooks());
 		} catch(IOException e) {
 			System.out.println("Couldnt create output .dat archive");
