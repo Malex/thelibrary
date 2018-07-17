@@ -15,7 +15,6 @@ import java.util.List;
 import org.junit.Test;
 
 public class LibraryTest {
-	private String c = "";
 	private OutputStream nullPrintStream =
 			new OutputStream() {
 				@Override
@@ -214,7 +213,6 @@ public class LibraryTest {
 		try (InputStream is = this.getClass().getResourceAsStream("/books.dat");) {
 			System.out.println(this.getClass().getResource("/books.dat"));
 			app.loadArchive(is);
-			c+=" titleremove";
 		}
 		String title = "Dieci Piccoli Indiani";
 		Book[] searchResult = app.searchBooksByTitle(title);
@@ -229,7 +227,6 @@ public class LibraryTest {
 		try (InputStream is = this.getClass().getResourceAsStream("/books.dat");) {
 			System.out.println(this.getClass().getResource("/books.dat"));
 			app.loadArchive(is);
-			c+=" authorremove";
 		}
 		assertNotNull(app.getBooks());
 		assertFalse(app.getBooks().isEmpty());
