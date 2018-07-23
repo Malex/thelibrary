@@ -7,7 +7,7 @@ import com.benfante.javacourse.thelibrary.core.model.Book;
 
 public interface BookDao {
 	
-	Collection<Book> getAllBooks();
+	Collection<Book> findAll();
 	
 	Book searchBookByIsbn(String isbn);
 	

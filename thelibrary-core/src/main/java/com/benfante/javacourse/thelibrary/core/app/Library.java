@@ -285,7 +285,7 @@ public class Library {
 	
 	public void printBooks() {
 		BookDao bookDao = null;
-		for(Book g : bookDao.getAllBooks()) {
+		for(Book g : bookDao.findAll()) {
 			System.out.println(g.toString()+"\n");
 		}
 	}
