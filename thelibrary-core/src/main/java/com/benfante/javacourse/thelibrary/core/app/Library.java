@@ -3,6 +3,7 @@ package com.benfante.javacourse.thelibrary.core.app;
 import com.benfante.javacourse.thelibrary.core.dao.AuthorDao;
 import com.benfante.javacourse.thelibrary.core.dao.BookDao;
 import com.benfante.javacourse.thelibrary.core.dao.DaoFactory;
+import com.benfante.javacourse.thelibrary.core.dao.DaoFactoryCreator;
 import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationDaoFactory;
 import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationStorage;
 import com.benfante.javacourse.thelibrary.core.model.*;
@@ -19,8 +20,7 @@ import java.math.BigDecimal;
 
 public class Library {
 	
-	private SerializationStorage serializationStorage;
-	private DaoFactory factory = new SerializationDaoFactory(serializationStorage);
+	private DaoFactory factory = DaoFactoryCreator.getDaoFactory();
 	private BookDao bookDao = factory.getBookDao();
 	private AuthorDao authorDao = factory.getAuthorDao();
 	
@@ -127,12 +127,7 @@ public class Library {
 	}
 	
 	public Library() {
-		 try {
-			 this.serializationStorage = new SerializationStorage("archive.dat");
-
-		 } catch (Exception e) {
-			 e.printStackTrace();
-		 }
+		 
 	}
 	
 //	public Library(Book book) {
