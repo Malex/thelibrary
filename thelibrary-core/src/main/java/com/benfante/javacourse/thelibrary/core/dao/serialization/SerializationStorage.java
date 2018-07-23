@@ -20,7 +20,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.benfante.javacourse.thelibrary.core.app.Library;
 import com.benfante.javacourse.thelibrary.core.model.Author;
 import com.benfante.javacourse.thelibrary.core.model.Book;
 
@@ -62,7 +61,7 @@ public class SerializationStorage implements Serializable {
 		}
 	}
 	
-	private void storeArchive() throws FileNotFoundException, IOException {
+	void storeArchive() throws FileNotFoundException, IOException {
 		try(OutputStream fos = new FileOutputStream(this.archive);) {
 			this.storeArchive(fos);
 		}
@@ -79,15 +78,15 @@ public class SerializationStorage implements Serializable {
 		}
 	}
 	
-	void addBooks(Book[] books) throws FileNotFoundException, IOException {
+	void addBooks(Book[] books) {
 		for (Book g : books)
 			this.addBook(g); 
 	}
-	void addBooks(Collection<Book> books) throws FileNotFoundException, IOException {
+	void addBooks(Collection<Book> books){
 		for (Book g : books)
 			this.addBook(g); 
 	}
-	void addBook(Book book) throws FileNotFoundException, IOException {
+	void addBook(Book book) {
 //		Book[] new_books = new Book[this.books.length+1];
 //		for(int i=0; i<this.books.length; i++)
 //			new_books[i]=this.books[i];
@@ -95,7 +94,7 @@ public class SerializationStorage implements Serializable {
 //		this.books = new_books;
 		this.books.add(book);
 		this.updateMaps(book);
-		this.storeArchive();
+//		this.storeArchive();
 	}
 	
 	private void updateTitleMap(Book book) {
@@ -141,7 +140,7 @@ public class SerializationStorage implements Serializable {
 		this.removeMapAuthor(book);
 		this.removeMapIsbn(book);
 	}
-	void removeBook(Book book) throws FileNotFoundException, IOException {
+	void removeBook(Book book) {
 //		int hash = book.hashCode();
 //		boolean found = false;
 //		for (int i=0; i < this.books.length; i++) {
@@ -154,14 +153,14 @@ public class SerializationStorage implements Serializable {
 //			this.trimBooks();
 		this.books.remove(book);
 		this.removeMap(book);
-		this.storeArchive();
+//		this.storeArchive();
 	}
 	
-	void removeBooks(Book[] books) throws FileNotFoundException, IOException {
+	void removeBooks(Book[] books) {
 		for(Book b : books)
 			this.removeBook(b);
 	}
-	void removeBooks(Collection<Book> books) throws FileNotFoundException, IOException {
+	void removeBooks(Collection<Book> books) {
 		for(Book b : books) {
 			this.removeBook(b);
 		}
