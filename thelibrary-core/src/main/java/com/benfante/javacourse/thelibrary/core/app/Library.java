@@ -22,7 +22,7 @@ public class Library {
 	
 	public static void main(String[] args) {
 		Library lib = new Library();
-//		lib.runApp(System.in);
+		lib.runApp(System.in);
 		lib.printBooks();
 		
 	}
@@ -140,185 +140,11 @@ public class Library {
 //		this.addBooks(books);
 //	}
 	
-//	
-//	private void updateTitleMap(Book book) {
-//		Collection<Book> tmp = new HashSet<>();
-//		if(this.booksByTitle.containsKey(book.getTitle()))
-//			tmp.addAll(this.booksByTitle.get(book.getTitle()));
-//		tmp.add(book);
-//		this.booksByTitle.put(book.getTitle(), tmp);
-//	}
-//	private void updateAuthorMap(Book book) {
-//		for(Author a : book.getAuthor()) {
-//			Collection<Book> tmp = new HashSet<>();
-//			if(this.booksByAuthor.containsKey(a))
-//				tmp.addAll(this.booksByAuthor.get(a));
-//			tmp.add(book);
-//			this.booksByAuthor.put(a, tmp);
-//		}
-//	}
-//	private void updateIsbnMap(Book book) {
-//		if(book.getIsbn()!=null && this.booksByIsbn.containsKey(book.getIsbn()))
-//			throw new RuntimeException("ISBN codes must be unique");
-//		this.booksByIsbn.put(book.getIsbn(), book);
-//	}
-//	private void updateMaps(Book book) {
-//		this.updateTitleMap(book);
-//		this.updateAuthorMap(book);
-//		this.updateIsbnMap(book);
-//	}
-//	
-//	private Author searchAuthorById(long id) {
-//		for(Author a : this.booksByAuthor.keySet()) {
-//			if(a.getId()==id)
-//				return a;
-//		}
-//		return null;
-//	}
-//	public void addBook(Book book) {
-////		Book[] new_books = new Book[this.books.length+1];
-////		for(int i=0; i<this.books.length; i++)
-////			new_books[i]=this.books[i];
-////		new_books[this.books.length] = book;
-////		this.books = new_books;
-//		Author tmp;
-//		Author a;
-//		for(int i=0;i<book.getAuthor().size();i++) {
-//			a = book.getAuthor().get(i);
-//			tmp = this.searchAuthorById(a.getId());
-//			if(tmp==null)
-//				continue;
-//			else
-//				book.getAuthor().set(i, tmp);
-//		}
-//		this.books.add(book);
-//		this.updateMaps(book);
-//	}
-//	
-//	public void addBooks(Book[] books) {
-//		for (Book g : books)
-//			this.addBook(g); 
-//	}
-//	public void addBooks(Collection<Book> books) {
-//		for (Book g : books)
-//			this.addBook(g); 
-//	}
-//	
-//	private void removeMapTitle(Book book) {
-//		this.booksByTitle.get(book.getTitle()).remove(book);
-//	}
-//	private void removeMapAuthor(Book book) {
-//		for(Author a : book.getAuthor())
-//			this.booksByAuthor.get(a).remove(book);
-//	}
-//	private void removeMapIsbn(Book book) {
-//		this.booksByIsbn.remove(book.getIsbn());
-//	}
-//	private void removeMap(Book book) {
-//		this.removeMapTitle(book);
-//		this.removeMapAuthor(book);
-//		this.removeMapIsbn(book);
-//	}
-//	public void removeBook(Book book) {
-////		int hash = book.hashCode();
-////		boolean found = false;
-////		for (int i=0; i < this.books.length; i++) {
-////			if(this.books[i].hashCode() == hash && this.books[i].equals(book)) {
-////				this.books[i] = null;
-////				if(!found) found=true;
-////			}
-////		}
-////		if(found)
-////			this.trimBooks();
-//		this.books.remove(book);
-//		this.removeMap(book);
-//	}
-//	
-//	public void removeBooks(Book[] books) {
-//		for(Book b : books)
-//			this.removeBook(b);
-//	}
-//	public void removeBooks(Collection<Book> books) {
-//		for(Book b : books) {
-//			this.removeBook(b);
-//		}
-//	}
-	
-	/*Method to resize array after removing elements*/
-//	void trimBooks() {
-//		int count = 0,shift=0;
-//		for (int i=0; i < this.books.length; i++) {
-//			if(this.books[i]==null) { //Finding how many elements were removed, saving in count
-//				count++;
-//			}
-//		}
-//		Book[] new_book = new Book[this.books.length-count];
-//		
-//		for (int i=0; i < this.books.length-count;i++) { // Filling new array
-//			while(this.books[i+shift]==null) { //Counting number of blanks from location in cycle
-//				shift++;
-//			}
-//			new_book[i]=this.books[i+shift];
-//		}
-//		
-//		this.books = new_book;
-//	}
-	
-	
-//	public Book[] searchBooksByTitle(String title) {
-//		return this.booksByTitle.get(title).toArray(runtimeArr);
-//	}
-//	
-//	public Book[] searchBooksByAuthor(Author author) {
-//		return this.booksByAuthor.get(author).toArray(runtimeArr);
-//	}
-//	
-//	public Book searchBookByIsbn(String isbn) {
-//		return this.booksByIsbn.get(isbn);
-//	}
-//	
-//
-//	public Collection<Book> getBooks() {
-//		return this.books;
-//	}
-
 	
 	public void printBooks() {
 		for(Book g : this.bookDao.findAll()) {
 			System.out.println(g.toString()+"\n");
 		}
 	}
-//
-//	
-//	public void saveArchive() {
-//		try(ObjectOutputStream oj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(this.getClass().getResource("/books.dat").getFile()))));) {
-//			System.out.println(this.getClass().getResource("/books.dat").getFile());
-//			oj.writeObject(this.getBooks());
-//		} catch(IOException e) {
-//			System.out.println("Couldnt create output .dat archive");
-//			e.printStackTrace();
-//
-//		}
-//	}
-//	
-//	@SuppressWarnings("unchecked")
-//	public void loadArchive(InputStream is) throws IOException,ClassNotFoundException {
-//		ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(is));
-//		this.addBooks((HashSet<Book>) in.readObject());
-//		
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	public static Library loadArchive() throws ClassNotFoundException {
-//		try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(Library.class.getResourceAsStream("/books.dat"))); ) {
-//			Library ret = new Library();
-//			ret.addBooks((HashSet<Book>) in.readObject());
-//			return ret;
-//		} catch(IOException e) {
-//			System.out.println("Couldnt find archive to load");
-//		}
-//		throw new RuntimeException("No return to make");
-//	}
-//	
 	
 }
