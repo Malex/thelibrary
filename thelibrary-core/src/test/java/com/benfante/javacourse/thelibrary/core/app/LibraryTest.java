@@ -1,5 +1,7 @@
 package com.benfante.javacourse.thelibrary.core.app;
 
+
+import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationStorage;
 import com.benfante.javacourse.thelibrary.core.model.*;
 
 import static org.junit.Assert.*;
@@ -23,59 +25,11 @@ public class LibraryTest {
 //			};
 //	
 //	
-//	@Test
-//	public void testAddBook() {
-//		List<Book> b = new LinkedList<>();
-//		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-//		Library lib = new Library();
-//		lib.addBook(b.get(0));
-//		Collection<Book> set = new HashSet<>(b);
-//		assertTrue(set.equals(lib.getBooks()));
-//	}
+
 //	
-//	@Test
-//	public void testAddBooks() {
-//		Collection<Book> b = new HashSet<>();
-//		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(5,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
-//		Library lib = new Library();
-//		lib.addBooks(b);
-//		assertTrue(b.equals(lib.getBooks()));
-//	}
+
 //
-//	@Test
-//	public void testRemoveBook() {
-//		List<Book> b = new LinkedList<>();
-//		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(5,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
-//		Library lib = new Library();
-//		lib.addBooks(b);
-//		lib.removeBook(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-//		Collection<Book> b2 = new HashSet<>();
-//		b2.add(b.get(0));
-//		b2.add(b.get(2));
-//		assertTrue(b2.equals(lib.getBooks()));
-//	}
-//
-//	@Test
-//	public void testRemoveBooks() {
-//		List<Book> b = new LinkedList<>();
-//		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(3,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
-//		Library lib = new Library();
-//		lib.addBooks(b);
-//		List<Book> b3 = new LinkedList<>();
-//		b3.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-//		b3.add(new Book(3,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
-//		lib.removeBooks(b3);
-//		Collection<Book> b2 = new HashSet<>();
-//		b2.add(b.get(0));
-//		assertTrue(b2.equals(lib.getBooks()));
-//		
-//	}
+
 //
 //	//method no longer exists. test is wrong for old method now
 ////	@Test
@@ -127,21 +81,7 @@ public class LibraryTest {
 //		assertTrue(Arrays.equals(ret, b2));
 //	}
 //
-//	@Test
-//	public void testLoadBooks() {
-//		Library lib = new Library();
-//		try(InputStream in = this.getClass().getResourceAsStream("/books.txt")){
-//			Library arg = new Library();
-//			arg.addBook(new Book(1,"Dieci Piccoli Indiani",new Author(1,"Agatha","Christie"),new Publisher(1,"Mondadori"),new BigDecimal(10.5)));
-//			arg.addBook(new Book(2,"The Java Programming Language",new Author[] {new Author(2,"Ken","Arnolds"),new Author(3,"James","Gosling"),new Author(4,"David","Holmes")},new Publisher(2,"Addison-Wesley Professional"),new BigDecimal(10.5)));
-//			assertNotNull(in);
-//			lib.loadBooks(in,null);
-//			assertTrue(lib.getBooks().equals(arg.getBooks()));
-//		} catch (IOException | RuntimeException e) {
-//			System.out.println("File not found");
-//			fail("prova");
-//		}
-//	}
+
 //	
 //	@Test
 //	public void testSaveData() {
@@ -238,4 +178,20 @@ public class LibraryTest {
 //		assertEquals(1, searchResult.length);
 //	}
 //	
+	
+//	@Test
+//	public void testLoadBooks() {
+//		Library lib = new Library();
+//		try(InputStream in = this.getClass().getResourceAsStream("/books.txt")){
+//			SerializationStorage arg = new SerializationStorage();
+//			arg.addBook(new Book(1,"Dieci Piccoli Indiani",new Author(1,"Agatha","Christie"),new Publisher(1,"Mondadori"),new BigDecimal(10.5)));
+//			arg.addBook(new Book(2,"The Java Programming Language",new Author[] {new Author(2,"Ken","Arnolds"),new Author(3,"James","Gosling"),new Author(4,"David","Holmes")},new Publisher(2,"Addison-Wesley Professional"),new BigDecimal(10.5)));
+//			assertNotNull(in);
+//			lib.loadBooks(in,null);
+//			assertTrue(lib.getBooks().equals(arg.getBooks()));
+//		} catch (IOException | RuntimeException e) {
+//			System.out.println("File not found");
+//			fail("prova");
+//		}
+//	}
 }

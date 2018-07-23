@@ -9,12 +9,14 @@ public interface BookDao {
 	
 	Collection<Book> findAll();
 	
-	Book searchBookByIsbn(String isbn);
+	Book findByIsbn(String isbn);
 	
-	Book[] searchBooksByTitle(String title);
+	Book[] findByTitle(String title);
 	
-	Book[] searchBooksByAuthor(Author author);
+	Book[] findByAuthor(Author author);
 	
-	void store(Book book);
+	Book store(Book book);
+	
+	void remove(Book book);
 	
 }

@@ -45,6 +45,10 @@ public class SerializationStorage implements Serializable {
 		this.loadArchive(this.archive);
 	}
 
+	public SerializationStorage() {
+		this.archive="";
+	}
+	
 	@SuppressWarnings("unchecked")
 	protected void loadArchive(InputStream input) throws IOException, ClassNotFoundException {
 		ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(input));

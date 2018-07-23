@@ -6,5 +6,7 @@ public interface AuthorDao {
 	
 	Author getOrCreateAuthor(String firstName,String lastName);
 	
-	Author searchAuthorByFirstAndLastName(String firstName,String lastName);
+	Author findByFirstAndLastName(String firstName,String lastName);
+	
+	Author findById(long id);
 }
