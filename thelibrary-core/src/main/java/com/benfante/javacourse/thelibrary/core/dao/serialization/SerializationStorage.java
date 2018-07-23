@@ -29,7 +29,7 @@ public class SerializationStorage implements Serializable {
 
 
 	@SuppressWarnings("unchecked")
-	void loadArchive(InputStream input) throws IOException, ClassNotFoundException {
+	private void loadArchive(InputStream input) throws IOException, ClassNotFoundException {
 		ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(input));
 		this.addBooks((HashSet<Book>) in.readObject());
 	}
@@ -96,7 +96,7 @@ public class SerializationStorage implements Serializable {
 		this.removeMapAuthor(book);
 		this.removeMapIsbn(book);
 	}
-	public void removeBook(Book book) {
+	void removeBook(Book book) {
 //		int hash = book.hashCode();
 //		boolean found = false;
 //		for (int i=0; i < this.books.length; i++) {
@@ -111,11 +111,11 @@ public class SerializationStorage implements Serializable {
 		this.removeMap(book);
 	}
 	
-	public void removeBooks(Book[] books) {
+	void removeBooks(Book[] books) {
 		for(Book b : books)
 			this.removeBook(b);
 	}
-	public void removeBooks(Collection<Book> books) {
+	void removeBooks(Collection<Book> books) {
 		for(Book b : books) {
 			this.removeBook(b);
 		}

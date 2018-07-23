@@ -24,20 +24,17 @@ public class SerializationBookDao implements BookDao {
 
 	@Override
 	public Book searchBookByIsbn(String isbn) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.serializationStorage.booksByIsbn.get(isbn);
 	}
 
 	@Override
 	public Book[] searchBooksByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.serializationStorage.booksByTitle.get(title).toArray(runtimeArr);
 	}
 
 	@Override
 	public Book[] searchBooksByAuthor(Author author) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.serializationStorage.booksByAuthor.get(author).toArray(runtimeArr);
 	}
 
 	@Override
