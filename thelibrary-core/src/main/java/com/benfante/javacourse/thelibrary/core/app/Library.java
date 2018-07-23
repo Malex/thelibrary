@@ -4,8 +4,7 @@ import com.benfante.javacourse.thelibrary.core.dao.AuthorDao;
 import com.benfante.javacourse.thelibrary.core.dao.BookDao;
 import com.benfante.javacourse.thelibrary.core.dao.DaoFactory;
 import com.benfante.javacourse.thelibrary.core.dao.DaoFactoryCreator;
-import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationDaoFactory;
-import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationStorage;
+
 import com.benfante.javacourse.thelibrary.core.model.*;
 
 import java.io.BufferedReader;
