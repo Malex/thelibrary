@@ -3,6 +3,8 @@ package com.benfante.javacourse.thelibrary.core.model;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -133,6 +135,63 @@ public class BookTest {
 		assertTrue(book1.compareTo(book2)==0);
 		assertTrue(book1.compareTo(book3)>0);
 		assertTrue(book1.compareTo(book4)<0);
+	}
+	
+	//Benfante tests
+	@Test
+	public void testBookConstruction2() {
+		long id = 0;
+		String title = "A title";
+		List<Author> authors = new LinkedList<>();
+		authors.add(new Author(0, "The", "single author"));
+		Publisher publisher = new Publisher(0, "A publisher");
+		BigDecimal price = BigDecimal.valueOf(1.23);
+		Book book = new Book(id, title, authors, publisher, price);
+		assertEquals(id, book.getId());
+		assertEquals(title, book.getTitle());
+		assertEquals(authors, book.getAuthor());
+		assertEquals(price, book.getPrice());
+	}
+
+	@Test
+	public void testBookSetters2() {
+		long id = 0;
+		String title = "A title";
+		List<Author> authors = new LinkedList<>();
+		authors.add(new Author(0, "The", "single author"));
+		Publisher publisher = new Publisher(0, "A publisher");
+		BigDecimal price = BigDecimal.valueOf(1.23);
+		Book book = new Book(id, title, authors, publisher, price);
+		long newId = 1;
+		String newTitle = "Another title";
+		List<Author> newAuthors = new LinkedList<>();
+		authors.add(new Author(1, "Another", "author"));
+		Publisher newPublisher = new Publisher(0, "Another publisher");
+		BigDecimal newPrice = BigDecimal.valueOf(2.34);
+		book.setId(newId);
+		book.setTitle(newTitle);
+		book.setAuthor(newAuthors);
+		book.setPublisher(newPublisher);
+		book.setPrice(newPrice);
+		assertEquals(newId, book.getId());
+		assertEquals(newTitle, book.getTitle());
+		assertEquals(newAuthors, book.getAuthor());
+		assertEquals(newPublisher, book.getPublisher());
+		assertEquals(newPrice, book.getPrice());
+	}
+	
+	@Test
+	public void testAddAuthor2() {
+		long id = 0;
+		String title = "A title";
+		List<Author> authors = new LinkedList<>();
+		authors.add(new Author(0, "The", "single author"));
+		Publisher publisher = new Publisher(0, "A publisher");
+		BigDecimal price = BigDecimal.valueOf(1.23);
+		Book book = new Book(id, title, authors, publisher, price);
+		book.addAuthor(new Author(1, "Another", "Author"));
+		assertEquals(2, book.getAuthor().size());
+		assertEquals(1L, book.getAuthor().get(1).getId());
 	}
 	
 }

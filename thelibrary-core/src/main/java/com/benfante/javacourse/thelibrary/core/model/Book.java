@@ -2,7 +2,7 @@ package com.benfante.javacourse.thelibrary.core.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -24,7 +24,7 @@ public class Book implements Serializable,Comparable<Book> {
 	private String isbn;
 	private String title;
 	private BigDecimal price;
-	private List<Author> author = new LinkedList<>();
+	private List<Author> author = new ArrayList<>();
 	private Publisher publisher;
 	private SortedSet<BookCategory> categories = new TreeSet<>();
 	
@@ -76,14 +76,30 @@ public class Book implements Serializable,Comparable<Book> {
 		this.setPrice(price);
 	}
 	
+	public Book(long id, String Isbn, String title, List<Author> author, Publisher publisher, BigDecimal price ) {
+		this(id,title,author,publisher,price);
+		this.setIsbn(Isbn);
+	}
+
+	public Book(long Id, String Isbn, String title, List<Author> author) {
+		this(Id,title,author);
+		this.setIsbn(Isbn);
+	}
+	
+	public Book(long Id, String Isbn, String title, List<Author> author,BigDecimal price) {
+		this(Id,title,author,price);
+		this.setIsbn(Isbn);
+	}
+	
+	
 	public long getId() {
 		return this.Id;
 	}
 	public void setId(long id) {
-		if(id>0)
+		if(id>=0)
 			this.Id = id;
 		else
-			throw new IllegalArgumentException("ID must be positive");
+			throw new IllegalArgumentException("ID must be non-negative");
 	}
 	
 	
@@ -132,7 +148,7 @@ public class Book implements Serializable,Comparable<Book> {
 			throw new IllegalArgumentException();
 		this.author.clear();
 		for(Author g : author) {
-			if(g.getId()<=0)
+			if(g.getId()<0)
 				throw new IllegalArgumentException();
 			else
 				this.addAuthor(g);
@@ -155,7 +171,7 @@ public class Book implements Serializable,Comparable<Book> {
 		return this.publisher;
 	}
 	public void setPublisher(Publisher publisher) {
-		if(publisher!=null && publisher.getId() > 0)
+		if(publisher!=null && publisher.getId() >= 0)
 			this.publisher = publisher;
 		else
 			throw new IllegalArgumentException();
@@ -164,7 +180,7 @@ public class Book implements Serializable,Comparable<Book> {
 	
 	public void addAuthor(Author author) throws RuntimeException {
 		log.debug("Adding author: id={}, Name: {} {}",author.getId(),author.getFirstName(),author.getLastName());
-		if(author==null || author.getId()<=0)
+		if(author==null || author.getId()<0)
 			throw new IllegalArgumentException();
 		if(!this.author.add(author))  //adding happens here
 			throw new RuntimeException("Could not add author");
@@ -175,7 +191,8 @@ public class Book implements Serializable,Comparable<Book> {
 		return this.getAuthor().contains(author);
 	}
 	
-	public String getPrint() {
+	@Override
+	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthors: ");
 		for (Author g : this.getAuthor()) {
@@ -288,7 +305,7 @@ public class Book implements Serializable,Comparable<Book> {
 	}
 	@Override
 	public int compareTo(Book o) {
-		if(this.hashCode()!=o.hashCode())
+		if(o.hashCode()!=this.hashCode()) //NullPointerException is raised here automatically
 			return this.calcComp(o);
 		else
 			if(this.equals(o))

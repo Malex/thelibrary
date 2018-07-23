@@ -1,8 +1,15 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class BookTitleComparator implements Comparator<Book> {
+public class BookTitleComparator implements Comparator<Book>,Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	
 	private static final BookTitleComparator comparator = new BookTitleComparator();
 	

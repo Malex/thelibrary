@@ -1,19 +1,25 @@
 package com.benfante.javacourse.thelibrary.core.app;
 
+import com.benfante.javacourse.thelibrary.core.dao.BookDao;
+import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationBookDao;
+import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationStorage;
 import com.benfante.javacourse.thelibrary.core.model.*;
 
-import java.io.*;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+
 
 public class Library {
 	
-	private Collection<Book> books = new LinkedList<>();
-
+	private SerializationStorage serializationStorage;
+	private BookDao bookDao;
+	
 	public static void main(String[] args) {
 		Library lib = new Library();
 		lib.runApp(System.in);
@@ -40,7 +46,8 @@ public class Library {
 		input_a = in.readLine();
 		printLine(out,"\tInserisci Cognome Autore: ");
 		input_c = in.readLine();
-		b.addAuthor(new Author(id_a,input_a,input_c));
+		Author a = new Author(id_a,input_a,input_c);
+		b.addAuthor(a);
 		return true;
 	}
 	
@@ -89,7 +96,7 @@ public class Library {
 		
 		while(loadCategory(in, out, b)) {}
 		
-		this.addBook(b);
+		this.bookDao.store(b);
 		return true;
 		
 	}
@@ -116,131 +123,28 @@ public class Library {
 	}
 	
 	public Library() {
-		super();
+		 try {
+			 this.serializationStorage = new SerializationStorage("archive.dat");
+			 this.bookDao = new SerializationBookDao(this.serializationStorage);
+
+		 } catch (Exception e) {
+			 e.printStackTrace();
+		 }
 	}
 	
-	public Library(Book book) {
-		this.addBook(book);
-	}
-	
-	public Library(Book[] books) {
-		this.addBooks(books);
-	}
-	
-	public void addBook(Book book) {
-//		Book[] new_books = new Book[this.books.length+1];
-//		for(int i=0; i<this.books.length; i++)
-//			new_books[i]=this.books[i];
-//		new_books[this.books.length] = book;
-//		this.books = new_books;
-		this.books.add(book);
-	}
-	
-	public void addBooks(Book[] books) {
-		for (Book g : books)
-			this.addBook(g); 
-	}
-	public void addBooks(Collection<Book> books) {
-		for (Book g : books)
-			this.addBook(g); 
-	}
-	
-	public void removeBook(Book book) {
-//		int hash = book.hashCode();
-//		boolean found = false;
-//		for (int i=0; i < this.books.length; i++) {
-//			if(this.books[i].hashCode() == hash && this.books[i].equals(book)) {
-//				this.books[i] = null;
-//				if(!found) found=true;
-//			}
-//		}
-//		if(found)
-//			this.trimBooks();
-		this.books.remove(book);
-	}
-	
-	public void removeBooks(Book[] books) {
-		for(Book b : books)
-			this.removeBook(b);
-	}
-	public void removeBooks(Collection<Book> books) {
-		for(Iterator<Book> b=books.iterator();b.hasNext();) {
-			this.removeBook(b.next());
-		}
-	}
-	
-	/*Method to resize array after removing elements*/
-//	void trimBooks() {
-//		int count = 0,shift=0;
-//		for (int i=0; i < this.books.length; i++) {
-//			if(this.books[i]==null) { //Finding how many elements were removed, saving in count
-//				count++;
-//			}
-//		}
-//		Book[] new_book = new Book[this.books.length-count];
-//		
-//		for (int i=0; i < this.books.length-count;i++) { // Filling new array
-//			while(this.books[i+shift]==null) { //Counting number of blanks from location in cycle
-//				shift++;
-//			}
-//			new_book[i]=this.books[i+shift];
-//		}
-//		
-//		this.books = new_book;
+//	public Library(Book book) {
+//		this.addBook(book);
+//	}
+//	
+//	public Library(Book[] books) {
+//		this.addBooks(books);
 //	}
 	
 	
-	public Collection<Book> searchBooksByTitle(String title) {
-		List<Book> ret = new LinkedList<>();
-		for(Book g : this.getBooks())
-			if (g.getTitle().equals(title)) 
-				ret.add(g);
-		return ret;
-	}
-	
-	public Collection<Book> searchBooksByAuthor(Author author) {
-		List<Book> ret = new LinkedList<>();
-		for(Book g : this.getBooks())
-			if (g.hasAuthor(author)) 
-				ret.add(g);
-		return ret;
-	}
-	
-
-	Collection<Book> getBooks() {
-		return this.books;
-	}
-
-	
 	public void printBooks() {
-		for(Book g : this.getBooks()) {
-			System.out.println(g.getPrint()+"\n");
+		for(Book g : this.bookDao.findAll()) {
+			System.out.println(g.toString()+"\n");
 		}
 	}
-
-	
-	public void saveArchive() {
-		try(ObjectOutputStream oj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(this.getClass().getResource("/books.dat").getFile()))));) {
-			oj.writeObject(this.getBooks());
-		} catch(IOException e) {
-			System.out.println("Couldnt create output .dat archive");
-			e.printStackTrace();
-
-		}
-	}
-	
-
-	@SuppressWarnings("unchecked")
-	public static Library loadArchive() throws ClassNotFoundException {
-		try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(Library.class.getResourceAsStream("/books.dat"))); ) {
-			Library ret = new Library();
-			ret.addBooks((List<Book>) in.readObject());
-			return ret;
-		} catch(IOException e) {
-			System.out.println("Couldnt find archive to load");
-		}
-		throw new RuntimeException("No return to make");
-	}
-	
 	
 }
