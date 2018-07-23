@@ -7,14 +7,14 @@ import com.benfante.javacourse.thelibrary.core.model.Book;
 
 public interface BookDao {
 	
-	public Collection<Book> getAllBooks();
+	Collection<Book> getAllBooks();
 	
-	public Book searchBookByIsbn(String isbn);
+	Book searchBookByIsbn(String isbn);
 	
-	public Book[] searchBooksByTitle(String title);
+	Book[] searchBooksByTitle(String title);
 	
-	public Book[] searchBooksByAuthor(Author author);
+	Book[] searchBooksByAuthor(Author author);
 	
-	public void store(Book book);
+	void store(Book book);
 	
 }

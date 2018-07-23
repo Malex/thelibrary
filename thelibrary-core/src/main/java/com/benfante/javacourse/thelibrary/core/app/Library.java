@@ -1,5 +1,6 @@
 package com.benfante.javacourse.thelibrary.core.app;
 
+import com.benfante.javacourse.thelibrary.core.dao.BookDao;
 import com.benfante.javacourse.thelibrary.core.model.*;
 
 import java.io.*;
@@ -283,7 +284,8 @@ public class Library {
 
 	
 	public void printBooks() {
-		for(Book g : this.getBooks()) {
+		BookDao bookDao = null;
+		for(Book g : bookDao.getAllBooks()) {
 			System.out.println(g.toString()+"\n");
 		}
 	}

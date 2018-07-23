@@ -2,8 +2,8 @@ package com.benfante.javacourse.thelibrary.core.dao;
 
 public interface DaoFactory {
 
-	public BookDao getBookDao(); 
+	BookDao getBookDao(); 
 	
-	public AuthorDao getAuthorDao();
+	AuthorDao getAuthorDao();
 	
 }
