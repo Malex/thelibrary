@@ -1,7 +1,9 @@
 package com.benfante.javacourse.thelibrary.core.app;
 
+import com.benfante.javacourse.thelibrary.core.dao.AuthorDao;
 import com.benfante.javacourse.thelibrary.core.dao.BookDao;
-import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationBookDao;
+import com.benfante.javacourse.thelibrary.core.dao.DaoFactory;
+import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationDaoFactory;
 import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationStorage;
 import com.benfante.javacourse.thelibrary.core.model.*;
 
@@ -18,7 +20,9 @@ import java.math.BigDecimal;
 public class Library {
 	
 	private SerializationStorage serializationStorage;
-	private BookDao bookDao;
+	private DaoFactory factory = new SerializationDaoFactory(serializationStorage);
+	private BookDao bookDao = factory.getBookDao();
+	private AuthorDao authorDao = factory.getAuthorDao();
 	
 	public static void main(String[] args) {
 		Library lib = new Library();
@@ -125,7 +129,6 @@ public class Library {
 	public Library() {
 		 try {
 			 this.serializationStorage = new SerializationStorage("archive.dat");
-			 this.bookDao = new SerializationBookDao(this.serializationStorage);
 
 		 } catch (Exception e) {
 			 e.printStackTrace();
