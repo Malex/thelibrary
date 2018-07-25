@@ -17,12 +17,30 @@ import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class Library {
+	private static final Logger log = LoggerFactory.getLogger(Library.class);
 	
 	private DaoFactory factory = DaoFactoryCreator.getDaoFactory();
 	private BookDao bookDao = factory.getBookDao();
 	private AuthorDao authorDao = factory.getAuthorDao();
+	
+	public Library() {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				try {
+					log.info("Destroying the library object, saving library data.");
+					factory.close();
+				} catch (Exception e) {
+					log.error("Cant close DaoFactory in Library main run");
+				}
+			}
+		});
+	}
 	
 	public static void main(String[] args) {
 		Library lib = new Library();
@@ -33,6 +51,14 @@ public class Library {
 	}
 
 	
+	@Override
+	protected void finalize() throws Throwable {
+		log.info("Destroying the library object, saving library data.");
+		this.factory.close();
+		super.finalize();
+	}
+
+
 	private static void printLine(BufferedWriter out,String s) throws IOException {
 		out.write(s);
 		out.newLine();
@@ -80,8 +106,9 @@ public class Library {
 		long id;
 		printLine(out,"Inserisci il libro: ");
 		printLine(out,"\tInserisci l'ID del libro: ");
-		if((id = Long.parseLong(in.readLine()))==-1)
+		if((id = Long.parseLong(in.readLine()))==-1) {
 			return false;
+		}
 		long id_p;
 		String titolo;
 		
@@ -93,7 +120,6 @@ public class Library {
 
 		
 		while(loadAuthor(in,out,b)) {}
-
 		printLine(out,"\tInserisci ID dell'editore: ");
 		id_p = Long.parseLong(in.readLine());
 		printLine(out,"\tInserisci nome editore: ");
@@ -127,9 +153,6 @@ public class Library {
 		}
 	}
 	
-	public Library() {
-		 
-	}
 	
 //	public Library(Book book) {
 //		this.addBook(book);

@@ -35,8 +35,7 @@ public class DaoFactoryCreator {
 					else 
 						res = serializationDaoFactory;
 				} catch (ClassNotFoundException | IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new RuntimeException("Error creating a SerializationDaoFactory",e);
 				}
 				break;
 		}
