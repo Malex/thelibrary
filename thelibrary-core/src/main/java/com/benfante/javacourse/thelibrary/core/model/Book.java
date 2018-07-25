@@ -25,14 +25,9 @@ public class Book implements Serializable,Comparable<Book> {
 	private String isbn;
 	private String title;
 	private BigDecimal price;
-	@ManyToMany
-	@JoinTable(
-			name="book_author",
-			joinColumns=@JoinColumn(name="book_id"),
-			inverseJoinColumns=@JoinColumn(name="author_id")
-			)
+	@ManyToMany(cascade= {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<Author> author = new ArrayList<>();
-	@ManyToOne
+	@ManyToOne(cascade= {CascadeType.ALL})
 	private Publisher publisher;
 	@ElementCollection(targetClass=BookCategory.class)
 	@Enumerated(EnumType.STRING)

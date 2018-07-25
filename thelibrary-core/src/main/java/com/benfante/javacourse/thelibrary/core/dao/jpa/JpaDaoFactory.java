@@ -1,7 +1,6 @@
 package com.benfante.javacourse.thelibrary.core.dao.jpa;
 
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import com.benfante.javacourse.thelibrary.core.dao.AuthorDao;
 import com.benfante.javacourse.thelibrary.core.dao.BookDao;
@@ -24,7 +23,7 @@ public class JpaDaoFactory implements DaoFactory {
 
 	@Override
 	public BookDao getBookDao() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

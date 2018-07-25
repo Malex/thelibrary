@@ -29,12 +29,12 @@ public class JpaDaoFactoryTest {
 
 	@Test
 	public void testGetBookDao() {
-		assertNull(instance.getBookDao());
+		assertNotNull(instance.getBookDao());
 	}
 
 	@Test
 	public void testGetAuthorDao() {
-		assertNull(instance.getAuthorDao());
+		assertNotNull(instance.getAuthorDao());
 	}
 
 	
