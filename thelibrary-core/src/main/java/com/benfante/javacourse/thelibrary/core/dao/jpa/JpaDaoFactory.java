@@ -18,19 +18,17 @@ public class JpaDaoFactory implements DaoFactory {
 	@Override
 	public void close() throws Exception {
 		entityManagerFactory.close();
-
 	}
 
 	@Override
 	public BookDao getBookDao() {
-		
-		return null;
+		return new JpaBookDao(this.entityManagerFactory.createEntityManager());
 	}
 
 	@Override
 	public AuthorDao getAuthorDao() {
-		// TODO Auto-generated method stub
-		return null;
+		return new JpaAuthorDao(this.entityManagerFactory.createEntityManager());
+
 	}
 
 }
