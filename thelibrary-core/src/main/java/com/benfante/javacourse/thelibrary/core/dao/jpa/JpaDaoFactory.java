@@ -27,7 +27,7 @@ public class JpaDaoFactory implements DaoFactory {
 
 	@Override
 	public AuthorDao getAuthorDao() {
-		return new JpaAuthorDao(this.entityManagerFactory.createEntityManager());
+		return new JpaAuthorDao(this.entityManagerFactory);
 
 	}
 

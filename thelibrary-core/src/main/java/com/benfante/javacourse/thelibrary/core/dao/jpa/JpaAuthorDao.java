@@ -1,16 +1,17 @@
 package com.benfante.javacourse.thelibrary.core.dao.jpa;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import com.benfante.javacourse.thelibrary.core.dao.AuthorDao;
 import com.benfante.javacourse.thelibrary.core.model.Author;
 
 public class JpaAuthorDao implements AuthorDao {
 
-	private EntityManager em;
+	private EntityManagerFactory emf;
 	
-	public JpaAuthorDao(EntityManager em) {
-		this.em = em;
+	public JpaAuthorDao(EntityManagerFactory emf) {
+		this.emf = emf;
 	}
 	
 	@Override
@@ -27,8 +28,8 @@ public class JpaAuthorDao implements AuthorDao {
 
 	@Override
 	public Author findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = emf.createEntityManager();
+		return em.find(Author.class,id);
 	}
 
 }
