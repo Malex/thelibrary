@@ -51,12 +51,12 @@ public class Library {
 	}
 
 	
-	@Override
-	protected void finalize() throws Throwable {
-		log.info("Destroying the library object, saving library data.");
-		this.factory.close();
-		super.finalize();
-	}
+//	@Override
+//	protected void finalize() throws Throwable {
+//		log.info("Destroying the library object, saving library data.");
+//		this.factory.close();
+//		super.finalize();
+//	}
 
 
 	private static void printLine(BufferedWriter out,String s) throws IOException {

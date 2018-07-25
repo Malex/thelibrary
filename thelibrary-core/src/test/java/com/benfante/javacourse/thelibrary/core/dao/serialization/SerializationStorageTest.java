@@ -77,7 +77,7 @@ public class SerializationStorageTest {
 			instance = new SerializationStorage(is);
 		}
 		assertNotNull(instance.books);
-		assertEquals(2,instance.books.size());
+		assertEquals(1,instance.books.size());
 		
 		
 	}

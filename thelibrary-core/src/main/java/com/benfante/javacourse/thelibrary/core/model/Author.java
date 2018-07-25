@@ -1,15 +1,17 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
+@Entity
 public class Author implements Serializable,Comparable<Author> {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	@OneToOne
 	private FullName name;
 	
 	

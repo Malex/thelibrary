@@ -7,25 +7,37 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.persistence.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Entity
 public class Book implements Serializable,Comparable<Book> {
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = LoggerFactory.getLogger(Book.class);
 	
-	private long Id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
 	private String isbn;
 	private String title;
 	private BigDecimal price;
+	@ManyToMany
+	@JoinTable(
+			name="book_author",
+			joinColumns=@JoinColumn(name="book_id"),
+			inverseJoinColumns=@JoinColumn(name="author_id")
+			)
 	private List<Author> author = new ArrayList<>();
+	@ManyToOne
 	private Publisher publisher;
+	@ElementCollection(targetClass=BookCategory.class)
+	@Enumerated(EnumType.STRING)
+	@Column(name="catgory")
+	@OrderBy("category ASC")
 	private SortedSet<BookCategory> categories = new TreeSet<>();
 	
 	public Book(long id, String title, Author author, Publisher publisher, BigDecimal price ) {
@@ -93,11 +105,11 @@ public class Book implements Serializable,Comparable<Book> {
 	
 	
 	public long getId() {
-		return this.Id;
+		return this.id;
 	}
 	public void setId(long id) {
 		if(id>=0)
-			this.Id = id;
+			this.id = id;
 		else
 			throw new IllegalArgumentException("ID must be non-negative");
 	}
