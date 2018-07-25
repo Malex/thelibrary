@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
+import java.util.Collection;
 
 
 public class Library {
@@ -25,6 +26,7 @@ public class Library {
 	
 	public static void main(String[] args) {
 		Library lib = new Library();
+		lib.bookDao.findAll();
 		lib.runApp(System.in);
 		lib.printBooks();
 		
@@ -139,9 +141,13 @@ public class Library {
 	
 	
 	public void printBooks() {
-		for(Book g : this.bookDao.findAll()) {
+		for(Book g : this.getBooks()) {
 			System.out.println(g.toString()+"\n");
 		}
 	}
+	Collection<Book> getBooks() {
+		return this.bookDao.findAll();
+	}
+	
 	
 }

@@ -2,6 +2,8 @@ package com.benfante.javacourse.thelibrary.core.dao.serialization;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -68,6 +70,17 @@ public class SerializationStorageTest {
 		
 	}
 	
+	@Test
+	public void testLoadArchive() throws ClassNotFoundException, IOException {
+		SerializationStorage instance = null;
+		try(InputStream is = this.getClass().getResourceAsStream("/archive.dat")) {
+			instance = new SerializationStorage(is);
+		}
+		assertNotNull(instance.books);
+		assertEquals(2,instance.books.size());
+		
+		
+	}
 	
 
 }

@@ -1,28 +1,22 @@
 package com.benfante.javacourse.thelibrary.core.app;
 
 
-import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationStorage;
-import com.benfante.javacourse.thelibrary.core.model.*;
+
 
 import static org.junit.Assert.*;
 
 import java.io.*;
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+
 
 import org.junit.Test;
 
 public class LibraryTest {
-//	private OutputStream nullPrintStream =
-//			new OutputStream() {
-//				@Override
-//				public void write(int b) throws IOException {
-//				}
-//			};
+	private OutputStream nullPrintStream =
+			new OutputStream() {
+				@Override
+				public void write(int b) throws IOException {
+				}
+			};
 //	
 //	
 
@@ -52,33 +46,12 @@ public class LibraryTest {
 //
 //	@Test
 //	public void testSearchBooksByTitle() {
-//		List<Book> b = new LinkedList<>();
-//		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(5,"Sanremo",new Author(5,"Pippow","Baudow")));
-//		Library lib = new Library();
-//		lib.addBooks(b);
-//		Book[] ret=lib.searchBooksByTitle("Sanremo");
-//		Book[] b2 = new Book[2] ;
-//		b2[0]=b.get(0);
-//		b2[1]=b.get(2);
-//		assertTrue(Arrays.equals(ret, b2));
+//		
 //	}
 //
 //	@Test
 //	public void testSearchBooksByAuthor() {
-//		List<Book> b = new LinkedList<>();
-//		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-//		b.add(new Book(5,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
-//		Author Pippo = new Author(3, "Pippo", "Baudo");
-//		Library lib = new Library();
-//		lib.addBooks(b);
-//		Book[] ret=lib.searchBooksByAuthor(Pippo);
-//		Book[] b2 = new Book[2] ;
-//		b2[0]=b.get(0);
-//		b2[1]=b.get(1);
-//		assertTrue(Arrays.equals(ret, b2));
+
 //	}
 //
 
@@ -105,15 +78,15 @@ public class LibraryTest {
 //		
 //	}
 //	
-//	@Test
-//	public void testLoadAllBooks() throws IOException {
-//		Library app = new Library();
-//		try (InputStream is = this.getClass().getResourceAsStream("/books.txt");) {
-//			app.loadBooks(is, nullPrintStream);
-//			assertNotNull(app.getBooks());
-//			assertEquals(2, app.getBooks().size());
-//		}
-//	}
+		@Test
+		public void testLoadAllBooks() throws IOException {
+			Library app = new Library();
+			try (InputStream is = this.getClass().getResourceAsStream("/books.txt");) {
+				app.loadBooks(is, nullPrintStream);
+				assertNotNull(app.getBooks());
+				assertEquals(2, app.getBooks().size());
+			}
+		}
 //
 //	@Test
 //	public void testAddExistentBook() throws ClassNotFoundException, IOException {
@@ -147,36 +120,9 @@ public class LibraryTest {
 //		} 
 //	}
 //	
-//	@Test
-//	public void testSearchBookByTitleAfterRemove() throws ClassNotFoundException, IOException {
-//		Library app = new Library();
-//		try (InputStream is = this.getClass().getResourceAsStream("/books.dat");) {
-//			System.out.println(this.getClass().getResource("/books.dat"));
-//			app.loadArchive(is);
-//		}
-//		String title = "Dieci Piccoli Indiani";
-//		Book[] searchResult = app.searchBooksByTitle(title);
-//		app.removeBook(searchResult[0]);
-//		searchResult = app.searchBooksByTitle(title);
-//		assertEquals(0, searchResult.length);
-//	}
+
 //	
-//	@Test
-//	public void testSearchBookByAuthorAfterRemove() throws ClassNotFoundException, IOException {
-//		Library app = new Library();
-//		try (InputStream is = this.getClass().getResourceAsStream("/books.dat");) {
-//			System.out.println(this.getClass().getResource("/books.dat"));
-//			app.loadArchive(is);
-//		}
-//		assertNotNull(app.getBooks());
-//		assertFalse(app.getBooks().isEmpty());
-//		Author author = new Author(1, "Agatha", "Christie");
-//		app.addBook(new Book(5,"Orient Express", author));
-//		Book[] searchResult = app.searchBooksByAuthor(author);
-//		app.removeBook(searchResult[0]);
-//		searchResult = app.searchBooksByAuthor(author);
-//		assertEquals(1, searchResult.length);
-//	}
+
 //	
 	
 //	@Test

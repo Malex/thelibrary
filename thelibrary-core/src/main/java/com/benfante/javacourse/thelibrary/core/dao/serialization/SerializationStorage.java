@@ -27,7 +27,7 @@ public class SerializationStorage implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private static final Logger log = LoggerFactory.getLogger(SerializationStorage.class);
-	private String archive;
+	private String archive = "";
 
 	
 	Collection<Book> books = new HashSet<>();
@@ -57,6 +57,16 @@ public class SerializationStorage implements Serializable {
 	
 	private void loadArchive(String fileSource) throws ClassNotFoundException, FileNotFoundException, IOException {
 		File file = new File(fileSource);
+		log.info("Loading books from {} file",file.getAbsolutePath());
+		if(file.exists()) {
+			try(InputStream fis = new FileInputStream(file)) {
+				this.loadArchive(fis);
+			}
+		}
+	}
+	
+	void loadArchive() throws FileNotFoundException, IOException, ClassNotFoundException {
+		File file = new File(this.archive);
 		log.info("Loading books from {} file",file.getAbsolutePath());
 		if(file.exists()) {
 			try(InputStream fis = new FileInputStream(file)) {
