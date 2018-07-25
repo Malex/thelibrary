@@ -21,7 +21,7 @@ public class SerializationBookDaoTest {
 	}
 
 	@Test
-	public void testSearchBookByAuthorAfterRemove() throws ClassNotFoundException, IOException {
+	public void testFindByAuthorAfterRemove() throws ClassNotFoundException, IOException {
 		SerializationBookDao instance = null;
 		try (InputStream is = this.getClass().getResourceAsStream("/archive.dat");) {
 			instance = new SerializationBookDao(new SerializationStorage(is));

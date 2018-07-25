@@ -47,13 +47,6 @@ public class SerializationBookDao implements BookDao {
 	@Override
 	public Book store(Book book) {
 		this.serializationStorage.addBook(book);
-		//activate to generate .dat from library
-//		try {
-//			this.serializationStorage.storeArchive();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		return book;
 	}
 
