@@ -7,10 +7,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
+import javax.persistence.criteria.CollectionJoin;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ListJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.SetJoin;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
+import javax.persistence.metamodel.SingularAttribute;
 
 import com.benfante.javacourse.thelibrary.core.dao.BookDao;
 import com.benfante.javacourse.thelibrary.core.model.Author;
@@ -76,10 +83,10 @@ public class JpaBookDao implements BookDao {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Book> q = cb.createQuery(Book.class);
 		Root<Book> root = q.from(Book.class);
-		CriteriaQuery<Author> q2 = cb.createQuery(Author.class);
-		Root<Author> root2 = q2.from(Author.class);
-		Predicate pr = root.get("author").in(root2.get("book"));
-		q.where(pr);
+		Metamodel m = em.getMetamodel();
+		EntityType<Book> entity = m.entity(Book.class);
+		Join<Book, Author> owner = root.join(entity.getList("author",Author.class));
+		
 		List<Book> result = em.createQuery(q).getResultList();
 		em.getTransaction().commit();
 		em.close();

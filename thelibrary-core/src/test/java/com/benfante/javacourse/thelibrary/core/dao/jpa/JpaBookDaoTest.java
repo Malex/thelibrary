@@ -70,7 +70,13 @@ public class JpaBookDaoTest {
 
 	@Test
 	public void testFindByAuthor() {
-		//fail("Not yet implemented");
+		BookDao b = instance.getBookDao();
+		Book[] col = b.findByAuthor(new Author(new FullName("Gianni","Levada")));
+		assertEquals(2, col.length);
+		assertTrue(popBook.containsAll(Arrays.asList(col)));
+		col = b.findByAuthor(new Author("Janus","Caputo"));
+		assertEquals(1, col.length);
+		assertTrue(popBook.containsAll(Arrays.asList(col)));
 	}
 
 	@Test
