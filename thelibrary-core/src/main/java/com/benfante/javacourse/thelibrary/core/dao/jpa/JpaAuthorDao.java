@@ -40,13 +40,13 @@ public class JpaAuthorDao implements AuthorDao {
 		return result;
 	}
 
-	private FullName getOrCreateFullName(String firstName, String lastName) {
+	FullName getOrCreateFullName(String firstName, String lastName) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<FullName> q = cb.createQuery(FullName.class);
 		Root<FullName> root = q.from(FullName.class);
-		q.where(cb.like(root.get("firstname"),firstName),cb.like(root.get("lastname"), lastName));
+		q.where(cb.like(root.get("firstName"),firstName),cb.like(root.get("lastName"), lastName));
 		FullName result;
 		try {
 			result = em.createQuery(q).getSingleResult();
@@ -67,7 +67,7 @@ public class JpaAuthorDao implements AuthorDao {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Author> q = cb.createQuery(Author.class);
 		Root<Author> root = q.from(Author.class);
-		q.where(cb.equal(root.get("fullname"), fullname));
+		q.where(cb.equal(root.get("name"), fullname));
 		Author result = em.createQuery(q).getSingleResult();
 		em.getTransaction().commit();
 		em.close();

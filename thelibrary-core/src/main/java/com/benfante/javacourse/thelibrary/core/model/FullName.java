@@ -20,6 +20,11 @@ public class FullName implements Serializable {
 		return firstName+" "+lastName;
 	}
 
+	public long getId() {
+		return this.id;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -58,6 +63,8 @@ public class FullName implements Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+	public FullName() {}
+	
 
 	public String getFirstName() {
 		return firstName;

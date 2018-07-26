@@ -15,6 +15,12 @@ public class Author implements Serializable,Comparable<Author> {
 	private FullName name;
 	
 	
+	public FullName getFullName() {
+		return name;
+	}
+
+	public Author() {}
+	
 	public Author(FullName name) {
 		this.name = name;
 	}
