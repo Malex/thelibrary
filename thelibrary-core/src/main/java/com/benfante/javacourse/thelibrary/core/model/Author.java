@@ -15,6 +15,10 @@ public class Author implements Serializable,Comparable<Author> {
 	private FullName name;
 	
 	
+	public Author(FullName name) {
+		this.name = name;
+	}
+	
 	public Author(long id, String firstName, String lastName) {
 		this.setId(id);
 		this.name = new FullName(firstName,lastName);
