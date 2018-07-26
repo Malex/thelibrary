@@ -11,11 +11,18 @@ public class Publisher implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)	
-	private long id;
+	private Long id;
 	private String name;
+	
+	
+	public Publisher() {}
 	
 	public Publisher(long id, String name) {
 		this.setId(id);
+		this.setName(name);
+	}
+	
+	public Publisher(String name) {
 		this.setName(name);
 	}
 	

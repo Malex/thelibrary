@@ -41,6 +41,7 @@ public class JpaAuthorDaoTest {
 	public void testFindById() {
 		AuthorDao auth = instance.getAuthorDao();
 		for(Author a : popAuthor) {
+			assertNotNull(a.getId());
 			assertEquals(a,auth.findById(a.getId()));
 		}
 	}

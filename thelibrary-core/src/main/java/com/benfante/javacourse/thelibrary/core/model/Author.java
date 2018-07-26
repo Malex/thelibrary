@@ -10,8 +10,8 @@ public class Author implements Serializable,Comparable<Author> {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
-	@OneToOne
+	private Long id;
+	@OneToOne(cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	private FullName name;
 	
 	
@@ -31,7 +31,7 @@ public class Author implements Serializable,Comparable<Author> {
 	}
 	
 	
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 	public void setId(long id) {
@@ -84,8 +84,7 @@ public class Author implements Serializable,Comparable<Author> {
 		if(!(o instanceof Author))
 			return false;
 		Author author = (Author) o;
-		if(this.getId()==author.getId()) {
-			//assert this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName());
+		if(this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName())) {
 			return true;
 		} else {
 			return false;
@@ -94,7 +93,7 @@ public class Author implements Serializable,Comparable<Author> {
 	
 	@Override
 	public int hashCode() {
-		return Long.valueOf(this.getId()).hashCode();//+this.getFirstName().hashCode()+this.getLastName().hashCode();
+		return this.getFirstName().hashCode()+this.getLastName().hashCode();
 	}
 	
 	@Override

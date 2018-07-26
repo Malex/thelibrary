@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -26,7 +27,14 @@ public class JpaBookDao implements BookDao {
 	@Override
 	public Collection<Book> findAll() {
 		EntityManager em = this.em.createEntityManager();
-		return em.createQuery("Book.findAll", Book.class).getResultList();
+		em.getTransaction().begin();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Book> q = cb.createQuery(Book.class);
+		q.from(Book.class);
+		List<Book> result = em.createQuery(q).getResultList();
+		em.getTransaction().commit();
+		em.close();
+		return result;
 	}
 
 	@Override
@@ -37,7 +45,10 @@ public class JpaBookDao implements BookDao {
 		CriteriaQuery<Book> q = cb.createQuery(Book.class);
 		Root<Book> root = q.from(Book.class);
 		q.where(cb.equal(root.get("isbn"), isbn));
-		Book result = em.createQuery(q).getSingleResult();
+		Book result = null;
+		try {
+			result = em.createQuery(q).getSingleResult();
+		} catch(NoResultException e) {}
 		em.getTransaction().commit();
 		em.close();
 		return result;
@@ -78,7 +89,7 @@ public class JpaBookDao implements BookDao {
 	public Book store(Book book) {
 		EntityManager em = this.em.createEntityManager();
 		em.getTransaction().begin();
-		em.persist(book);
+		book = em.merge(book);
 		em.getTransaction().commit();
 		em.close();
 		return book;
@@ -88,6 +99,7 @@ public class JpaBookDao implements BookDao {
 	public void remove(Book book) {
 		EntityManager em = this.em.createEntityManager();
 		em.getTransaction().begin();
+		book = em.merge(book);
 		em.remove(book);
 		em.getTransaction().commit();
 		em.close();

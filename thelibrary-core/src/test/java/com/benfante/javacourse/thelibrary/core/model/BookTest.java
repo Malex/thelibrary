@@ -14,7 +14,7 @@ public class BookTest {
 
 	@Test
 	public void testBookConstruction() {
-		long id = 1;
+		Long id = 1L;
 		String title = "A title";
 		Author author = new Author(1, "The", "single author");
 		Publisher publisher = new Publisher(1, "A publisher");
@@ -34,7 +34,7 @@ public class BookTest {
 		Publisher publisher = new Publisher(1, "A publisher");
 		float price = 1.23f;
 		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
-		long newId = 2;
+		Long newId = 2L;
 		String newTitle = "Another title";
 		Author newAuthor = new Author(2, "Another", "author");
 		Publisher newPublisher = new Publisher(2, "Another publisher");
@@ -140,7 +140,7 @@ public class BookTest {
 	//Benfante tests
 	@Test
 	public void testBookConstruction2() {
-		long id = 0;
+		Long id = 0L;
 		String title = "A title";
 		List<Author> authors = new LinkedList<>();
 		authors.add(new Author(0, "The", "single author"));
@@ -155,14 +155,14 @@ public class BookTest {
 
 	@Test
 	public void testBookSetters2() {
-		long id = 0;
+		Long id = 0L;
 		String title = "A title";
 		List<Author> authors = new LinkedList<>();
 		authors.add(new Author(0, "The", "single author"));
 		Publisher publisher = new Publisher(0, "A publisher");
 		BigDecimal price = BigDecimal.valueOf(1.23);
 		Book book = new Book(id, title, authors, publisher, price);
-		long newId = 1;
+		Long newId = 1L;
 		String newTitle = "Another title";
 		List<Author> newAuthors = new LinkedList<>();
 		authors.add(new Author(1, "Another", "author"));
@@ -191,7 +191,7 @@ public class BookTest {
 		Book book = new Book(id, title, authors, publisher, price);
 		book.addAuthor(new Author(1, "Another", "Author"));
 		assertEquals(2, book.getAuthor().size());
-		assertEquals(1L, book.getAuthor().get(1).getId());
+		assertEquals(Long.valueOf(1L), book.getAuthor().get(1).getId());
 	}
 	
 }

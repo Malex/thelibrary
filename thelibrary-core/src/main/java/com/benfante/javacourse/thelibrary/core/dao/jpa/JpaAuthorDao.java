@@ -33,7 +33,7 @@ public class JpaAuthorDao implements AuthorDao {
 			result = em.createQuery(q).getSingleResult();
 		} catch (NoResultException e) {
 			result = new Author(authorName);
-			em.persist(result);
+			result = em.merge(result);
 		}
 		em.getTransaction().commit();
 		em.close();
@@ -52,7 +52,7 @@ public class JpaAuthorDao implements AuthorDao {
 			result = em.createQuery(q).getSingleResult();
 		} catch (NoResultException e) {
 			result = new FullName(firstName, lastName);
-			em.persist(result);
+			result = em.merge(result);
 		}
 		em.getTransaction().commit();
 		em.close();
