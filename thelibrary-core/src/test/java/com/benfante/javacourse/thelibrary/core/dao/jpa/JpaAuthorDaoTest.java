@@ -24,7 +24,7 @@ public class JpaAuthorDaoTest {
 	@BeforeClass
 	public static void dbSetUp() {
 		Properties configuration = new Properties();
-		configuration.setProperty(DaoFactoryCreator.JPA_DAO_FACTORY_PERSISTENCE_UNIT_NAME_PARAM, "com.benfante.javacourse.thelibrary");
+		configuration.setProperty(DaoFactoryCreator.JPA_DAO_FACTORY_PERSISTENCE_UNIT_NAME_PARAM, "com.benfante.javacourse.thelibrary-test");
 		instance = DaoFactoryCreator.getDaoFactory(DaoFactoryCreator.JPA_DAO_FACTORY, configuration);
 		AuthorDao auth = instance.getAuthorDao();
 		Author a = auth.getOrCreateAuthor("Ciccio", "Banana");

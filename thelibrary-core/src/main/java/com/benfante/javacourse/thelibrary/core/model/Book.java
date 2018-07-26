@@ -25,6 +25,7 @@ public class Book implements Serializable,Comparable<Book> {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	@Basic(optional=false)
+	@Column(unique=true)
 	private String isbn;
 	private String title;
 	private BigDecimal price;

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -89,8 +90,13 @@ public class JpaBookDao implements BookDao {
 	public Book store(Book book) {
 		EntityManager em = this.em.createEntityManager();
 		em.getTransaction().begin();
+		Book tmp = book;
 		book = em.merge(book);
-		em.getTransaction().commit();
+		try {
+			em.getTransaction().commit();
+		} catch(RollbackException e) {
+			book = tmp;
+		}
 		em.close();
 		return book;
 	}
