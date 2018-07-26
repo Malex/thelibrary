@@ -22,7 +22,7 @@ public class JpaDaoFactory implements DaoFactory {
 
 	@Override
 	public BookDao getBookDao() {
-		return new JpaBookDao(this.entityManagerFactory.createEntityManager());
+		return new JpaBookDao(this.entityManagerFactory);
 	}
 
 	@Override
