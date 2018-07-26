@@ -84,7 +84,7 @@ public class LibraryTest {
 			try (InputStream is = this.getClass().getResourceAsStream("/books.txt");) {
 				app.loadBooks(is, nullPrintStream);
 				assertNotNull(app.getBooks());
-				assertEquals(3, app.getBooks().size());
+				assertEquals(2, app.getBooks().size());
 			}
 		}
 //

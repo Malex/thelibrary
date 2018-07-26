@@ -26,10 +26,10 @@ public class BookTitleComparatorTest {
 	public void sortCompare() {
 		BookTitleComparator com = BookTitleComparator.getInstance();
 		
-		Book book1 = new Book(2,"B book",new Author(1,"a","author"));
-		Book book2 = new Book(2,"B book",new Author(1,"a","author"));
-		Book book3 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book4 = new Book(4,"C book",new Author(1,"a","author"));
+		Book book1 = new Book("1","B book",new Author(1,"a","author"));
+		Book book2 = new Book("2","B book",new Author(1,"a","author"));
+		Book book3 = new Book("1","A book",new Author(1,"a","author"));
+		Book book4 = new Book("4","C book",new Author(1,"a","author"));
 		
 		List<Book> tmp = new LinkedList<>();
 		tmp.add(book4);

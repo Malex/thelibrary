@@ -129,7 +129,7 @@ public class SerializationStorage implements Serializable {
 	}
 	private void updateIsbnMap(Book book) {
 		if(book.getIsbn()!=null && this.booksByIsbn.containsKey(book.getIsbn()))
-			throw new RuntimeException("ISBN codes must be unique");
+			return;
 		this.booksByIsbn.put(book.getIsbn(), book);
 	}
 	private void updateMaps(Book book) {

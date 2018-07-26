@@ -33,7 +33,7 @@ public class SerializationBookDaoTest {
 			Book[] searchResult = instance.findByAuthor(author);
 			assertEquals(1, searchResult.length);
 			
-			instance.store(new Book(5,"Orient Express", author));
+			instance.store(new Book("5","Orient Express", author));
 			searchResult = instance.findByAuthor(author);
 			assertEquals(2, searchResult.length);
 			
@@ -46,9 +46,9 @@ public class SerializationBookDaoTest {
 	@Test
 	public void testFindByAuthor() {
 		List<Book> b = new LinkedList<>();
-		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-		b.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-		b.add(new Book(5,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
+		b.add(new Book("1","Sanremo",new Author(3,"Pippo","Baudo")));
+		b.add(new Book("4","Sawnremo",new Author(3,"Pippo","Baudo")));
+		b.add(new Book("5","Sanremeeeo",new Author(5,"Pippow","Baudow")));
 		Author Pippo = new Author(3, "Pippo", "Baudo");
 		SerializationBookDao lib = new SerializationBookDao(new SerializationStorage());
 		lib.serializationStorage.addBooks(b);
@@ -62,9 +62,9 @@ public class SerializationBookDaoTest {
 	@Test
 	public void testFindByTitle() {
 		List<Book> b = new LinkedList<>();
-		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-		b.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
-		b.add(new Book(5,"Sanremo",new Author(5,"Pippow","Baudow")));
+		b.add(new Book("1","Sanremo",new Author(3,"Pippo","Baudo")));
+		b.add(new Book("4","Sawnremo",new Author(3,"Pippo","Baudo")));
+		b.add(new Book("5","Sanremo",new Author(5,"Pippow","Baudow")));
 		SerializationBookDao lib = new SerializationBookDao(new SerializationStorage());
 		lib.serializationStorage.addBooks(b);
 		Book[] ret=lib.findByTitle("Sanremo");

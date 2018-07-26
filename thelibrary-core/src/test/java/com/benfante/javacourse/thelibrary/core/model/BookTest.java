@@ -3,6 +3,7 @@ package com.benfante.javacourse.thelibrary.core.model;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
@@ -69,8 +70,8 @@ public class BookTest {
 	
 	@Test 
 	public void testNoAuthor() {
-		Author[] author = new Author[0];
-		long id = 1;
+		List<Author> author = new ArrayList<>();
+		String id = "1";
 		Publisher publisher = new Publisher(1, "A publisher");
 		float price = 1.23f;
 		String title = "A title";
@@ -87,7 +88,7 @@ public class BookTest {
 	
 	@Test
 	public void testEquals() {
-		long id = 1;
+		String id = "1";
 		String title = "A title";
 		Author author = new Author(1, "The", "single author");
 		Publisher publisher = new Publisher(1, "A publisher");
@@ -96,7 +97,7 @@ public class BookTest {
 		Book book2 = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
 		assertEquals(book,book2);
 		assertEquals(book.hashCode(),book2.hashCode());
-		book2.setId(3);
+		book2.setIsbn("3");
 		assertNotEquals(book.hashCode(),book2.hashCode());
 	}
 	
@@ -128,10 +129,10 @@ public class BookTest {
 	
 	@Test
 	public void testCompare() {
-		Book book1 = new Book(2,"A book",new Author(1,"a","author"));
-		Book book2 = new Book(2,"A book",new Author(1,"a","author"));
-		Book book3 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book4 = new Book(4,"A book",new Author(1,"a","author"));
+		Book book1 = new Book("2","A book",new Author(1,"a","author"));
+		Book book2 = new Book("2","A book",new Author(1,"a","author"));
+		Book book3 = new Book("1","A book",new Author(1,"a","author"));
+		Book book4 = new Book("4","A book",new Author(1,"a","author"));
 		assertTrue(book1.compareTo(book2)==0);
 		assertTrue(book1.compareTo(book3)>0);
 		assertTrue(book1.compareTo(book4)<0);

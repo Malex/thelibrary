@@ -97,6 +97,11 @@ public class Book implements Serializable,Comparable<Book> {
 		this.setIsbn(Isbn);
 	}
 	
+	public Book(String Isbn, String title, Author author) {
+		this(title,author);
+		this.setIsbn(Isbn);
+	}
+	
 	public Book(String Isbn, String title, List<Author> author,BigDecimal price) {
 		this(title,author,price);
 		this.setIsbn(Isbn);
@@ -161,6 +166,7 @@ public class Book implements Serializable,Comparable<Book> {
 		this.setIsbn(Isbn);
 	}
 
+	
 	public Book(long Id, String Isbn, String title, List<Author> author) {
 		this(Id,title,author);
 		this.setIsbn(Isbn);
@@ -367,7 +373,7 @@ public class Book implements Serializable,Comparable<Book> {
 
 	
 	private int calcComp(Book o) {
-		return (this.getId()<o.getId())?-1:1;
+		return (this.getIsbn().compareTo(o.getIsbn())<0)?-1:1;
 	}
 	@Override
 	public int compareTo(Book o) {

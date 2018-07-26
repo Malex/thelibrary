@@ -8,20 +8,20 @@ import org.junit.Test;
 
 public class AuthorTest {
 
-	
-	@SuppressWarnings("unlikely-arg-type")
-	@Test
-	public void testAuthorEquals() {
-		Object auth1 = new Author(1,"Pippo","Baudo");
-		Author auth2 = new Author(1,"Pippo","Baudo");
-		assertTrue(auth1.equals(auth2));
-		auth2.setId(3);
-		assertFalse(auth1.equals(auth2));
-		assertFalse(auth1.equals(null));
-		auth2.setId(1);
-		assertFalse(auth2.equals(new String("ciao")));
-		
-	}
+//	Old test, before JPA changes	
+//	@SuppressWarnings("unlikely-arg-type")
+//	@Test
+//	public void testAuthorEquals() {
+//		Object auth1 = new Author(1,"Pippo","Baudo");
+//		Author auth2 = new Author(1,"Pippo","Baudo");
+//		assertTrue(auth1.equals(auth2));
+//		auth2.setName(3);
+//		assertFalse(auth1.equals(auth2));
+//		assertFalse(auth1.equals(null));
+//		auth2.setId(1);
+//		assertFalse(auth2.equals(new String("ciao")));
+//		
+//	}
 	
 //	@Test(expected = AssertionError.class)
 //	public void testAuthorEqualsReally() {
@@ -57,29 +57,32 @@ public class AuthorTest {
 	//Benfante tests
 	@Test
 	public void testEquals() {
-		Author author1 = new Author(1, null, null);
-		Author author2 = new Author(1, null, null);
+		Author author1 = new Author(1, "AMB", "Let");
+		Author author2 = new Author(1, "AMB", "Let");
+		assertTrue(author1.equals(author2));
+		author1 = new Author(1, "AMB", "Let");
+		author2 = new Author(2, "AMB", "Let");
 		assertTrue(author1.equals(author2));
 	}
 
 	@Test
 	public void testEqualsFalse() {
-		Author author1 = new Author(1, null, null);
-		Author author2 = new Author(2, null, null);
+		Author author1 = new Author(1, "AMB", "Let");
+		Author author2 = new Author(1, "OMB", "Let");
 		assertFalse(author1.equals(author2));
 	}
 
 	@Test
 	public void testHashCode() {
-		Author author1 = new Author(1, null, null);
-		Author author2 = new Author(1, null, null);
+		Author author1 = new Author(1, "", "");
+		Author author2 = new Author(2, "", "");
 		assertTrue(author1.hashCode() == author2.hashCode());
 	}
 
 	@Test
 	public void testHashCodeDifferentMaybe() {
-		Author author1 = new Author(1, null, null);
-		Author author2 = new Author(2, null, null);
+		Author author1 = new Author(1, "", "");
+		Author author2 = new Author(2, "", "orpo");
 		assertTrue(author1.hashCode() != author2.hashCode());
 	}
 }

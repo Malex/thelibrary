@@ -16,6 +16,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,12 +113,13 @@ public class Library {
 		}
 		long id_p;
 		String titolo;
-		
+		printLine(out,"\tInserisci l'Isbn del libro: ");
+		String isbn = in.readLine();
 		printLine(out,"\tInserisci titolo: ");
 		titolo = in.readLine();
 		printLine(out,"\tInserisci prezzo");
 		//readline below
-		Book b = new Book(id,titolo,new Author[0],new BigDecimal(in.readLine()));
+		Book b = new Book(id,isbn,titolo,new LinkedList<Author>(),new BigDecimal(in.readLine()));
 
 		
 		while(loadAuthor(in,out,b)) {}
