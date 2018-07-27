@@ -45,5 +45,10 @@
 			<version>2.4.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency> <!-- necessary for java >=9 -->
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -1,7 +1,9 @@
-package com.benfante.javacourse.thelibrary.core.model;
+package com.benfante.javacourse.thelibrary.core.model.comparator;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
+import com.benfante.javacourse.thelibrary.core.model.Book;
 
 public class BookTitleComparator implements Comparator<Book>,Serializable {
 	

@@ -31,15 +31,15 @@ public class SerializationBookDaoTest {
 			
 			Author author = new Author(1, "Agatha", "Christie");
 			Book[] searchResult = instance.findByAuthor(author);
-			assertEquals(1, searchResult.length);
+			assertEquals(2, searchResult.length);
 			
 			instance.store(new Book("5","Orient Express", author));
 			searchResult = instance.findByAuthor(author);
-			assertEquals(2, searchResult.length);
+			assertEquals(3, searchResult.length);
 			
 			instance.remove(searchResult[0]);
 			searchResult = instance.findByAuthor(author);
-			assertEquals(1, searchResult.length);
+			assertEquals(2, searchResult.length);
 		}
 	}
 	
