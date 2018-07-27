@@ -280,7 +280,7 @@ public class Book implements Serializable,Comparable<Book> {
 		StringBuilder str = new StringBuilder();
 		str.append("ID=").append((this.getId()!=null)?this.getId():"null").append("\nISBN: ").append(this.getIsbn()).append("\nTitle: ").append(this.getTitle()).append("\nAuthors: ");
 		for (Author g : this.getAuthor()) {
-			str.append(g.getPrint()).append("; ");
+			str.append(g.toString()).append("; ");
 		}
 		if(this.getAuthor().isEmpty())
 			str.append("No authors for this book.; "); //Last 2 chars get deleted on next instruction

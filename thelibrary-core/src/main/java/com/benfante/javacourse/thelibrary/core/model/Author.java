@@ -10,8 +10,10 @@ public class Author implements Serializable,Comparable<Author> {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(insertable=true, updatable=true,nullable=false)
 	private Long id;
 	@OneToOne(cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+	@JoinColumn(unique=true)
 	private FullName name;
 	
 	

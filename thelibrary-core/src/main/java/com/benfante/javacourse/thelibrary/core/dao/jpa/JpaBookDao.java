@@ -16,6 +16,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
 import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.ManagedType;
 import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
 
@@ -80,13 +81,14 @@ public class JpaBookDao implements BookDao {
 	public Book[] findByAuthor(Author author) {
 		EntityManager em = this.em.createEntityManager();
 		em.getTransaction().begin();
+		author = em.merge(author);
+		em.getTransaction().commit();
+		System.out.println(author);
+		em.getTransaction().begin();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Book> q = cb.createQuery(Book.class);
 		Root<Book> root = q.from(Book.class);
-		Metamodel m = em.getMetamodel();
-		EntityType<Book> entity = m.entity(Book.class);
-		Join<Book, Author> owner = root.join(entity.getList("author",Author.class));
-		
+		q.where(cb.isMember(author,root.get("author")));
 		List<Book> result = em.createQuery(q).getResultList();
 		em.getTransaction().commit();
 		em.close();

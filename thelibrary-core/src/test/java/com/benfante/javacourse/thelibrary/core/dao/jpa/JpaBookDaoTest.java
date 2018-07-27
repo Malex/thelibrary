@@ -32,11 +32,11 @@ public class JpaBookDaoTest {
 		configuration.setProperty(DaoFactoryCreator.JPA_DAO_FACTORY_PERSISTENCE_UNIT_NAME_PARAM, "com.benfante.javacourse.thelibrary-test");
 		instance = DaoFactoryCreator.getDaoFactory(DaoFactoryCreator.JPA_DAO_FACTORY, configuration);
 		BookDao b = instance.getBookDao();
-		Book a = b.store(new Book("1111-0000-11","Ciccio va al mare",new Author(new FullName("Gianni","Levada")),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
+		Book a = b.store(new Book("1111-0000-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
 		popBook.add(a);
-		a = b.store(new Book("1111-03500-11","Cucciolo di vita",new Author(new FullName("Gianni","Levada")),new Publisher("Mondadori"),BigDecimal.valueOf(32)));
+		a = b.store(new Book("1111-03500-11","Cucciolo di vita",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(32)));
 		popBook.add(a);
-		a = b.store(new Book("1111-03530-11","Cucciolo di vita",new Author(new FullName("Janus","Caputo")),new Publisher("Hoepli"),BigDecimal.valueOf(0.12)));
+		a = b.store(new Book("1111-03530-11","Cucciolo di vita",new Author(2,"Janus","Caputo"),new Publisher("Hoepli"),BigDecimal.valueOf(0.12)));
 		popBook.add(a);
 	}
 	
@@ -71,10 +71,10 @@ public class JpaBookDaoTest {
 	@Test
 	public void testFindByAuthor() {
 		BookDao b = instance.getBookDao();
-		Book[] col = b.findByAuthor(new Author(new FullName("Gianni","Levada")));
+		Book[] col = b.findByAuthor(new Author(1,"Gianni","Levada"));
 		assertEquals(2, col.length);
 		assertTrue(popBook.containsAll(Arrays.asList(col)));
-		col = b.findByAuthor(new Author("Janus","Caputo"));
+		col = b.findByAuthor(new Author(2,"Janus","Caputo"));
 		assertEquals(1, col.length);
 		assertTrue(popBook.containsAll(Arrays.asList(col)));
 	}
@@ -82,8 +82,8 @@ public class JpaBookDaoTest {
 	@Test
 	public void testStore() {
 		BookDao b = instance.getBookDao();
-		b.store(new Book("1111-0000-11","Ciccio va al mare",new Author(new FullName("Gianni","Levada")),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
-		b.store(new Book("1111-00030-11","Ciccio va al mare",new Author(new FullName("Gianni","Levada")),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
+		b.store(new Book("1111-0000-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
+		b.store(new Book("1111-00030-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
 		Collection<Book> col = b.findAll();
 		assertEquals(4, col.size());
 	}

@@ -1,5 +1,5 @@
 1
-1111111
+0000-1111-2222
 Dieci Piccoli Indiani
 10.5
 1
@@ -8,9 +8,9 @@ Christie
 -1
 1
 Mondadori
-X
+5 1 X
 2
-3333333
+0000-1111-0000
 The Java Programming Language
 66.49
 2
@@ -25,5 +25,16 @@ Holmes
 -1
 2
 Addison-Wesley Professional
-X
+3 x
+3
+0000-1111-3333
+Assassinio sull'Orient Express
+10.5
+1
+Agatha
+Christie
+-1
+1
+Mondadori
+5 1 X
 -1

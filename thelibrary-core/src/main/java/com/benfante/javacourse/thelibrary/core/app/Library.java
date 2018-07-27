@@ -92,16 +92,25 @@ public class Library {
 		}
 		printLine(out,"X Fine inserimento categorie");
 		
-		printLine(out,"\tInserisci una categoria: ");
+		printLine(out,"\tInserisci le categorie separate da uno spazio (termina con X): ");
 		String cat = in.readLine();
-		if("X".equals(cat) || "x".equals(cat))
-			return false;
-		try {
-			b.addCategory(BookCategory.getCategory(Integer.parseInt(cat)-1));
-		} catch(IllegalArgumentException e) {
-			printLine(out,"Tale categoria non rientra in quelle previste. Riprova.");
-		}
-		return true;
+		outer:
+		do { 
+			for(Character c : cat.toCharArray()) {
+				if(c==' ')
+					continue;
+				if(Character.valueOf('X').equals(c) || Character.valueOf('x').equals(c))
+					break outer;
+				try {
+					b.addCategory(BookCategory.getCategory(Integer.parseInt(String.valueOf(c))-1));
+					System.out.println(b);
+				} catch(IllegalArgumentException e) {
+					printLine(out,"Tale categoria non rientra in quelle previste. Riprova.");
+				}
+			}
+			return true;
+		} while(false);
+		return false;
 	}
 	
 	private boolean loadBook(BufferedReader in, BufferedWriter out) throws IOException {
@@ -171,6 +180,7 @@ public class Library {
 			System.out.println(g.toString()+"\n");
 		}
 	}
+	
 	Collection<Book> getBooks() {
 		return this.bookDao.findAll();
 	}
