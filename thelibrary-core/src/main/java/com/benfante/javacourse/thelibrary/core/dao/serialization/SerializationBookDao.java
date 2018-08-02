@@ -23,7 +23,6 @@ public class SerializationBookDao implements BookDao {
 		try {
 			serializationStorage.loadArchive();
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return this.serializationStorage.books;
