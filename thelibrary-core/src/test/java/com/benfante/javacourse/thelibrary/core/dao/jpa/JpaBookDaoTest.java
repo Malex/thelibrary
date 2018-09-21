@@ -32,7 +32,7 @@ public class JpaBookDaoTest {
 	public void dbSetUp() {
 		Properties configuration = new Properties();
 		configuration.setProperty(DaoFactoryCreator.JPA_DAO_FACTORY_PERSISTENCE_UNIT_NAME_PARAM, "com.benfante.javacourse.thelibrary-test");
-		instance = DaoFactoryCreator.getDaoFactory(DaoFactoryCreator.JPA_DAO_FACTORY, configuration);
+		instance = DaoFactoryCreator.getDaoFactory(DaoFactoryCreator.DaoFactoryType.JPA_DAO_FACTORY, configuration);
 		BookDao b = instance.getBookDao();
 		Book a = b.store(new Book("1111-0000-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
 		popBook.add(a);

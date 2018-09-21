@@ -10,8 +10,11 @@ import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationDa
 import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationStorage;
 
 public class DaoFactoryCreator {
-	public static final byte SERIALIZATION_DAO_FACTORY = 1;
-	public static final byte JPA_DAO_FACTORY = 2;
+	
+	public static enum DaoFactoryType {
+		SERIALIZATION_DAO_FACTORY, JPA_DAO_FACTORY
+	};
+	
 	public static final String SERIALIZATION_DAO_FACTORY_ARCHIVE_PARAM = "serializationDaoFactory.archive";
 	public static final String JPA_DAO_FACTORY_PERSISTENCE_UNIT_NAME_PARAM = "jpaDaoFactory.persistenceUnitName";
 	
@@ -21,10 +24,10 @@ public class DaoFactoryCreator {
 	public static DaoFactory getDaoFactory() {
 		Properties configuration = new Properties();
 		configuration.setProperty(SERIALIZATION_DAO_FACTORY_ARCHIVE_PARAM, "archive.dat");
-		return getDaoFactory(SERIALIZATION_DAO_FACTORY,configuration );
+		return getDaoFactory(DaoFactoryType.SERIALIZATION_DAO_FACTORY,configuration );
 	}
 	
-	public static DaoFactory getDaoFactory(byte daoFactoryType, Properties configuration) {
+	public static DaoFactory getDaoFactory(DaoFactoryType daoFactoryType, Properties configuration) {
 		DaoFactory res = null;
 		switch(daoFactoryType) {
 		
