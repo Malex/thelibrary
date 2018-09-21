@@ -3,8 +3,10 @@ package com.benfante.javacourse.thelibrary.core.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.benfante.javacourse.thelibrary.core.util.AuthorUtil;
+
 @Entity
-public class Author implements Serializable/*,Comparable<Author>*/ {
+public class Author implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -104,20 +106,7 @@ public class Author implements Serializable/*,Comparable<Author>*/ {
 	
 	@Override
 	public String toString() {
-		return "Author [id=" + this.getId() + ", name= "+this.name.toString()+" ]";
-	}
-	
-	public String getPrint() {
-		return this.getFirstName()+" "+this.getLastName();
+		return AuthorUtil.toString(this);
 	}
 
-
-//	@Override
-//	public int compareTo(Author o) {
-//		if(o.getId()==this.getId()) //NullPointerException is automatically raised here
-//			return 0;
-//		else 
-//			return (this.getId()<o.getId())?-1:1;
-//	}
-	
 }
