@@ -3,6 +3,7 @@ package com.benfante.javacourse.thelibrary.core.model;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
@@ -14,7 +15,7 @@ public class BookTest {
 
 	@Test
 	public void testBookConstruction() {
-		long id = 1;
+		Long id = 1L;
 		String title = "A title";
 		Author author = new Author(1, "The", "single author");
 		Publisher publisher = new Publisher(1, "A publisher");
@@ -34,7 +35,7 @@ public class BookTest {
 		Publisher publisher = new Publisher(1, "A publisher");
 		float price = 1.23f;
 		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
-		long newId = 2;
+		Long newId = 2L;
 		String newTitle = "Another title";
 		Author newAuthor = new Author(2, "Another", "author");
 		Publisher newPublisher = new Publisher(2, "Another publisher");
@@ -69,8 +70,8 @@ public class BookTest {
 	
 	@Test 
 	public void testNoAuthor() {
-		Author[] author = new Author[0];
-		long id = 1;
+		List<Author> author = new ArrayList<>();
+		String id = "1";
 		Publisher publisher = new Publisher(1, "A publisher");
 		float price = 1.23f;
 		String title = "A title";
@@ -87,7 +88,7 @@ public class BookTest {
 	
 	@Test
 	public void testEquals() {
-		long id = 1;
+		String id = "1";
 		String title = "A title";
 		Author author = new Author(1, "The", "single author");
 		Publisher publisher = new Publisher(1, "A publisher");
@@ -96,7 +97,7 @@ public class BookTest {
 		Book book2 = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
 		assertEquals(book,book2);
 		assertEquals(book.hashCode(),book2.hashCode());
-		book2.setId(3);
+		book2.setIsbn("3");
 		assertNotEquals(book.hashCode(),book2.hashCode());
 	}
 	
@@ -128,10 +129,10 @@ public class BookTest {
 	
 	@Test
 	public void testCompare() {
-		Book book1 = new Book(2,"A book",new Author(1,"a","author"));
-		Book book2 = new Book(2,"A book",new Author(1,"a","author"));
-		Book book3 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book4 = new Book(4,"A book",new Author(1,"a","author"));
+		Book book1 = new Book("2","A book",new Author(1,"a","author"));
+		Book book2 = new Book("2","A book",new Author(1,"a","author"));
+		Book book3 = new Book("1","A book",new Author(1,"a","author"));
+		Book book4 = new Book("4","A book",new Author(1,"a","author"));
 		assertTrue(book1.compareTo(book2)==0);
 		assertTrue(book1.compareTo(book3)>0);
 		assertTrue(book1.compareTo(book4)<0);
@@ -140,7 +141,7 @@ public class BookTest {
 	//Benfante tests
 	@Test
 	public void testBookConstruction2() {
-		long id = 0;
+		Long id = 0L;
 		String title = "A title";
 		List<Author> authors = new LinkedList<>();
 		authors.add(new Author(0, "The", "single author"));
@@ -155,14 +156,14 @@ public class BookTest {
 
 	@Test
 	public void testBookSetters2() {
-		long id = 0;
+		Long id = 0L;
 		String title = "A title";
 		List<Author> authors = new LinkedList<>();
 		authors.add(new Author(0, "The", "single author"));
 		Publisher publisher = new Publisher(0, "A publisher");
 		BigDecimal price = BigDecimal.valueOf(1.23);
 		Book book = new Book(id, title, authors, publisher, price);
-		long newId = 1;
+		Long newId = 1L;
 		String newTitle = "Another title";
 		List<Author> newAuthors = new LinkedList<>();
 		authors.add(new Author(1, "Another", "author"));
@@ -191,7 +192,7 @@ public class BookTest {
 		Book book = new Book(id, title, authors, publisher, price);
 		book.addAuthor(new Author(1, "Another", "Author"));
 		assertEquals(2, book.getAuthor().size());
-		assertEquals(1L, book.getAuthor().get(1).getId());
+		assertEquals(Long.valueOf(1L), book.getAuthor().get(1).getId());
 	}
 	
 }

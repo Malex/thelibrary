@@ -7,26 +7,111 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.persistence.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Entity
+@Table(name="book",
+		uniqueConstraints=@UniqueConstraint(columnNames = { "isbn" }))
 public class Book implements Serializable,Comparable<Book> {
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = LoggerFactory.getLogger(Book.class);
 	
-	private long Id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	@Basic(optional=false)
+	@Column(unique=true)
 	private String isbn;
 	private String title;
 	private BigDecimal price;
+	//(cascade= {CascadeType.MERGE, CascadeType.PERSIST})  /// problem in the future?
+	@ManyToMany(fetch = FetchType.EAGER, cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	private List<Author> author = new ArrayList<>();
+	@ManyToOne(cascade= {CascadeType.ALL})
 	private Publisher publisher;
+	@ElementCollection(targetClass=BookCategory.class, fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING)
+	@Column(name="category")
+	@OrderBy("category ASC")
 	private SortedSet<BookCategory> categories = new TreeSet<>();
+	
+	public Book() {}
+	
+	public Book(String title, Author author, Publisher publisher, BigDecimal price ) {
+		this(title,author,price);
+		this.setPublisher(publisher);
+	}
+
+	public Book(String title, Author author) {
+		this.setAuthor(author);
+		this.setTitle(title);
+	}
+	
+	public Book(String title, Author author,BigDecimal price) {
+		this(title,author);
+		this.setPrice(price);
+	}
+	
+	public Book(String title, Author[] author, Publisher publisher, BigDecimal price ) {
+		this(title,author,price);
+		this.setPublisher(publisher);
+	}
+
+	public Book(String title, Author[] author) {
+		this.setAuthor(author);
+		this.setTitle(title);
+	}
+	
+	public Book(String title, Author[] author,BigDecimal price) {
+		this(title,author);
+		this.setPrice(price);
+	}
+	
+	public Book(String title, List<Author> author, Publisher publisher, BigDecimal price ) {
+		this(title,author,price);
+		this.setPublisher(publisher);
+	}
+
+	public Book(String title, List<Author> author) {
+		this.setAuthor(author);
+		this.setTitle(title);
+	}
+	
+	public Book(String title, List<Author> author,BigDecimal price) {
+		this(title,author);
+		this.setPrice(price);
+	}
+	
+	public Book(String Isbn, String title, List<Author> author, Publisher publisher, BigDecimal price ) {
+		this(title,author,publisher,price);
+		this.setIsbn(Isbn);
+	}
+
+	public Book(String Isbn, String title, List<Author> author) {
+		this(title,author);
+		this.setIsbn(Isbn);
+	}
+	
+	public Book(String Isbn, String title, Author author) {
+		this(title,author);
+		this.setIsbn(Isbn);
+	}
+	
+	public Book(String Isbn, String title, List<Author> author,BigDecimal price) {
+		this(title,author,price);
+		this.setIsbn(Isbn);
+	}
+	public Book(String Isbn, String title, Author author,Publisher pub,BigDecimal price) {
+		this(title,author,price);
+		this.setIsbn(Isbn);
+		this.setPublisher(pub);
+	}
+	
 	
 	public Book(long id, String title, Author author, Publisher publisher, BigDecimal price ) {
 		this(id,title,author,price);
@@ -81,6 +166,7 @@ public class Book implements Serializable,Comparable<Book> {
 		this.setIsbn(Isbn);
 	}
 
+	
 	public Book(long Id, String Isbn, String title, List<Author> author) {
 		this(Id,title,author);
 		this.setIsbn(Isbn);
@@ -92,12 +178,12 @@ public class Book implements Serializable,Comparable<Book> {
 	}
 	
 	
-	public long getId() {
-		return this.Id;
+	public Long getId() {
+		return this.id;
 	}
 	public void setId(long id) {
 		if(id>=0)
-			this.Id = id;
+			this.id = id;
 		else
 			throw new IllegalArgumentException("ID must be non-negative");
 	}
@@ -171,7 +257,7 @@ public class Book implements Serializable,Comparable<Book> {
 		return this.publisher;
 	}
 	public void setPublisher(Publisher publisher) {
-		if(publisher!=null && publisher.getId() >= 0)
+		if(publisher!=null)
 			this.publisher = publisher;
 		else
 			throw new IllegalArgumentException();
@@ -180,8 +266,6 @@ public class Book implements Serializable,Comparable<Book> {
 	
 	public void addAuthor(Author author) throws RuntimeException {
 		log.debug("Adding author: id={}, Name: {} {}",author.getId(),author.getFirstName(),author.getLastName());
-		if(author==null || author.getId()<0)
-			throw new IllegalArgumentException();
 		if(!this.author.add(author))  //adding happens here
 			throw new RuntimeException("Could not add author");
 	}
@@ -194,9 +278,9 @@ public class Book implements Serializable,Comparable<Book> {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append("ID=").append(this.getId()).append("\nTitle: ").append(this.getTitle()).append("\nAuthors: ");
+		str.append("ID=").append((this.getId()!=null)?this.getId():"null").append("\nISBN: ").append(this.getIsbn()).append("\nTitle: ").append(this.getTitle()).append("\nAuthors: ");
 		for (Author g : this.getAuthor()) {
-			str.append(g.getPrint()).append("; ");
+			str.append(g.toString()).append("; ");
 		}
 		if(this.getAuthor().isEmpty())
 			str.append("No authors for this book.; "); //Last 2 chars get deleted on next instruction
@@ -275,16 +359,7 @@ public class Book implements Serializable,Comparable<Book> {
 		if(o==null || !(o instanceof Book))
 			return false;
 		Book book = (Book)o;
-		if(this.getId()==book.getId()) {
-//			if(this.getAuthor().length!=book.getAuthor().length)
-//				return false;
-//			boolean isThere = this.getAuthor().length==0; //this way it works for 0 authors.
-//			for(Author g : this.getAuthor()) {
-//				isThere = book.hasAuthor(g);
-//				if(!isThere)
-//					break;
-//			}
-//			assert isThere && (this.getTitle().equals(book.getTitle())) && this.getPrice()==book.getPrice() && ((this.getPublisher()!=null)?(this.getPublisher().equals(book.getPublisher())):true);
+		if(this.getIsbn().equals(book.getIsbn())) {
 			return true;
 		}
 		else 
@@ -293,15 +368,12 @@ public class Book implements Serializable,Comparable<Book> {
 	
 	@Override
 	public int hashCode() {
-//		int tmpHash = 0;
-//		for(Author g : this.getAuthor())
-//			tmpHash += g.hashCode();
-		return Long.valueOf(this.getId()).hashCode();//+Float.valueOf(this.getPrice()).hashCode()+this.getTitle().hashCode()+((this.getPublisher()!=null)?this.getPublisher().hashCode():0)+tmpHash;
+		return this.getIsbn().hashCode();
 	}
 
 	
 	private int calcComp(Book o) {
-		return (this.getId()<o.getId())?-1:1;
+		return (this.getIsbn().compareTo(o.getIsbn())<0)?-1:1;
 	}
 	@Override
 	public int compareTo(Book o) {

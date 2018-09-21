@@ -2,18 +2,27 @@ package com.benfante.javacourse.thelibrary.core.model;
 
 import java.io.Serializable;
 
+import javax.persistence.*;
+
+@Entity
 public class Publisher implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
-	private long id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)	
+	private Long id;
 	private String name;
+	
+	
+	public Publisher() {}
 	
 	public Publisher(long id, String name) {
 		this.setId(id);
+		this.setName(name);
+	}
+	
+	public Publisher(String name) {
 		this.setName(name);
 	}
 	

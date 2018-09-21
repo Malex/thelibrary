@@ -5,7 +5,7 @@ import com.benfante.javacourse.thelibrary.core.model.Author;
 
 public class SerializationAuthorDao implements AuthorDao {
 
-private SerializationStorage serializationStorage;
+	private SerializationStorage serializationStorage;
 	
 	public SerializationAuthorDao(SerializationStorage serializationStorage) {
 		this.serializationStorage = serializationStorage;

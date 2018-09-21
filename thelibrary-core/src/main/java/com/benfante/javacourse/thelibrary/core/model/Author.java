@@ -1,17 +1,31 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
+@Entity
 public class Author implements Serializable,Comparable<Author> {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
-	private long id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(insertable=true, updatable=true,nullable=false)
+	private Long id;
+	@OneToOne(cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+	@JoinColumn(unique=true)
 	private FullName name;
 	
+	
+	public FullName getFullName() {
+		return name;
+	}
+
+	public Author() {}
+	
+	public Author(FullName name) {
+		this.name = name;
+	}
 	
 	public Author(long id, String firstName, String lastName) {
 		this.setId(id);
@@ -19,7 +33,11 @@ public class Author implements Serializable,Comparable<Author> {
 	}
 	
 	
-	public long getId() {
+	public Author(String firstName, String lastName) {
+		this(new FullName(firstName,lastName));
+	}
+
+	public Long getId() {
 		return this.id;
 	}
 	public void setId(long id) {
@@ -72,8 +90,7 @@ public class Author implements Serializable,Comparable<Author> {
 		if(!(o instanceof Author))
 			return false;
 		Author author = (Author) o;
-		if(this.getId()==author.getId()) {
-			//assert this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName());
+		if(this.getFirstName().equals(author.getFirstName()) && this.getLastName().equals(author.getLastName())) {
 			return true;
 		} else {
 			return false;
@@ -82,7 +99,7 @@ public class Author implements Serializable,Comparable<Author> {
 	
 	@Override
 	public int hashCode() {
-		return Long.valueOf(this.getId()).hashCode();//+this.getFirstName().hashCode()+this.getLastName().hashCode();
+		return this.getFirstName().hashCode()+this.getLastName().hashCode();
 	}
 	
 	@Override

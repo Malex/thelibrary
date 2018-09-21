@@ -1,8 +1,10 @@
 package com.benfante.javacourse.thelibrary.core.app;
 
+import com.benfante.javacourse.thelibrary.core.dao.AuthorDao;
 import com.benfante.javacourse.thelibrary.core.dao.BookDao;
-import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationBookDao;
-import com.benfante.javacourse.thelibrary.core.dao.serialization.SerializationStorage;
+import com.benfante.javacourse.thelibrary.core.dao.DaoFactory;
+import com.benfante.javacourse.thelibrary.core.dao.DaoFactoryCreator;
+
 import com.benfante.javacourse.thelibrary.core.model.*;
 
 import java.io.BufferedReader;
@@ -13,21 +15,52 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class Library {
+	private static final Logger log = LoggerFactory.getLogger(Library.class);
 	
-	private SerializationStorage serializationStorage;
-	private BookDao bookDao;
+	private DaoFactory factory = DaoFactoryCreator.getDaoFactory();
+	private BookDao bookDao = factory.getBookDao();
+	private AuthorDao authorDao = factory.getAuthorDao();
+	
+	public Library() {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				try {
+					log.info("Destroying the library object, saving library data.");
+					factory.close();
+				} catch (Exception e) {
+					log.error("Cant close DaoFactory in Library main run");
+				}
+			}
+		});
+	}
 	
 	public static void main(String[] args) {
 		Library lib = new Library();
+		lib.bookDao.findAll();
 		lib.runApp(System.in);
 		lib.printBooks();
 		
 	}
 
 	
+//	@Override
+//	protected void finalize() throws Throwable {
+//		log.info("Destroying the library object, saving library data.");
+//		this.factory.close();
+//		super.finalize();
+//	}
+
+
 	private static void printLine(BufferedWriter out,String s) throws IOException {
 		out.write(s);
 		out.newLine();
@@ -59,36 +92,46 @@ public class Library {
 		}
 		printLine(out,"X Fine inserimento categorie");
 		
-		printLine(out,"\tInserisci una categoria: ");
+		printLine(out,"\tInserisci le categorie separate da uno spazio (termina con X): ");
 		String cat = in.readLine();
-		if("X".equals(cat) || "x".equals(cat))
-			return false;
-		try {
-			b.addCategory(BookCategory.getCategory(Integer.parseInt(cat)-1));
-		} catch(IllegalArgumentException e) {
-			printLine(out,"Tale categoria non rientra in quelle previste. Riprova.");
-		}
-		return true;
+		outer:
+		do { 
+			for(Character c : cat.toCharArray()) {
+				if(c==' ')
+					continue;
+				if(Character.valueOf('X').equals(c) || Character.valueOf('x').equals(c))
+					break outer;
+				try {
+					b.addCategory(BookCategory.getCategory(Integer.parseInt(String.valueOf(c))-1));
+					System.out.println(b);
+				} catch(IllegalArgumentException e) {
+					printLine(out,"Tale categoria non rientra in quelle previste. Riprova.");
+				}
+			}
+			return true;
+		} while(false);
+		return false;
 	}
 	
 	private boolean loadBook(BufferedReader in, BufferedWriter out) throws IOException {
 		long id;
 		printLine(out,"Inserisci il libro: ");
 		printLine(out,"\tInserisci l'ID del libro: ");
-		if((id = Long.parseLong(in.readLine()))==-1)
+		if((id = Long.parseLong(in.readLine()))==-1) {
 			return false;
+		}
 		long id_p;
 		String titolo;
-		
+		printLine(out,"\tInserisci l'Isbn del libro: ");
+		String isbn = in.readLine();
 		printLine(out,"\tInserisci titolo: ");
 		titolo = in.readLine();
 		printLine(out,"\tInserisci prezzo");
 		//readline below
-		Book b = new Book(id,titolo,new Author[0],new BigDecimal(in.readLine()));
+		Book b = new Book(id,isbn,titolo,new LinkedList<Author>(),new BigDecimal(in.readLine()));
 
 		
 		while(loadAuthor(in,out,b)) {}
-
 		printLine(out,"\tInserisci ID dell'editore: ");
 		id_p = Long.parseLong(in.readLine());
 		printLine(out,"\tInserisci nome editore: ");
@@ -122,15 +165,6 @@ public class Library {
 		}
 	}
 	
-	public Library() {
-		 try {
-			 this.serializationStorage = new SerializationStorage("archive.dat");
-			 this.bookDao = new SerializationBookDao(this.serializationStorage);
-
-		 } catch (Exception e) {
-			 e.printStackTrace();
-		 }
-	}
 	
 //	public Library(Book book) {
 //		this.addBook(book);
@@ -142,9 +176,14 @@ public class Library {
 	
 	
 	public void printBooks() {
-		for(Book g : this.bookDao.findAll()) {
+		for(Book g : this.getBooks()) {
 			System.out.println(g.toString()+"\n");
 		}
 	}
+	
+	Collection<Book> getBooks() {
+		return this.bookDao.findAll();
+	}
+	
 	
 }

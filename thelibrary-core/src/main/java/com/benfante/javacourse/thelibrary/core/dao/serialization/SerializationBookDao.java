@@ -1,5 +1,6 @@
 package com.benfante.javacourse.thelibrary.core.dao.serialization;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import com.benfante.javacourse.thelibrary.core.dao.BookDao;
@@ -10,7 +11,7 @@ import com.benfante.javacourse.thelibrary.core.model.Book;
 public class SerializationBookDao implements BookDao {
 	private static final Book[] runtimeArr = new Book[0]; 
 	
-	private SerializationStorage serializationStorage;
+	SerializationStorage serializationStorage;
 	
 	
 	public SerializationBookDao(SerializationStorage serializationStorage) {
@@ -19,6 +20,11 @@ public class SerializationBookDao implements BookDao {
 
 	@Override
 	public Collection<Book> findAll() {
+		try {
+			serializationStorage.loadArchive();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
 		return this.serializationStorage.books;
 	}
 

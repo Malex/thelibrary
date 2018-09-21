@@ -1,12 +1,17 @@
 package com.benfante.javacourse.thelibrary.core.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
+@Entity
 public class FullName implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	
 	String firstName;
 	String lastName;
 	
@@ -15,6 +20,11 @@ public class FullName implements Serializable {
 		return firstName+" "+lastName;
 	}
 
+	public long getId() {
+		return this.id;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -53,6 +63,8 @@ public class FullName implements Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+	public FullName() {}
+	
 
 	public String getFirstName() {
 		return firstName;
