@@ -12,11 +12,14 @@ public class BookIsbnComparator implements Comparator<Book>,Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static final BookIsbnComparator com = new BookIsbnComparator();
+	private static BookIsbnComparator comparator = null;
 	
 	
 	public static BookIsbnComparator getInstance() {
-		return com;
+		if(comparator==null) {
+			createInstance();
+		}
+		return comparator;
 	}
 	
 	private BookIsbnComparator() {
@@ -28,6 +31,12 @@ public class BookIsbnComparator implements Comparator<Book>,Serializable {
 			return (o1==o2)?0:((o1==null)?-1:1);
 		else
 			return o1.getIsbn().compareToIgnoreCase(o2.getIsbn());
+	}
+	
+	private static synchronized void createInstance() {
+		if(comparator==null) {
+			comparator = new BookIsbnComparator();
+		}
 	}
 
 }
