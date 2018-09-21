@@ -4,13 +4,13 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-public class Author implements Serializable,Comparable<Author> {
+public class Author implements Serializable/*,Comparable<Author>*/ {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(insertable=true, updatable=true,nullable=false)
+	@Column(insertable=true, updatable=false,nullable=false)
 	private Long id;
 	@OneToOne(cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(unique=true)
@@ -112,12 +112,12 @@ public class Author implements Serializable,Comparable<Author> {
 	}
 
 
-	@Override
-	public int compareTo(Author o) {
-		if(o.getId()==this.getId()) //NullPointerException is automatically raised here
-			return 0;
-		else 
-			return (this.getId()<o.getId())?-1:1;
-	}
+//	@Override
+//	public int compareTo(Author o) {
+//		if(o.getId()==this.getId()) //NullPointerException is automatically raised here
+//			return 0;
+//		else 
+//			return (this.getId()<o.getId())?-1:1;
+//	}
 	
 }

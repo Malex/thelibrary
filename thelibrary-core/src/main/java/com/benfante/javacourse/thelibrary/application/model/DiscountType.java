@@ -1,4 +1,4 @@
-package com.benfante.javacourse.thelibrary.core.model;
+package com.benfante.javacourse.thelibrary.application.model;
 
 import java.io.Serializable;
 
