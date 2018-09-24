@@ -31,5 +31,5 @@ rule "Is cleck available"
         $clerk : Clerk( contract == ContractType.SEASONAL )
     then
         if(! ClerkUtils.isAvailable( $clerk ) )
-        	throw new RuntimeException("Clerk "+$clerk.id+" "+$clerk.name+" is not available on "+$op.date);
+        	throw new com.benfante.javacourse.thelibrary.application.util.ClerkNotAvailableException("Clerk not available",clerk,$op.date);
 end

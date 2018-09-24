@@ -53,7 +53,7 @@ public class ClerkUtils {
 			} catch (DateTimeParseException e) {
 				String error = "Could not parse value of date properties for seasonal contract";
 				log.error(error);
-				throw new RuntimeException(error);
+				throw new ClerkNotAvailableException(error,clerk,now);
 			}
 		}
 		log.warn("Il contratto del Clerk [id="+clerk.getId()+", nome="+clerk.getName()+" non è stato valorizzato");
