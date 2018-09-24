@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.benfante.javacourse.thelibrary.application.model.Enumerations.ContractType;
 import com.benfante.javacourse.thelibrary.core.model.FullName;
 
 @Entity

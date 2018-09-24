@@ -1,0 +1,35 @@
+#created on: 24-set-2018
+package com.benfante.thelibrary.application.business
+
+#list any import classes here.
+import com.benfante.javacourse.thelibrary.application.model.Operation
+import com.benfante.javacourse.thelibrary.application.model.Clerk
+import com.benfante.javacourse.thelibrary.application.model.Enumerations.OperationType
+import com.benfante.javacourse.thelibrary.application.model.Enumerations.DiscountType
+import com.benfante.javacourse.thelibrary.application.model.Enumerations.ContractType
+import com.benfante.javacourse.thelibrary.application.util.ClerkUtils
+import org.slf4j.*
+
+#declare any global variables here
+global Logger log = LoggerFactory.getLogger("DROOLS");
+
+
+
+rule "Correct usage of discounts"
+	salience 8
+    when
+        $op : Operation( not(operationType==OperationType.BUY), not(discount==null)  )
+    then
+    	log.warn("Discount non valido per questa operazione, procedo a rimuoverlo");
+        $op.setDiscount(null);
+end
+
+rule "Is cleck available"
+	salience 10
+    when
+        $op : Operation( $cleck : clerk )
+        $clerk : Clerk( contract == ContractType.SEASONAL )
+    then
+        if(! ClerkUtils.isAvailable( $clerk ) )
+        	throw new RuntimeException("Clerk "+$clerk.id+" "+$clerk.name+" is not available on "+$op.date);
+end
