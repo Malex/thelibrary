@@ -36,38 +36,38 @@ public class BusinessCriteria {
 		return kbase;
 	}
 
-	protected RulesBOU fireRulesProcessor(RulesBIN bin) {
-		Result result = new Result();
-		KieBase kbase = getKBase();
-		KieSession ksession = kbase.newKieSession();
-		List<Object> resultList = bin.getFacts();
+	protected RulesBOU fireRulesProcessor(final RulesBIN bin) {
+		final Result result = new Result();
+		final KieBase kbase = getKBase();
+		final KieSession ksession = kbase.newKieSession();
+		final List<Object> resultList = bin.getFacts();
 		for(Object item : resultList) {
 			ksession.insert(item);
 		}
 		ksession.insert(result);
 		ksession.fireAllRules();
 		ksession.dispose();
-		RulesBOU out = new RulesBOU();
+		final RulesBOU out = new RulesBOU();
 		out.setResult(result);
 		out.setProcessedFacts(resultList);
 		return out;
 	}
 	
-	public RulesBOU fireRules(RulesBIN rules) {
+	public RulesBOU fireRules(final RulesBIN rules) {
 		if(rules==null) {
-			String error = "Rules BIN is null";
+			final String error = "Rules BIN is null";
 			log.error(error);
 			throw new IllegalArgumentException(error);
 		}
 		if(rules.getFacts()==null) {
-			String error = "Fact list is null";
+			final String error = "Fact list is null";
 			log.error(error);
 			throw new IllegalArgumentException(error);
 		}
 		if(rules.getFacts().size()==0) {
 			log.warn("Empty list of facts was passed to rule processing");
 		}
-		RulesBOU out = fireRulesProcessor(rules);
+		final RulesBOU out = fireRulesProcessor(rules);
 		return out;
 	}
 	

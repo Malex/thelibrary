@@ -54,7 +54,7 @@ public class ResourceList {
 		} catch (final IOException e) {
 			throw new Error(e);
 		}
-		final Enumeration e = zf.entries();
+		final Enumeration<? extends ZipEntry > e = zf.entries();
 		while (e.hasMoreElements()) {
 			final ZipEntry ze = (ZipEntry) e.nextElement();
 			final String fileName = ze.getName();
