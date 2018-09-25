@@ -59,5 +59,5 @@ public class ClerkUtils {
 		log.warn("Il contratto del Clerk [id="+clerk.getId()+", nome="+clerk.getName()+" non è stato valorizzato");
 		return false;
 	}
-	
+
 }

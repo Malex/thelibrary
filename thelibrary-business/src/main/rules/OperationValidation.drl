@@ -8,28 +8,36 @@ import com.benfante.javacourse.thelibrary.application.model.Enumerations.Operati
 import com.benfante.javacourse.thelibrary.application.model.Enumerations.DiscountType
 import com.benfante.javacourse.thelibrary.application.model.Enumerations.ContractType
 import com.benfante.javacourse.thelibrary.application.util.ClerkUtils
-import org.slf4j.*
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 #declare any global variables here
 global Logger log = LoggerFactory.getLogger("DROOLS");
-
-
 
 rule "Correct usage of discounts"
 	salience 8
     when
         $op : Operation( not(operationType==OperationType.BUY), not(discount==null)  )
+        $res : Result( )
     then
     	log.warn("Discount non valido per questa operazione, procedo a rimuoverlo");
         $op.setDiscount(null);
+        $res.setResult(true);
+        $res.setCode("205");
+        $res.setMessage("Modifica Valorizzazione Discount necessaria");
+        $res.setWarning(true);
 end
 
 rule "Is cleck available"
-	salience 10
+	salience 1
     when
         $op : Operation( $cleck : clerk )
         $clerk : Clerk( contract == ContractType.SEASONAL )
+        $res : Result( )
     then
-        if(! ClerkUtils.isAvailable( $clerk ) )
-        	throw new com.benfante.javacourse.thelibrary.application.util.ClerkNotAvailableException("Clerk not available",clerk,$op.date);
+        if(! ClerkUtils.isAvailable( $clerk ) ) {
+        	$res.setResult(false);
+        	$res.setCode("421");
+        	$res.setMessage("Clerk not available on "+$op.date);
+        }	
 end
