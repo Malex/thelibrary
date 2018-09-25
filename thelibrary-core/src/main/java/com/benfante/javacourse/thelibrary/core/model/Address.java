@@ -2,89 +2,81 @@ package com.benfante.javacourse.thelibrary.core.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Address implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String addressLine1;
 	private String addressLine2;
 	private String postalCode;
 	private String city;
 	private String province;
 	private String nation;
-	
+
+	public Address(String addressLine1, String addressLine2, String postalCode, String city, String province,
+			String nation) {
+		this.addressLine1 = addressLine1;
+		this.addressLine2 = addressLine2;
+		this.postalCode = postalCode;
+		this.city = city;
+		this.province = province;
+		this.nation = nation;
+	}
+
+	public Address() {
+	}
+
 	public String getAddressLine1() {
 		return addressLine1;
 	}
-	public void setAddressLine1(String addressLine1) throws IllegalArgumentException {
-		if(addressLine1!=null)
-			this.addressLine1 = addressLine1;
-		else 
-			throw new IllegalArgumentException();
+
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
 	}
-	
+
 	public String getAddressLine2() {
 		return addressLine2;
 	}
-	public void setAddressLine2(String addressLine2)  throws IllegalArgumentException {
-		if(addressLine2!=null)
-			this.addressLine2 = addressLine2;
-		else
-			throw new IllegalArgumentException();
+
+	public void setAddressLine2(String addressLine2) {
+		this.addressLine2 = addressLine2;
 	}
-	
+
 	public String getPostalCode() {
 		return postalCode;
 	}
-	public void setPostalCode(String postalCode) throws IllegalArgumentException {
-		if(postalCode!=null)
-			this.postalCode = postalCode;
-		else 
-			throw new IllegalArgumentException();
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
 	}
-	
+
 	public String getCity() {
 		return city;
 	}
-	public void setCity(String city) throws IllegalArgumentException {
-		if(city!=null)
-			this.city = city;
-		else
-			throw new IllegalArgumentException();
+
+	public void setCity(String city) {
+		this.city = city;
 	}
-	
+
 	public String getProvince() {
 		return province;
 	}
-	public void setProvince(String province) throws IllegalArgumentException {
-		if(province!=null)
-			this.province = province;
-		else
-			throw new IllegalArgumentException();
+
+	public void setProvince(String province) {
+		this.province = province;
 	}
-	
+
 	public String getNation() {
 		return nation;
 	}
-	public void setNation(String nation) throws IllegalArgumentException {
-		if(nation!=null)
-			this.nation = nation;
-		else
-			throw new IllegalArgumentException();
+
+	public void setNation(String nation) {
+		this.nation = nation;
 	}
-	
-	public Address(String addressLine1, String addressLine2, String postalCode, String city, String province,
-			String nation) {
-		this.setAddressLine1(addressLine1);
-		this.setAddressLine2(addressLine2);
-		this.setPostalCode(postalCode);
-		this.setCity(city);
-		this.setNation(nation);
-		this.setProvince(province);
-	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -97,6 +89,7 @@ public class Address implements Serializable {
 		result = prime * result + ((province == null) ? 0 : province.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -138,6 +131,5 @@ public class Address implements Serializable {
 			return false;
 		return true;
 	}
-		
-	
+
 }

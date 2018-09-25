@@ -26,48 +26,58 @@ public class Publisher implements Serializable {
 		this.setName(name);
 	}
 	
-	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
-		if(id>=0)
+	public void setId(Long id) {
 			this.id = id;
-		else
-			throw new IllegalArgumentException();
 	}
-	
 	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
-		if(name!=null)
 			this.name = name;
-		else
-			throw new IllegalArgumentException();
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		Publisher pub = (Publisher) o;
-		if(this.getId()==pub.getId()) {
-			if(this.getName()!=null)
-				assert this.getName().equals(pub.getName());
-			else 
-				if(pub.getName()==null)
-					return true;
-			return true;
-		}
-		else 
-			return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return Long.valueOf(this.getId()).hashCode()+this.getName().hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Publisher)) {
+			return false;
+		}
+		Publisher other = (Publisher) obj;
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		return true;
+	}
+
 	public String getPrint() {
 		return this.getName();
 	}

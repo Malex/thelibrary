@@ -43,10 +43,7 @@ public class Author implements Serializable {
 		return this.id;
 	}
 	public void setId(long id) {
-		if(id>=0)
 			this.id = id;
-		else
-			throw new IllegalArgumentException();
 	}
 	
 	
@@ -54,10 +51,7 @@ public class Author implements Serializable {
 		return this.name.getFirstName();
 	}
 	public void setFirstName(String firstName) {
-		if(firstName!=null)
 			this.name.setFirstName(firstName);
-		else
-			throw new IllegalArgumentException();
 	}
 	
 	
@@ -65,10 +59,7 @@ public class Author implements Serializable {
 		return this.name.getLastName();
 	}
 	public void setLastName(String lastName) {
-		if(lastName!=null)
 			this.name.setLastName(lastName);
-		else
-			throw new IllegalArgumentException();
 	}
 	
 	
