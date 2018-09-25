@@ -6,6 +6,7 @@ import com.benfante.javacourse.thelibrary.core.dao.DaoFactory;
 import com.benfante.javacourse.thelibrary.core.dao.DaoFactoryCreator;
 
 import com.benfante.javacourse.thelibrary.core.model.*;
+import com.benfante.javacourse.thelibrary.core.model.utils.BookUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -128,7 +129,7 @@ public class Library {
 		titolo = in.readLine();
 		printLine(out,"\tInserisci prezzo");
 		//readline below
-		Book b = new Book(id,isbn,titolo,new LinkedList<Author>(),new BigDecimal(in.readLine()));
+		Book b = BookUtil.generateBook(id,isbn,titolo,new LinkedList<Author>(),new BigDecimal(in.readLine()));
 
 		
 		while(loadAuthor(in,out,b)) {}

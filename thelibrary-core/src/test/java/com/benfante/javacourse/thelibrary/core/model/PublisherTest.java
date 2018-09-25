@@ -16,14 +16,8 @@ public class PublisherTest {
 		assertEquals(pub1.hashCode(),pub2.hashCode());
 		assertNotEquals(pub2,pub3);
 	}
-	
-	@Test(expected = AssertionError.class)
-	public void equalsAssertTest() {
-		Publisher pub1 = new Publisher(1,"Mondadori");
-		Publisher pub3 = new Publisher(1,"Hoepli");
-		pub1.equals(pub3);
-	}
 
+	@Test
 	public void hashTest() {
 		Publisher pub1 = new Publisher(1,"Mondadori");
 		Publisher pub3 = new Publisher(1,"Hoepli");

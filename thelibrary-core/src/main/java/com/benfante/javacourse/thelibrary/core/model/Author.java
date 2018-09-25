@@ -3,7 +3,7 @@ package com.benfante.javacourse.thelibrary.core.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.benfante.javacourse.thelibrary.core.util.AuthorUtil;
+import com.benfante.javacourse.thelibrary.core.model.utils.AuthorUtil;
 
 @Entity
 public class Author implements Serializable {

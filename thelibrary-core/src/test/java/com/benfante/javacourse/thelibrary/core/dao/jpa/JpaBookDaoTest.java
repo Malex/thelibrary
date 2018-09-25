@@ -21,6 +21,7 @@ import com.benfante.javacourse.thelibrary.core.dao.DaoFactoryCreator;
 import com.benfante.javacourse.thelibrary.core.model.Author;
 import com.benfante.javacourse.thelibrary.core.model.Book;
 import com.benfante.javacourse.thelibrary.core.model.Publisher;
+import com.benfante.javacourse.thelibrary.core.model.utils.BookUtil;
 
 public class JpaBookDaoTest {
 
@@ -34,11 +35,11 @@ public class JpaBookDaoTest {
 		configuration.setProperty(DaoFactoryCreator.JPA_DAO_FACTORY_PERSISTENCE_UNIT_NAME_PARAM, "com.benfante.javacourse.thelibrary-test");
 		instance = DaoFactoryCreator.getDaoFactory(DaoFactoryCreator.DaoFactoryType.JPA_DAO_FACTORY, configuration);
 		BookDao b = instance.getBookDao();
-		Book a = b.store(new Book("1111-0000-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
+		Book a = b.store(BookUtil.generateBook("1111-0000-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
 		popBook.add(a);
-		a = b.store(new Book("1111-03500-11","Cucciolo di vita",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(32)));
+		a = b.store(BookUtil.generateBook("1111-03500-11","Cucciolo di vita",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(32)));
 		popBook.add(a);
-		a = b.store(new Book("1111-03530-11","Cucciolo di vita",new Author(2,"Janus","Caputo"),new Publisher("Hoepli"),BigDecimal.valueOf(0.12)));
+		a = b.store(BookUtil.generateBook("1111-03530-11","Cucciolo di vita",new Author(2,"Janus","Caputo"),new Publisher("Hoepli"),BigDecimal.valueOf(0.12)));
 		popBook.add(a);
 	}
 	
@@ -84,8 +85,8 @@ public class JpaBookDaoTest {
 	@Test
 	public void testStore() {
 		BookDao b = instance.getBookDao();
-		b.store(new Book("1111-0000-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
-		b.store(new Book("1111-00030-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
+		b.store(BookUtil.generateBook("1111-0000-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
+		b.store(BookUtil.generateBook("1111-00030-11","Ciccio va al mare",new Author(1,"Gianni","Levada"),new Publisher("Mondadori"),BigDecimal.valueOf(16.4)));
 		Collection<Book> col = b.findAll();
 		assertEquals(4, col.size());
 	}

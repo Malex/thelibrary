@@ -1,4 +1,4 @@
-package com.benfante.javacourse.thelibrary.core.util;
+package com.benfante.javacourse.thelibrary.core.model.utils;
 
 import com.benfante.javacourse.thelibrary.core.model.Author;
 

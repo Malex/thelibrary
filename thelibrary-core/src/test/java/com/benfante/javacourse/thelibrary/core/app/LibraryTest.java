@@ -29,17 +29,17 @@ public class LibraryTest {
 ////	@Test
 ////	public void testTrimBooks() {
 ////		List<Book> b = new LinkedList<>();
-////		b.add(new Book(1,"Sanremo",new Author(3,"Pippo","Baudo")));
-////		b.add(new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
+////		b.add(BookUtil.generateBook(1,"Sanremo",new Author(3,"Pippo","Baudo")));
+////		b.add(BookUtil.generateBook(4,"Sawnremo",new Author(3,"Pippo","Baudo")));
 ////		b.add(null);
-////		b.add(new Book(5,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
+////		b.add(BookUtil.generateBook(5,"Sanremeeeo",new Author(5,"Pippow","Baudow")));
 ////		Library lib = new Library();
 ////		lib.addBooks(b);
 ////		lib.trimBooks();
-////		b = new Book[3];
-////		b[0]=new Book(1,"Sanremo",new Author(3,"Pippo","Baudo"));
-////		b[1]=new Book(4,"Sawnremo",new Author(3,"Pippo","Baudo"));
-////		b[2]=new Book(5,"Sanremeeeo",new Author(5,"Pippow","Baudow"));
+////		b = BookUtil.generateBook[3];
+////		b[0]=BookUtil.generateBook(1,"Sanremo",new Author(3,"Pippo","Baudo"));
+////		b[1]=BookUtil.generateBook(4,"Sawnremo",new Author(3,"Pippo","Baudo"));
+////		b[2]=BookUtil.generateBook(5,"Sanremeeeo",new Author(5,"Pippow","Baudow"));
 ////		assertTrue(Arrays.equals(b, lib.getBooks()));
 //
 ////	}
@@ -64,8 +64,8 @@ public class LibraryTest {
 ////			if(!f.exists())
 ////				f.createNewFile();
 //			Library arg = new Library();
-//			arg.addBook(new Book(1,"Dieci Piccoli Indiani",new Author(1,"Agatha","Christie"),new Publisher(1,"Mondadori"),new BigDecimal(10.5)));
-//			arg.addBook(new Book(2,"The Java Programming Language",new Author[] {new Author(2,"Ken","Arnolds"),new Author(3,"James","Gosling"),new Author(4,"David","Holmes")},new Publisher(2,"Addison-Wesley Professional"),new BigDecimal(10.5)));
+//			arg.addBook(BookUtil.generateBook(1,"Dieci Piccoli Indiani",new Author(1,"Agatha","Christie"),new Publisher(1,"Mondadori"),new BigDecimal(10.5)));
+//			arg.addBook(BookUtil.generateBook(2,"The Java Programming Language",new Author[] {new Author(2,"Ken","Arnolds"),new Author(3,"James","Gosling"),new Author(4,"David","Holmes")},new Publisher(2,"Addison-Wesley Professional"),new BigDecimal(10.5)));
 //			assertNotNull(in);
 //			lib.loadBooks(in,null);
 //			lib.saveArchive();
@@ -97,7 +97,7 @@ public class LibraryTest {
 //		assertNotNull(app.getBooks());
 //		int originalSize = app.getBooks().size();
 //		Book containedBook = app.getBooks().iterator().next();
-//		app.addBook(new Book(containedBook.getId(), "", new Author(0,null,null)));
+//		app.addBook(BookUtil.generateBook(containedBook.getId(), "", new Author(0,null,null)));
 //		assertEquals(originalSize, app.getBooks().size());
 //	}
 //	
@@ -107,7 +107,7 @@ public class LibraryTest {
 //		try (InputStream is = this.getClass().getResourceAsStream("/books.dat");) {
 //			app.loadArchive(is);
 //		}
-//		//app.addBook(new Book(45,"Prova",new Author(1,"Agatha","Christie")));
+//		//app.addBook(BookUtil.generateBook(45,"Prova",new Author(1,"Agatha","Christie")));
 //		for(Author author : app.booksByAuthor.keySet()) {
 //			for(Book b : app.booksByAuthor.get(author)) {
 //				for(Author a : b.getAuthor()) {
@@ -130,8 +130,8 @@ public class LibraryTest {
 //		Library lib = new Library();
 //		try(InputStream in = this.getClass().getResourceAsStream("/books.txt")){
 //			SerializationStorage arg = new SerializationStorage();
-//			arg.addBook(new Book(1,"Dieci Piccoli Indiani",new Author(1,"Agatha","Christie"),new Publisher(1,"Mondadori"),new BigDecimal(10.5)));
-//			arg.addBook(new Book(2,"The Java Programming Language",new Author[] {new Author(2,"Ken","Arnolds"),new Author(3,"James","Gosling"),new Author(4,"David","Holmes")},new Publisher(2,"Addison-Wesley Professional"),new BigDecimal(10.5)));
+//			arg.addBook(BookUtil.generateBook(1,"Dieci Piccoli Indiani",new Author(1,"Agatha","Christie"),new Publisher(1,"Mondadori"),new BigDecimal(10.5)));
+//			arg.addBook(BookUtil.generateBook(2,"The Java Programming Language",new Author[] {new Author(2,"Ken","Arnolds"),new Author(3,"James","Gosling"),new Author(4,"David","Holmes")},new Publisher(2,"Addison-Wesley Professional"),new BigDecimal(10.5)));
 //			assertNotNull(in);
 //			lib.loadBooks(in,null);
 //			assertTrue(lib.getBooks().equals(arg.getBooks()));

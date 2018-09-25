@@ -101,7 +101,7 @@ public class SerializationStorage implements Serializable {
 			this.addBook(g); 
 	}
 	void addBook(Book book) {
-//		Book[] new_books = new Book[this.books.length+1];
+//		Book[] new_books = BookUtil.generateBook[this.books.length+1];
 //		for(int i=0; i<this.books.length; i++)
 //			new_books[i]=this.books[i];
 //		new_books[this.books.length] = book;

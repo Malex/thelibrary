@@ -10,15 +10,17 @@ import org.junit.Test;
 
 import com.benfante.javacourse.thelibrary.core.model.Author;
 import com.benfante.javacourse.thelibrary.core.model.Book;
+import com.benfante.javacourse.thelibrary.core.model.utils.BookIsbnComparator;
+import com.benfante.javacourse.thelibrary.core.model.utils.BookUtil;
 
 public class BookIsbnComparatorTest {
 
 	@Test
 	public void testCompare() {
-		Book book1 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book2 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book3 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book4 = new Book(1,"A book",new Author(1,"a","author"));
+		Book book1 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
+		Book book2 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
+		Book book3 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
+		Book book4 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
 		book1.setIsbn("12345");
 		book2.setIsbn("12345");
 		book3.setIsbn("02159");
@@ -33,10 +35,10 @@ public class BookIsbnComparatorTest {
 	public void sortCompare() {
 		BookIsbnComparator com = BookIsbnComparator.getInstance();
 		
-		Book book1 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book2 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book3 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book4 = new Book(1,"A book",new Author(1,"a","author"));
+		Book book1 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
+		Book book2 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
+		Book book3 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
+		Book book4 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
 		book1.setIsbn("12345");
 		book2.setIsbn("12345");
 		book3.setIsbn("02159");
@@ -65,10 +67,10 @@ public class BookIsbnComparatorTest {
 	public void sortCompareReverse() {
 		BookIsbnComparator com = BookIsbnComparator.getInstance();
 		
-		Book book1 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book2 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book3 = new Book(1,"A book",new Author(1,"a","author"));
-		Book book4 = new Book(1,"A book",new Author(1,"a","author"));
+		Book book1 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
+		Book book2 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
+		Book book3 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
+		Book book4 = BookUtil.generateBook(1,"A book",new Author(1,"a","author"));
 		book1.setIsbn("12345");
 		book2.setIsbn("12345");
 		book3.setIsbn("02159");

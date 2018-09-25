@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
+import com.benfante.javacourse.thelibrary.core.model.utils.BookUtil;
+
 public class AuthorTest {
 
 //	Old test, before JPA changes	
@@ -40,14 +42,14 @@ public class AuthorTest {
 		float price = 1.23f;
 		String title = "A title";
 		
-		Book book = new Book(id, title, author, publisher, BigDecimal.valueOf(price));
-		Book book3 = new Book(id, title, auth1, publisher, BigDecimal.valueOf(price));
+		Book book = BookUtil.generateBook(id, title, author, publisher, BigDecimal.valueOf(price));
+		Book book3 = BookUtil.generateBook(id, title, auth1, publisher, BigDecimal.valueOf(price));
 
 		Author auth2 = new Author(2,"Pippo","Baudo");
 		auth2.setLastName("Pluto");
 		auth2.setId(3);
 		Author[] arrAuth = {auth1,auth2};
-		Book book2 = new Book(4,"ciao", arrAuth);
+		Book book2 = BookUtil.generateBook(4,"ciao", arrAuth);
 		
 		assertFalse(auth1.isAuthor(book));
 		assertTrue(auth1.isAuthor(book3));

@@ -9,9 +9,7 @@
 		<artifactId>thelibrary</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.benfante.javacourse</groupId>
 	<artifactId>thelibrary-business</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<name>thelibrary-business</name>
 	<url>http://maven.apache.org</url>
 	<properties>

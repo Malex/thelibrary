@@ -60,7 +60,7 @@
 //				count++;
 //			}
 //		}
-//		Book[] new_book = new Book[this.books.length-count];
+//		Book[] new_book = BookUtil.generateBook[this.books.length-count];
 //		
 //		for (int i=0; i < this.books.length-count;i++) { // Filling new array
 //			while(this.books[i+shift]==null) { //Counting number of blanks from location in cycle
@@ -109,7 +109,7 @@
 //		return null;
 //	}
 //	public void addBook(Book book) {
-////		Book[] new_books = new Book[this.books.length+1];
+////		Book[] new_books = BookUtil.generateBook[this.books.length+1];
 ////		for(int i=0; i<this.books.length; i++)
 ////			new_books[i]=this.books[i];
 ////		new_books[this.books.length] = book;

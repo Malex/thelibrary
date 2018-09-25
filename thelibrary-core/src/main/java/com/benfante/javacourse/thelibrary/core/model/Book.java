@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 
 @Entity
 @Table(name = "book", uniqueConstraints = @UniqueConstraint(columnNames = { "isbn" }))
-public class Book implements Serializable, Comparable<Book> {
+public class Book implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,140 +58,6 @@ public class Book implements Serializable, Comparable<Book> {
 	private SortedSet<BookCategory> categories = new TreeSet<>();
 
 	public Book() {
-	}
-
-	public Book(String title, Author author, Publisher publisher, BigDecimal price) {
-		this(title, author, price);
-		this.setPublisher(publisher);
-	}
-
-	public Book(String title, Author author) {
-		this.setAuthor(author);
-		this.setTitle(title);
-	}
-
-	public Book(String title, Author author, BigDecimal price) {
-		this(title, author);
-		this.setPrice(price);
-	}
-
-	public Book(String title, Author[] author, Publisher publisher, BigDecimal price) {
-		this(title, author, price);
-		this.setPublisher(publisher);
-	}
-
-	public Book(String title, Author[] author) {
-		this.setAuthor(author);
-		this.setTitle(title);
-	}
-
-	public Book(String title, Author[] author, BigDecimal price) {
-		this(title, author);
-		this.setPrice(price);
-	}
-
-	public Book(String title, List<Author> author, Publisher publisher, BigDecimal price) {
-		this(title, author, price);
-		this.setPublisher(publisher);
-	}
-
-	public Book(String title, List<Author> author) {
-		this.setAuthor(author);
-		this.setTitle(title);
-	}
-
-	public Book(String title, List<Author> author, BigDecimal price) {
-		this(title, author);
-		this.setPrice(price);
-	}
-
-	public Book(String Isbn, String title, List<Author> author, Publisher publisher, BigDecimal price) {
-		this(title, author, publisher, price);
-		this.setIsbn(Isbn);
-	}
-
-	public Book(String Isbn, String title, List<Author> author) {
-		this(title, author);
-		this.setIsbn(Isbn);
-	}
-
-	public Book(String Isbn, String title, Author author) {
-		this(title, author);
-		this.setIsbn(Isbn);
-	}
-
-	public Book(String Isbn, String title, List<Author> author, BigDecimal price) {
-		this(title, author, price);
-		this.setIsbn(Isbn);
-	}
-
-	public Book(String Isbn, String title, Author author, Publisher pub, BigDecimal price) {
-		this(title, author, price);
-		this.setIsbn(Isbn);
-		this.setPublisher(pub);
-	}
-
-	public Book(long id, String title, Author author, Publisher publisher, BigDecimal price) {
-		this(id, title, author, price);
-		this.setPublisher(publisher);
-	}
-
-	public Book(long Id, String title, Author author) {
-		this.setId(Id);
-		this.setAuthor(author);
-		this.setTitle(title);
-	}
-
-	public Book(long Id, String title, Author author, BigDecimal price) {
-		this(Id, title, author);
-		this.setPrice(price);
-	}
-
-	public Book(long id, String title, Author[] author, Publisher publisher, BigDecimal price) {
-		this(id, title, author, price);
-		this.setPublisher(publisher);
-	}
-
-	public Book(long Id, String title, Author[] author) {
-		this.setId(Id);
-		this.setAuthor(author);
-		this.setTitle(title);
-	}
-
-	public Book(long Id, String title, Author[] author, BigDecimal price) {
-		this(Id, title, author);
-		this.setPrice(price);
-	}
-
-	public Book(long id, String title, List<Author> author, Publisher publisher, BigDecimal price) {
-		this(id, title, author, price);
-		this.setPublisher(publisher);
-	}
-
-	public Book(long Id, String title, List<Author> author) {
-		this.setId(Id);
-		this.setAuthor(author);
-		this.setTitle(title);
-	}
-
-	public Book(long Id, String title, List<Author> author, BigDecimal price) {
-		this(Id, title, author);
-		this.setPrice(price);
-	}
-
-	public Book(long id, String Isbn, String title, List<Author> author, Publisher publisher, BigDecimal price) {
-		this(id, title, author, publisher, price);
-		this.setIsbn(Isbn);
-	}
-
-	public Book(long Id, String Isbn, String title, List<Author> author) {
-		this(Id, title, author);
-		this.setIsbn(Isbn);
-	}
-
-	public Book(long Id, String Isbn, String title, List<Author> author, BigDecimal price) {
-		this(Id, title, author, price);
-		this.setIsbn(Isbn);
 	}
 
 	public Long getId() {
@@ -234,19 +100,19 @@ public class Book implements Serializable, Comparable<Book> {
 		return this.author;
 	}
 
-	void setAuthor(Author[] author) {
+	public void setAuthor(Author[] author) {
 		this.author.clear();
 		for (Author g : author) {
 			this.addAuthor(g);
 		}
 	}
 
-	void setAuthor(Author author) {
+	public void setAuthor(Author author) {
 		this.author.clear();
 		this.addAuthor(author);
 	}
 
-	void setAuthor(List<Author> author) {
+	public void setAuthor(List<Author> author) {
 		this.author = author;
 	}
 
@@ -319,7 +185,7 @@ public class Book implements Serializable, Comparable<Book> {
 		this.categories.add(category);
 		// len = this.getCategories().length;
 		//
-		// BookCategory[] newCat = new BookCategory[len+1];
+		// BookCategory[] newCat = BookUtil.generateBookCategory[len+1];
 		//
 		// for(int i=0; i<len;i++) {
 		// if(this.getCategories()[i]==category) //avoid duplicates (probably should use
@@ -356,20 +222,6 @@ public class Book implements Serializable, Comparable<Book> {
 	@Override
 	public int hashCode() {
 		return this.getIsbn().hashCode();
-	}
-
-	private int calcComp(Book o) {
-		return (this.getIsbn().compareTo(o.getIsbn()) < 0) ? -1 : 1;
-	}
-
-	@Override
-	public int compareTo(Book o) {
-		if (o.hashCode() != this.hashCode()) // NullPointerException is raised here automatically
-			return this.calcComp(o);
-		else if (this.equals(o))
-			return 0;
-		else
-			return this.calcComp(o);
 	}
 
 }

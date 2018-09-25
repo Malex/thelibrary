@@ -1,4 +1,4 @@
-package com.benfante.javacourse.thelibrary.core.model.comparator;
+package com.benfante.javacourse.thelibrary.core.model.utils;
 
 import java.io.Serializable;
 import java.util.Comparator;

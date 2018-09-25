@@ -43,4 +43,20 @@ public class ClerkNotAvailableException extends RuntimeException {
 			this.operationDate = date;
 		}
 	}
+
+	public LocalDate getOperationDate() {
+		return operationDate;
+	}
+
+	public void setOperationDate(LocalDate operationDate) {
+		this.operationDate = operationDate;
+	}
+
+	public Clerk getClerk() {
+		return clerk;
+	}
+
+	public void setClerk(Clerk clerk) {
+		this.clerk = clerk;
+	}
 }
