@@ -20,12 +20,14 @@ public class Operation implements Serializable {
 	
 	private OperationType operationType;
 	
-	private LocalDate dateOfOperation;
+	private LocalDate date;
 	
 	/**
 	 * Uguale a null se l'operazione non prevede sconti e/o prezzo
 	 */
-	private DiscountType discount;
+	private DiscountType discountType;
+	
+	private Number discount;
 	
 	private BigDecimal totalPrice;
 	
@@ -55,11 +57,11 @@ public class Operation implements Serializable {
 		this.operationType = operationType;
 	}
 
-	public DiscountType getDiscount() {
+	public Number getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(DiscountType discount) {
+	public void setDiscount(Number discount) {
 		this.discount = discount;
 	}
 
@@ -79,12 +81,20 @@ public class Operation implements Serializable {
 		this.booksInOperation = booksInOperation;
 	}
 
-	public LocalDate getDateOfOperation() {
-		return dateOfOperation;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setDateOfOperation(LocalDate dateOfOperation) {
-		this.dateOfOperation = dateOfOperation;
+	public void setDate(LocalDate dateOfOperation) {
+		this.date = dateOfOperation;
+	}
+
+	public DiscountType getDiscountType() {
+		return discountType;
+	}
+
+	public void setDiscountType(DiscountType discountType) {
+		this.discountType = discountType;
 	}
 	
 	

@@ -1,0 +1,63 @@
+//created on: 25-set-2018
+package com.benfante.thelibrary.application.business
+
+//list any import classes here.
+import com.benfante.javacourse.thelibrary.application.model.Operation
+import com.benfante.javacourse.thelibrary.core.model.Book
+import com.benfante.javacourse.thelibrary.application.model.Enumerations.DiscountType
+import static com.benfante.javacourse.thelibrary.business.utils.ResultUtils.*
+
+
+//declare any global variables here
+
+dialect "mvel"
+
+
+rule "Stimate total price"
+    when
+    	$op : Operation( totalPrice == null , $books : booksInOperation ) 
+    	accumulate( Book ( $price : price ) from $books, $total : sum($price))
+    then
+    	$op.setTotalPrice( new java.math.BigDecimal($total.toString()) );
+    	update($op);
+end
+
+rule "Ignored value"
+	no-loop true
+	when 
+		$op : Operation( discount!=null, discountType==null )
+		$res : Result( )
+	then
+		addWarning($res,"248","A discount value has been found, but discount type was set to null, so it is ignored");
+end
+
+rule "Apply Discount Full"
+	no-loop true
+	when
+		$op : Operation( $price : totalPrice != null, discount!=null, $disc : discount, discountType==DiscountType.FULL_PRICE)
+		$res : Result( )
+	then
+		addWarning($res,"335","Discount value is ignored because type is set to full");
+end
+			
+rule "Apply Discount Percentage"			
+	no-loop true
+	when
+		$op : Operation( $price : totalPrice != null, discount!=null, $disc : discount, discountType==DiscountType.PERCENTAGE)
+		$res : Result( )
+	then	
+		$op.setTotalPrice($price.add((new java.math.BigDecimal($disc.toString())).multiply($price).divide(java.math.BigDecimal.valueOf(100) ).negate() ) );
+		addResult($res,"201","Percentage Discount applied correctly");
+		update($op);
+end	
+
+rule "Apply Discount Value"			
+	no-loop true
+	when
+		$op : Operation( $price : totalPrice != null, discount!=null, $disc : discount, discountType==DiscountType.VALUE)
+		$res : Result( )
+	then
+		$op.setTotalPrice($price.add((new java.math.BigDecimal($disc)).negate()));
+		addResult($res,"200","Value Discount applied correctly");
+		update($op);
+end

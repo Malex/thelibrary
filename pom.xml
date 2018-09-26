@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.benfante.javacourse</groupId>
 	<artifactId>thelibrary</artifactId>
@@ -19,8 +21,8 @@
 	</properties>
 	<modules>
 		<module>thelibrary-core</module>
-    <module>thelibrary-business</module>
-  </modules>
+		<module>thelibrary-business</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -60,28 +62,28 @@
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.0</version>
 		</dependency>
-		 <dependency>
-        <groupId>org.eclipse.jdt.core.compiler</groupId>
-        <artifactId>ecj</artifactId>
-        <version>4.5.1</version>
-    </dependency>
+		<dependency>
+			<groupId>org.eclipse.jdt.core.compiler</groupId>
+			<artifactId>ecj</artifactId>
+			<version>4.5.1</version>
+		</dependency>
 
-    <!-- core -->
-    <dependency>
-        <groupId>org.drools</groupId>
-        <artifactId>drools-core</artifactId>
-        <version>6.4.0.Final</version>
-    </dependency>
-    <dependency>
-        <groupId>org.drools</groupId>
-        <artifactId>drools-compiler</artifactId>
-        <version>6.4.0.Final</version>
-        <exclusions>
-            <exclusion>
-                <groupId>org.eclipse.jdt.core.compiler</groupId>
-                <artifactId>ecj</artifactId>
-            </exclusion>
-        </exclusions>
-    </dependency>
+		<!-- core -->
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+			<version>6.4.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+			<version>6.4.0.Final</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.jdt.core.compiler</groupId>
+					<artifactId>ecj</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 </project>

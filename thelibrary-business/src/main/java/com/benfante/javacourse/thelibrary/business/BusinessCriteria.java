@@ -41,6 +41,7 @@ public class BusinessCriteria {
 		final KieBase kbase = getKBase();
 		final KieSession ksession = kbase.newKieSession();
 		final List<Object> resultList = bin.getFacts();
+		ksession.setGlobal("log", log);
 		for(Object item : resultList) {
 			ksession.insert(item);
 		}

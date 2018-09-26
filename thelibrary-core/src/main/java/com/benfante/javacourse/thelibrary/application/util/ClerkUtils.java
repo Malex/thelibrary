@@ -19,7 +19,7 @@ public class ClerkUtils {
 	private ClerkUtils() {
 	}
 	
-	public static boolean isAvailable(Clerk clerk, LocalDate now) {
+	public static Boolean isAvailable(Clerk clerk, LocalDate now) {
 		if(clerk==null) {
 			throw new IllegalArgumentException("Il parametro Clerk deve essere valorizzato");
 		}

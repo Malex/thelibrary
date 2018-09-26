@@ -12,6 +12,7 @@
 	<artifactId>thelibrary-business</artifactId>
 	<name>thelibrary-business</name>
 	<url>http://maven.apache.org</url>
+	<packaging>kjar</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -24,7 +25,52 @@
 				<version>6.4.0.Final</version>
 				<extensions>true</extensions>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<executions>
+					<execution>
+<!-- 						<phase>test</phase>
+ -->						<goals>
+							<goal>java</goal>
+						</goals>
+						<!-- <configuration>
+							<mainClass>com.benfante.javacourse.thelibrary.business.GenericAppTest</mainClass>
+						</configuration> -->
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.kie</groupId>
+										<artifactId>kie-maven-plugin</artifactId>
+										<versionRange>[6.0.0,)</versionRange>
+										<goals>
+											<goal>build</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<dependencies>
 		<dependency>
@@ -48,29 +94,7 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jdt.core.compiler</groupId>
-			<artifactId>ecj</artifactId>
-			<version>4.5.1</version>
-		</dependency>
 
-		<!-- core -->
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-core</artifactId>
-			<version>6.4.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-compiler</artifactId>
-			<version>6.4.0.Final</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.eclipse.jdt.core.compiler</groupId>
-					<artifactId>ecj</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>

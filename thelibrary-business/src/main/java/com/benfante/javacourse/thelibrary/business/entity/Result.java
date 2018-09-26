@@ -36,6 +36,10 @@ public class Result implements Serializable {
 		return result;
 	}
 
+	public Boolean isResult() {
+		return result;
+	}
+	
 	public void setResult(Boolean result) {
 		this.result = result;
 	}

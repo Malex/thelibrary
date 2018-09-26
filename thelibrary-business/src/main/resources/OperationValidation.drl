@@ -1,36 +1,39 @@
-#created on: 24-set-2018
 package com.benfante.thelibrary.application.business
 
-#list any import classes here.
 import com.benfante.javacourse.thelibrary.application.model.Operation
 import com.benfante.javacourse.thelibrary.application.model.Clerk
 import com.benfante.javacourse.thelibrary.application.model.Enumerations.OperationType
 import com.benfante.javacourse.thelibrary.application.model.Enumerations.DiscountType
 import com.benfante.javacourse.thelibrary.application.model.Enumerations.ContractType
-import com.benfante.javacourse.thelibrary.application.util.ClerkUtils
-import com.benfante.javacourse.thelibrary.business.utils.ResultUtils
+import com.benfante.javacourse.thelibrary.business.entity.Result
+import function com.benfante.javacourse.thelibrary.application.util.ClerkUtils.isAvailable
+import static com.benfante.javacourse.thelibrary.business.utils.ResultUtils.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-#declare any global variables here
-global Logger log = LoggerFactory.getLogger("DROOLS");
+dialect "mvel"
+
+
+global Logger log;
 
 rule "Correct usage of discounts"
 	salience 8
+	lock-on-active true
     when
-        $op : Operation( not(operationType==OperationType.BUY), not(discount==null)  )
+        $op : Operation( operationType!=OperationType.BUY, (discount!=null && discountType!=null)  )
         $res : Result( )
     then
     	log.warn("Discount non valido per questa operazione, procedo a rimuoverlo");
         $op.setDiscount(null);
+        $op.setDiscountType(null);
         if($res.result==null) {
         	$res.setResult(true);
-       		ResultUtils.addWarning($res,"205","Discount invalid for this operation, it was removed");
+       		addWarning($res,"205","Discount invalid for this operation, it was removed");
        	} else {
        		if($res.result) {
-       			ResultUtils.addWarning($res,"205","Discount invalid for this operation, it was removed");
+       			addWarning($res,"205","Discount invalid for this operation, it was removed");
        		} else {
-       			ResultUtils.addNotPrimaryResult($res,"205","Discount invalid for this operation, it was removed");
+       			addNotPrimaryResult($res,"205","Discount invalid for this operation, it was removed");
        		}
        	}
 end
@@ -38,12 +41,11 @@ end
 rule "Is cleck available"
 	salience 1
     when
-        $op : Operation( $cleck : clerk )
-        $clerk : Clerk( contract == ContractType.SEASONAL )
+        $op : Operation( $clerk : clerk, clerk.contract == ContractType.SEASONAL )
         $res : Result( )
     then
-        if(! ClerkUtils.isAvailable( $clerk ) ) {
+        if(! isAvailable( $clerk, $op.date ).booleanValue() ) {
         	$res.setResult(false);
-        	ResultUtils.addResult("421","Clerk not available on "+$op.date);
+        	addResult($res,"421","Clerk not available on "+$op.date);
         }	
 end
