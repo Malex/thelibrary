@@ -14,6 +14,8 @@ public class Operation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
+	
 	private Clerk clerk;
 	
 	private Customer customer;
@@ -96,6 +98,13 @@ public class Operation implements Serializable {
 	public void setDiscountType(DiscountType discountType) {
 		this.discountType = discountType;
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}	
 	
 }

@@ -1,0 +1,27 @@
+//created on: 26-set-2018
+package com.benfante.javacourse.thelibrary.business
+
+//list any import classes here.
+
+import com.benfante.javacourse.thelibrary.application.model.Operation
+import com.benfante.javacourse.thelibrary.core.model.Book
+import com.benfante.javacourse.thelibrary.business.entity.Result
+import function com.benfante.javacourse.thelibrary.business.utils.ResultUtils.addResult
+//declare any global variables here
+
+
+
+
+rule "Multiple Operation for same book"
+    when
+        $op : Operation( $books : booksInOperation, $opid : id )
+        $b1 :  Book( $id : id ) from $books
+        $op2 : Operation( $books2: booksInOperation, id!=$opid )
+        $b2 : Book( id==$id ) from $books2
+        $res : Result(  )
+    then
+    	addResult($res,"408","Same book protagonist of different operations");
+    	$res.setResult(false);
+end
+
+
