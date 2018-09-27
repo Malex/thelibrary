@@ -22,6 +22,7 @@
 	<modules>
 		<module>thelibrary-core</module>
 		<module>thelibrary-business</module>
+		<module>thelibrary-web-user</module>
 	</modules>
 	<dependencies>
 		<dependency>
